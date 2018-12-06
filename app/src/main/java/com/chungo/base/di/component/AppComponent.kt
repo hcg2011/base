@@ -111,7 +111,6 @@ interface AppComponent {
      * @return [Cache]
      */
     fun extras(): Cache<*, *>
-    // fun extras(): IntelligentCache<Any>
 
     /**
      * 用于创建框架所需缓存对象的工厂

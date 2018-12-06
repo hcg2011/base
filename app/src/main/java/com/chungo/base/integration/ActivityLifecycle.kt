@@ -44,9 +44,10 @@ import javax.inject.Singleton
  * ================================================
  */
 @Singleton
-class ActivityLifecycle
-@Inject
-constructor() : Application.ActivityLifecycleCallbacks {
+class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
+
+    @Inject
+    constructor()
 
     @Inject
     lateinit var mApplication: Application

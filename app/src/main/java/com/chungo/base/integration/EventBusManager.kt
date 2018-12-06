@@ -119,7 +119,7 @@ class EventBusManager private constructor() {
         @Volatile
         private var sInstance: EventBusManager? = null
 
-        val instance: EventBusManager?
+        val instance: EventBusManager
             get() {
                 if (sInstance == null) {
                     synchronized(EventBusManager::class.java) {
@@ -128,7 +128,7 @@ class EventBusManager private constructor() {
                         }
                     }
                 }
-                return sInstance
+                return sInstance!!
             }
     }
 }

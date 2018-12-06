@@ -52,7 +52,7 @@ import javax.inject.Inject
 abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, FragmentLifecycleable {
     protected val TAG = this.javaClass.simpleName
     private val mLifecycleSubject = BehaviorSubject.create<FragmentEvent>()
-    private lateinit var mCache: Cache<String, Any>
+    private var mCache: Cache<String, Any>? = null
     protected var mContext: Context? = null
     @Inject
     protected lateinit var mPresenter: P//如果当前页面逻辑简单, Presenter 可以为 null
@@ -60,9 +60,9 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, FragmentLif
     @Synchronized
     override fun provideCache(): Cache<String, Any> {
         if (mCache == null) {
-            mCache = ArmsUtils.obtainAppComponentFromContext(this!!.activity!!).cacheFactory().build(CacheType.FRAGMENT_CACHE) as Cache<String, Any>
+            mCache = ArmsUtils.obtainAppComponentFromContext(this.activity!!).cacheFactory().build(CacheType.FRAGMENT_CACHE) as Cache<String, Any>
         }
-        return mCache
+        return mCache!!
     }
 
     override fun provideLifecycleSubject(): Subject<FragmentEvent> {

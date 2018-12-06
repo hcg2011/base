@@ -15,6 +15,7 @@
  */
 package com.chungo.base.di.module
 
+import android.app.Application
 import android.support.v4.app.FragmentManager
 import com.chungo.base.di.scope.Qualifiers
 import com.chungo.base.integration.ActivityLifecycle
@@ -41,16 +42,14 @@ abstract class AppModuleBinds {
     @Binds
     abstract fun bindRepositoryManager(repositoryManager: RepositoryManager): IRepositoryManager
 
-    @Qualifiers.Lifecycle
-    @Binds
-    //abstract fun bindActivityLifecycle(activityLifecycle: ActivityLifecycle): Application.ActivityLifecycleCallbacks
-    abstract fun bindActivityLifecycle(activityLifecycle: ActivityLifecycle): ActivityLifecycle
 
+    //@Qualifiers.Lifecycle
+    @Binds
+    abstract fun bindActivityLifecycle(activityLifecycle: ActivityLifecycle): Application.ActivityLifecycleCallbacks
 
     @Qualifiers.RxLifecycle
     @Binds
-    //abstract fun bindActivityForRxLifecycle(activityRxLifecycle: ActivityLifecycleForRxLifecycle): Application.ActivityLifecycleCallbacks
-    abstract fun bindActivityForRxLifecycle(activityRxLifecycle: ActivityLifecycleForRxLifecycle): ActivityLifecycleForRxLifecycle
+    abstract fun bindActivityForRxLifecycle(activityRxLifecycle: ActivityLifecycleForRxLifecycle): Application.ActivityLifecycleCallbacks
 
     @Binds
     abstract fun bindFragmentLifecycle(fragmentLifecycle: FragmentLifecycle): FragmentManager.FragmentLifecycleCallbacks

@@ -44,7 +44,7 @@ class ActivityDelegateImpl(private var mActivity: Activity?) : ActivityDelegate 
         //如果要使用 EventBus 请将此方法返回 true
         if (iActivity!!.useEventBus()) {
             //注册到事件主线
-            EventBusManager.instance!!.register(this!!.mActivity!!)
+            EventBusManager.instance.register(mActivity!!)
         }
 
         //这里提供 AppComponent 对象给 BaseActivity 的子类, 用于 Dagger2 的依赖注入

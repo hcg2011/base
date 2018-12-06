@@ -29,11 +29,9 @@ import com.chungo.base.di.component.AppComponent
 import com.chungo.base.di.component.DaggerAppComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
-import com.chungo.base.integration.ActivityLifecycle
 import com.chungo.base.integration.ConfigModule
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
-import com.chungo.base.integration.lifecycle.ActivityLifecycleForRxLifecycle
 import com.chungo.base.utils.ArmsUtils
 import com.chungo.base.utils.Preconditions
 import com.chungo.basemore.advance.GlobalConfiguration
@@ -59,15 +57,13 @@ class AppDelegate(context: Context) : App, AppLifecycles {
     private lateinit var mApplication: Application
     private lateinit var mAppComponent: AppComponent
 
-    @Qualifiers.Lifecycle
+    //@Qualifiers.Lifecycle
     @Inject
-    //lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
-    lateinit var mActivityLifecycle: ActivityLifecycle
+    lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
 
     @Qualifiers.RxLifecycle
     @Inject
-    //lateinit var mActivityLifecycleForRxLifecycle: Application.ActivityLifecycleCallbacks
-    lateinit var mActivityLifecycleForRxLifecycle: ActivityLifecycleForRxLifecycle
+    lateinit var mActivityLifecycleForRxLifecycle: Application.ActivityLifecycleCallbacks
 
     private var mModule: ConfigModule
     private var mAppLifecycles: MutableList<AppLifecycles> = ArrayList()
@@ -109,7 +105,7 @@ class AppDelegate(context: Context) : App, AppLifecycles {
     }
 
     override fun onCreate(application: Application) {
-        this.mApplication = application
+        mApplication = application
         mAppComponent = DaggerAppComponent
                 .builder()
                 .application(mApplication)//提供application

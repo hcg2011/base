@@ -60,7 +60,7 @@ abstract class BaseHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onClick(view: View) {
         if (mOnViewClickListener != null) {
-            mOnViewClickListener!!.onViewClick(view, this.position)
+            mOnViewClickListener!!.onViewClick(view, layoutPosition)
         }
     }
 
