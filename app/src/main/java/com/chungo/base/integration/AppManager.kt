@@ -35,12 +35,6 @@ import java.util.*
  * 用于管理所有 [Activity],和在前台的 [Activity]
  * 可以通过直接持有 [AppManager] 对象执行对应方法
  * 也可以通过 [.post] ,远程遥控执行对应方法,用法和 EventBus 类似
- *
- * @see [AppManager wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.3.11)
- * Created by JessYan on 14/12/2016 13:50
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 class AppManager private constructor() {
     protected val TAG = this.javaClass.simpleName
@@ -383,9 +377,6 @@ class AppManager private constructor() {
     }
 
     companion object {
-        /**
-         * true 为不需要加入到 Activity 容器进行统一管理,默认为 false
-         */
         val IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list"
         @Volatile
         private var sAppManager: AppManager? = null

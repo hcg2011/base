@@ -101,6 +101,17 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.sunloto.shandong.bean.** { *; }
 
+################Moshi###############
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-keepclasseswithmembers class * {
+    @com.squareup.moshi.* <methods>;
+}
+-keep @com.squareup.moshi.JsonQualifier interface *
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
 
 ################glide###############
 -keep public class * implements com.bumptech.glide.module.AppGlideModule

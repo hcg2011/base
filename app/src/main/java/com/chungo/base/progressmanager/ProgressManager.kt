@@ -1,21 +1,3 @@
-/**
- * Copyright 2017 JessYan
- *
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.base.progressmanager
 
 import android.app.Activity
@@ -48,6 +30,7 @@ import java.util.*
  * ================================================
  */
 class ProgressManager private constructor() {
+
     /**
      * 因为 [WeakHashMap] 将 `key` 作为弱键 (弱引用的键), 所以当 java 虚拟机 GC 时会将某个不在被引用的 `key` 回收并加入 [ReferenceQueue]
      * 在下一次操作 [WeakHashMap] 时,会比对 [ReferenceQueue] 中的 `key`
@@ -65,12 +48,49 @@ class ProgressManager private constructor() {
     private val mInterceptor: Interceptor
     private var mRefreshTime = DEFAULT_REFRESH_TIME //进度刷新时间(单位ms),避免高频率调用
 
+    companion object {
+
+        @Volatile //使用本管理器必须依赖 Okhttp
+        private lateinit var sInstance: ProgressManager
+
+        val OKHTTP_PACKAGE_NAME = "okhttp3.OkHttpClient"
+        val DEPENDENCY_OKHTTP: Boolean
+        val DEFAULT_REFRESH_TIME = 150
+        val IDENTIFICATION_NUMBER = "?NUMBER="
+        val IDENTIFICATION_HEADER = "HEADER"
+        val LOCATION_HEADER = "Location"
+
+        init {
+            var hasDependency: Boolean
+            try {
+                Class.forName(OKHTTP_PACKAGE_NAME)
+                hasDependency = true
+            } catch (e: ClassNotFoundException) {
+                hasDependency = false
+            }
+            DEPENDENCY_OKHTTP = hasDependency
+        }
+
+        fun getInstance(): ProgressManager {
+
+            if (sInstance == null) {
+                if (!DEPENDENCY_OKHTTP) {
+                    throw IllegalStateException("Must be dependency Okhttp")
+                }
+                synchronized(ProgressManager::class.java) {
+                    if (sInstance == null) {
+                        sInstance = ProgressManager()
+                    }
+                }
+            }
+            return sInstance!!
+        }
+    }
 
     init {
         this.mHandler = Handler(Looper.getMainLooper())
         this.mInterceptor = Interceptor { chain -> wrapResponseBody(chain.proceed(wrapRequestBody(chain.request())!!)) }
     }
-
 
     /**
      * 设置 [ProgressListener.onProgress] 每次被调用的间隔时间
@@ -139,8 +159,7 @@ class ProgressManager private constructor() {
      * @return
      */
     fun with(builder: OkHttpClient.Builder): OkHttpClient.Builder {
-        return builder
-                .addNetworkInterceptor(mInterceptor)
+        return builder.addNetworkInterceptor(mInterceptor)
     }
 
     /**
@@ -433,48 +452,4 @@ class ProgressManager private constructor() {
             }
         }
     }
-
-    companion object {
-
-        @Volatile
-        private var mProgressManager: ProgressManager? = null
-
-        val OKHTTP_PACKAGE_NAME = "okhttp3.OkHttpClient"
-        val DEPENDENCY_OKHTTP: Boolean
-        val DEFAULT_REFRESH_TIME = 150
-        val IDENTIFICATION_NUMBER = "?JessYan="
-        val IDENTIFICATION_HEADER = "JessYan"
-        val LOCATION_HEADER = "Location"
-
-
-        init {
-            var hasDependency: Boolean
-            try {
-                Class.forName(OKHTTP_PACKAGE_NAME)
-                hasDependency = true
-            } catch (e: ClassNotFoundException) {
-                hasDependency = false
-            }
-
-            DEPENDENCY_OKHTTP = hasDependency
-        }
-
-
-        //使用本管理器必须依赖 Okhttp
-        val instance: ProgressManager?
-            get() {
-                if (mProgressManager == null) {
-                    if (!DEPENDENCY_OKHTTP) {
-                        throw IllegalStateException("Must be dependency Okhttp")
-                    }
-                    synchronized(ProgressManager::class.java) {
-                        if (mProgressManager == null) {
-                            mProgressManager = ProgressManager()
-                        }
-                    }
-                }
-                return mProgressManager
-            }
-    }
-
 }

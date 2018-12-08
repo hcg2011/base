@@ -18,7 +18,6 @@ package com.chungo.base.di.module
 import android.app.Application
 import android.text.TextUtils
 import com.bumptech.glide.Glide
-import com.chungo.base.http.BaseUrl
 import com.chungo.base.http.GlobalHttpHandler
 import com.chungo.base.http.imageloader.BaseImageLoaderStrategy
 import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
@@ -53,16 +52,17 @@ import javax.inject.Singleton
 @Module
 class GlobalConfigModule private constructor(builder: Builder) {
     private val mApiUrl: HttpUrl?
-    private val mBaseUrl: BaseUrl?
     private val mLoaderStrategy: BaseImageLoaderStrategy<*>?
     private val mHandler: GlobalHttpHandler?
     private val mInterceptors: MutableList<Interceptor>?
     private val mErrorListener: ResponseErrorListener?
     private val mCacheFile: File?
+
     private val mRetrofitConfiguration: ClientModule.RetrofitConfiguration?
     private val mOkhttpConfiguration: ClientModule.OkhttpConfiguration?
     private val mRxCacheConfiguration: ClientModule.RxCacheConfiguration?
-    private val mGsonConfiguration: AppModule.GsonConfiguration?
+    private val mGsonConfiguration: ClientModule.GsonConfiguration?
+
     private val mPrintHttpLogLevel: RequestInterceptor.Level?
     private val mFormatPrinter: FormatPrinter?
     private val mCacheFactory: Cache.Factory?
@@ -70,7 +70,6 @@ class GlobalConfigModule private constructor(builder: Builder) {
 
     init {
         this.mApiUrl = builder.apiUrl
-        this.mBaseUrl = builder.baseUrl
         this.mLoaderStrategy = builder.loaderStrategy
         this.mHandler = builder.handler
         this.mInterceptors = builder.interceptors
@@ -93,22 +92,13 @@ class GlobalConfigModule private constructor(builder: Builder) {
         return mInterceptors
     }
 
-
-    /**
-     * 提供 BaseUrl,默认使用 <"https://api.github.com/">
-     *
-     * @return
-     */
     @Singleton
     @Provides
     fun provideBaseUrl(): HttpUrl? {
-        if (mBaseUrl != null) {
-            val httpUrl = mBaseUrl.url()
-            if (httpUrl != null) {
-                return httpUrl
-            }
-        }
-        return if (mApiUrl != null) mApiUrl else HttpUrl.parse("https://api.github.com/")
+        return if (mApiUrl != null)
+            mApiUrl
+        else
+            HttpUrl.parse("https://api.github.com/")
     }
 
 
@@ -178,7 +168,7 @@ class GlobalConfigModule private constructor(builder: Builder) {
 
     @Singleton
     @Provides
-    fun provideGsonConfiguration(): AppModule.GsonConfiguration? {
+    fun provideGsonConfiguration(): ClientModule.GsonConfiguration? {
         return mGsonConfiguration
     }
 
@@ -199,13 +189,6 @@ class GlobalConfigModule private constructor(builder: Builder) {
     fun provideCacheFactory(application: Application): Cache.Factory {
         return if (mCacheFactory != null) mCacheFactory else CacheFactory(application)
     }
-
-//    @Singleton
-//    @Provides
-//    fun provideCacheFactory(application: Application): Cache<*, *> {
-//        val size = CacheType.ACTIVITY_CACHE.calculateCacheSize(application)
-//        return IntelligentCache<Any>(size)
-//    }
 
     /**
      * 返回一个全局公用的线程池,适用于大多数异步需求。
@@ -228,32 +211,26 @@ class GlobalConfigModule private constructor(builder: Builder) {
     }
 
     class Builder {
-        var handler: GlobalHttpHandler? = null
-        var apiUrl: HttpUrl? = null
-        var baseUrl: BaseUrl? = null
-        var loaderStrategy: BaseImageLoaderStrategy<*>? = null
-        var interceptors: MutableList<Interceptor>? = null
-        var responseErrorListener: ResponseErrorListener? = null
-        var cacheFile: File? = null
-        var retrofitConfiguration: ClientModule.RetrofitConfiguration? = null
-        var okhttpConfiguration: ClientModule.OkhttpConfiguration? = null
-        var rxCacheConfiguration: ClientModule.RxCacheConfiguration? = null
-        var gsonConfiguration: AppModule.GsonConfiguration? = null
-        var printHttpLogLevel: RequestInterceptor.Level? = null
-        var formatPrinter: FormatPrinter? = null
-        var cacheFactory: Cache.Factory? = null
-        var executorService: ExecutorService? = null
+        internal var handler: GlobalHttpHandler? = null
+        internal var apiUrl: HttpUrl? = null
+        internal var loaderStrategy: BaseImageLoaderStrategy<*>? = null
+        internal var interceptors: MutableList<Interceptor>? = null
+        internal var responseErrorListener: ResponseErrorListener? = null
+        internal var cacheFile: File? = null
+        internal var retrofitConfiguration: ClientModule.RetrofitConfiguration? = null
+        internal var okhttpConfiguration: ClientModule.OkhttpConfiguration? = null
+        internal var rxCacheConfiguration: ClientModule.RxCacheConfiguration? = null
+        internal var gsonConfiguration: ClientModule.GsonConfiguration? = null
+        internal var printHttpLogLevel: RequestInterceptor.Level? = null
+        internal var formatPrinter: FormatPrinter? = null
+        internal var cacheFactory: Cache.Factory? = null
+        internal var executorService: ExecutorService? = null
 
-        fun baseurl(baseUrl: String): Builder {//基础url
+        fun baseurl(baseUrl: String): Builder {
             if (TextUtils.isEmpty(baseUrl)) {
                 throw NullPointerException("BaseUrl can not be empty")
             }
             this.apiUrl = HttpUrl.parse(baseUrl)
-            return this
-        }
-
-        fun baseurl(baseUrl: BaseUrl): Builder {
-            this.baseUrl = Preconditions.checkNotNull(baseUrl, BaseUrl::class.java.canonicalName!! + "can not be null.")
             return this
         }
 
@@ -301,7 +278,7 @@ class GlobalConfigModule private constructor(builder: Builder) {
             return this
         }
 
-        fun gsonConfiguration(gsonConfiguration: AppModule.GsonConfiguration): Builder {
+        fun gsonConfiguration(gsonConfiguration: ClientModule.GsonConfiguration): Builder {
             this.gsonConfiguration = gsonConfiguration
             return this
         }
@@ -330,6 +307,6 @@ class GlobalConfigModule private constructor(builder: Builder) {
             return GlobalConfigModule(this)
         }
 
-
     }
+
 }

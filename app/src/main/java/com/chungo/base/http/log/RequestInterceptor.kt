@@ -127,7 +127,7 @@ constructor() : Interceptor {
         }
 
         return originalResponse
-       // return if (mHandler != null) mHandler.onHttpResultResponse(bodyString!!, chain, originalResponse) else originalResponse
+        return if (mHandler != null) mHandler.onHttpResultResponse(bodyString!!, chain, originalResponse) else originalResponse
 
     }
 
@@ -177,12 +177,10 @@ constructor() : Interceptor {
     private fun parseContent(responseBody: ResponseBody, encoding: String?, clone: Buffer): String? {
         var charset: Charset? = Charset.forName("UTF-8")
         val contentType = responseBody.contentType()
-        if (contentType != null) {
+        if (contentType != null)
             charset = contentType.charset(charset)
-        }
         return if (encoding != null && encoding.equals("gzip", ignoreCase = true)) {//content 使用 gzip 压缩
-            //ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset!!))//解压
-            "gzip 解压还没有做!!!"
+            ZipHelper.decompressForGzip(clone.readByteArray(), convertCharset(charset!!))//解压
         } else if (encoding != null && encoding.equals("zlib", ignoreCase = true)) {//content 使用 zlib 压缩
             ZipHelper.decompressToStringForZlib(clone.readByteArray(), convertCharset(charset!!))//解压
         } else {//content 没有被压缩, 或者使用其他未知压缩方式
@@ -191,7 +189,6 @@ constructor() : Interceptor {
     }
 
     companion object {
-
         /**
          * 解析请求服务器的请求参数
          *

@@ -131,8 +131,6 @@ constructor(model: UserContract.Model, rootView: UserContract.View) : BasePresen
                             mAdapter!!.notifyItemRangeInserted(preEndIndex, users.size)
                     }
                 })
-
-        // addDispose(disposables);
     }
 
     override fun onDestroy() {

@@ -22,6 +22,7 @@ import com.chungo.base.rxerrorhandler.core.RxErrorHandler
 import com.chungo.base.rxerrorhandler.handler.listener.ResponseErrorListener
 import com.chungo.base.utils.DataHelper
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import io.rx_cache2.internal.RxCache
@@ -72,6 +73,28 @@ class ClientModule {
          */
         fun configRxCache(context: Context, builder: RxCache.Builder): RxCache?
     }
+    interface GsonConfiguration {
+        fun configGson(context: Context, builder: GsonBuilder)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGson(application: Application, configuration: GsonConfiguration): Gson {
+        val builder = GsonBuilder()
+        configuration.configGson(application, builder)
+        return builder.create()
+    }
+
+//    @Singleton
+//    @Provides
+//    fun provideGson(application: Application): Gson { //这里可以自己自定义配置Gson的参数
+//
+//        val builder = GsonBuilder()
+//        builder.serializeNulls()//支持序列化null的参数
+//                .enableComplexMapKeySerialization()//支持将序列化key为object的map,默认只能序列化key为string的map
+//        //configuration.configGson(application, builder)
+//        return builder.create()
+//    }
 
     /**
      * 提供 [Retrofit]
@@ -116,9 +139,9 @@ class ClientModule {
                 .connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
                 .addNetworkInterceptor(intercept)
-
-//        if (handler != null)
-//            builder.addInterceptor { chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())) }
+        TODO("这里可能报空")
+        if (handler != null)
+            builder.addInterceptor { chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())) }
 
         if (interceptors != null) {//如果外部提供了interceptor的集合则遍历添加
             for (interceptor in interceptors) {

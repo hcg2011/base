@@ -15,6 +15,8 @@ import com.chungo.basemore.mvp.contract.UserContract
 import com.chungo.basemore.mvp.presenter.UserPresenter
 import com.paginate.Paginate
 import com.tbruyelle.rxpermissions2.RxPermissions
+import me.jessyan.autosize.AutoSize
+import me.jessyan.autosize.internal.CustomAdapt
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,7 +31,7 @@ import javax.inject.Inject
  * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefreshLayout.OnRefreshListener {
+class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefreshLayout.OnRefreshListener, CustomAdapt {
 
     @BindView(R.id.recyclerView)
     lateinit var mRecyclerView: RecyclerView
@@ -46,6 +48,9 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
     private var mPaginate: Paginate? = null
     private var isLoadingMore: Boolean = false
 
+    override fun isBaseOnWidth(): Boolean = false
+    override fun getSizeInDp(): Float = 0.0f
+
     override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerUserComponent
                 .builder()
@@ -53,6 +58,10 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
                 .view(this)
                 .build()
                 .inject(this)
+        //由于某些原因, 屏幕旋转后 Fragment 的重建, 会导致框架对 Fragment 的自定义适配参数失去效果
+        //所以如果您的 Fragment 允许屏幕旋转, 则请在 onCreateView 手动调用一次 AutoSize.autoConvertDensity()
+        //如果您的 Fragment 不允许屏幕旋转, 则可以将下面调用 AutoSize.autoConvertDensity() 的代码删除掉
+        AutoSize.autoConvertDensity(this, 0.0f, false);
     }
 
     override fun obtainActivity(): FragmentActivity {

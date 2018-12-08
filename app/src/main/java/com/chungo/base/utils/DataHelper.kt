@@ -156,24 +156,18 @@ class DataHelper private constructor() {
             }
             var device: T? = null
             val productBase64 = mSharedPreferences!!.getString(key, null) ?: return null
-
-// 读取字节
+            // 读取字节
             val base64 = Base64.decode(productBase64.toByteArray(), Base64.DEFAULT)
-
             // 封装到字节流
             val bais = ByteArrayInputStream(base64)
             try {
                 // 再次封装
                 val bis = ObjectInputStream(bais)
-
                 // 读取对象
                 device = bis.readObject() as T
-
             } catch (e: Exception) {
-                // TODO Auto-generated catch block
                 e.printStackTrace()
             }
-
             return device
         }
 
@@ -269,22 +263,20 @@ class DataHelper private constructor() {
             return true
         }
 
-
+        //新版读取数据流
         @Throws(IOException::class)
-        fun bytyToString(inStream: InputStream): String {
-            val out = ByteArrayOutputStream()
-            val buf = ByteArray(1024)
-            var num = 0
-            while (num != -1) {
-                num = inStream.read(buf)
-                if (num == -1)
-                    break
-                out.write(buf, 0, buf.size)
+        fun byteToString(inPut: InputStream): String {
+            val output = ByteArrayOutputStream()
+            var read: Int = -1
+            inPut.use { input ->
+                output.use {
+                    while (input.read().also { read = it } != -1) {
+                        it.write(read)
+                    }
+                }
             }
-            val result = out.toString()
-            out.close()
-            return result
+            return output.toString()
+            output.close()
         }
     }
-
 }

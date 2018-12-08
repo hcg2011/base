@@ -207,23 +207,27 @@ class ZipHelper private constructor() {
         fun decompressForGzip(compressed: ByteArray, charsetName: String = "UTF-8"): String? {
             val BUFFER_SIZE = compressed.size
             var gis: GZIPInputStream? = null
-            var `is`: ByteArrayInputStream? = null
+            var byteInput: ByteArrayInputStream? = null
             try {
-                `is` = ByteArrayInputStream(compressed)
-                gis = GZIPInputStream(`is`, BUFFER_SIZE)
+                byteInput = ByteArrayInputStream(compressed)
+                gis = GZIPInputStream(byteInput, BUFFER_SIZE)
                 val string = StringBuilder()
                 val data = ByteArray(BUFFER_SIZE)
                 var bytesRead: Int
-                TODO("这里还没有做处理")
-//                while ((bytesRead = gis.read(data)) != -1) {
-//                    string.append(String(data, 0, bytesRead, charsetName as Charset))
-//                }
+                while (true) {
+                    bytesRead = gis.read(data)
+                    if (bytesRead == -1)
+                        break
+                    string.append(String(data, 0, bytesRead, Charset.forName(charsetName)))
+                }
                 return string.toString()
+
+
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {
                 closeQuietly(gis)
-                closeQuietly(`is`)
+                closeQuietly(byteInput)
             }
             return null
         }

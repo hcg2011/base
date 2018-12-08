@@ -33,7 +33,8 @@ ext {
             //network
             "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
             "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
-            "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
+            "retrofit-converter-moshi" : "com.squareup.retrofit2:converter-moshi:${version["retrofitSdkVersion"]}",
+
             "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
             "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.11.0",
             "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
@@ -75,6 +76,7 @@ ext {
             "eventbus"                 : "org.greenrobot:eventbus:3.1.1",
             "otto"                     : "com.squareup:otto:1.3.8",
             "gson"                     : "com.google.code.gson:gson:2.8.5",
+            "moshi"                    : "com.squareup.moshi:moshi-kotlin:1.8.0",
             "multidex"                 : "com.android.support:multidex:1.0.1",
             "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
             "arouter"                  : "com.alibaba:arouter-api:1.3.1",
