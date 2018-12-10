@@ -55,8 +55,9 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, Ac
     private val mLifecycleSubject = BehaviorSubject.create<ActivityEvent>()
     private var mCache: Cache<*, *>? = null
     private var mUnbinder: Unbinder? = null
+
     @Inject
-    protected lateinit var mPresenter: P//如果当前页面逻辑简单, Presenter 可以为 null
+    protected lateinit var mPresenter: P
 
     @Synchronized
     override fun provideCache(): Cache<*, *> {

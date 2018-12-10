@@ -19,8 +19,9 @@ import android.app.Application
 import android.content.Context
 import android.support.v4.app.FragmentManager
 import com.chungo.base.base.delegate.AppLifecycles
-import com.chungo.base.di.module.ClientModule
 import com.chungo.base.di.module.GlobalConfigModule
+import com.chungo.base.di.module.NetModule
+import com.chungo.base.di.module.RxCacheModule
 import com.chungo.base.http.SSLTrustManager
 import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
 import com.chungo.base.http.log.RequestInterceptor
@@ -102,21 +103,21 @@ class GlobalConfiguration : ConfigModule {
                 // rxjava必要要使用ErrorHandleSubscriber(默认实现Subscriber的onError方法),此监听才生效
                 .responseErrorListener(ResponseErrorListenerImpl())
                 .gsonConfiguration(
-                        object : ClientModule.GsonConfiguration {  //自定义配置Gson的参数
+                        object : NetModule.GsonConfig {  //自定义配置Gson的参数
                             override fun configGson(context: Context, builder: GsonBuilder) {
                                 builder.serializeNulls()//支持序列化null的参数
                                         .enableComplexMapKeySerialization()//支持将序列化key为object的map,默认只能序列化key为string的map
                             }
                         })
                 .retrofitConfiguration(
-                        object : ClientModule.RetrofitConfiguration {
+                        object : NetModule.RetrofitConfig {
                             override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
                                 //这里可以自己自定义配置Retrofit的参数, 甚至您可以替换框架配置好的 OkHttpClient 对象 (但是不建议这样做, 这样做您将损失框架提供的很多功能)
                                 //builder.addConverterFactory(FastJsonConverterFactory.create());//比如使用fastjson替代gson
                             }
                         })
                 .okhttpConfiguration(
-                        object : ClientModule.OkhttpConfiguration {
+                        object : NetModule.OkhttpConfig {
                             override fun configOkhttp(context: Context, builder: OkHttpClient.Builder) {
                                 //这里可以自己自定义配置Okhttp的参数
                                 builder.writeTimeout(10, TimeUnit.SECONDS)
@@ -132,7 +133,7 @@ class GlobalConfiguration : ConfigModule {
                             }
                         })
                 .rxCacheConfiguration(
-                        object : ClientModule.RxCacheConfiguration {
+                        object : RxCacheModule.RxCacheConfig {
                             override fun configRxCache(context: Context, builder: RxCache.Builder): RxCache? {
                                 //这里可以自己自定义配置 RxCache 的参数
                                 builder.useExpiredDataIfLoaderNotAvailable(true)

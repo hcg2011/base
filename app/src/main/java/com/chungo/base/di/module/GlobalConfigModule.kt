@@ -39,16 +39,6 @@ import java.util.*
 import java.util.concurrent.*
 import javax.inject.Singleton
 
-/**
- * ================================================
- * 框架独创的建造者模式 [Module],可向框架中注入外部配置的自定义参数
- *
- * @see [GlobalConfigModule Wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.3.1)
- * Created by JessYan on 2016/3/14.
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
 @Module
 class GlobalConfigModule private constructor(builder: Builder) {
     private val mApiUrl: HttpUrl?
@@ -58,10 +48,11 @@ class GlobalConfigModule private constructor(builder: Builder) {
     private val mErrorListener: ResponseErrorListener?
     private val mCacheFile: File?
 
-    private val mRetrofitConfiguration: ClientModule.RetrofitConfiguration?
-    private val mOkhttpConfiguration: ClientModule.OkhttpConfiguration?
-    private val mRxCacheConfiguration: ClientModule.RxCacheConfiguration?
-    private val mGsonConfiguration: ClientModule.GsonConfiguration?
+    private val mRetrofitConfiguration: NetModule.RetrofitConfig?
+    private val mOkhttpConfiguration: NetModule.OkhttpConfig?
+    private val mGsonConfiguration: NetModule.GsonConfig?
+
+    private val mRxCacheConfiguration: RxCacheModule.RxCacheConfig?
 
     private val mPrintHttpLogLevel: RequestInterceptor.Level?
     private val mFormatPrinter: FormatPrinter?
@@ -113,7 +104,6 @@ class GlobalConfigModule private constructor(builder: Builder) {
         return mLoaderStrategy as GlideImageLoaderStrategy
     }
 
-
     /**
      * 提供处理 Http 请求和响应结果的处理类
      *
@@ -124,7 +114,6 @@ class GlobalConfigModule private constructor(builder: Builder) {
     fun provideGlobalHttpHandler(): GlobalHttpHandler {
         return mHandler!!
     }
-
 
     /**
      * 提供缓存文件
@@ -150,26 +139,26 @@ class GlobalConfigModule private constructor(builder: Builder) {
 
     @Singleton
     @Provides
-    fun provideRetrofitConfiguration(): ClientModule.RetrofitConfiguration? {
+    fun provideRetrofitConfig(): NetModule.RetrofitConfig? {
         return mRetrofitConfiguration
     }
 
     @Singleton
     @Provides
-    fun provideOkhttpConfiguration(): ClientModule.OkhttpConfiguration? {
+    fun provideOkhttpConfig(): NetModule.OkhttpConfig? {
         return mOkhttpConfiguration
     }
 
     @Singleton
     @Provides
-    fun provideRxCacheConfiguration(): ClientModule.RxCacheConfiguration? {
-        return mRxCacheConfiguration
+    fun provideGsonConfig(): NetModule.GsonConfig? {
+        return mGsonConfiguration
     }
 
     @Singleton
     @Provides
-    fun provideGsonConfiguration(): ClientModule.GsonConfiguration? {
-        return mGsonConfiguration
+    fun provideRxCacheConfig(): RxCacheModule.RxCacheConfig? {
+        return mRxCacheConfiguration
     }
 
     @Singleton
@@ -217,10 +206,10 @@ class GlobalConfigModule private constructor(builder: Builder) {
         internal var interceptors: MutableList<Interceptor>? = null
         internal var responseErrorListener: ResponseErrorListener? = null
         internal var cacheFile: File? = null
-        internal var retrofitConfiguration: ClientModule.RetrofitConfiguration? = null
-        internal var okhttpConfiguration: ClientModule.OkhttpConfiguration? = null
-        internal var rxCacheConfiguration: ClientModule.RxCacheConfiguration? = null
-        internal var gsonConfiguration: ClientModule.GsonConfiguration? = null
+        internal var retrofitConfiguration: NetModule.RetrofitConfig? = null
+        internal var okhttpConfiguration: NetModule.OkhttpConfig? = null
+        internal var rxCacheConfiguration: RxCacheModule.RxCacheConfig? = null
+        internal var gsonConfiguration: NetModule.GsonConfig? = null
         internal var printHttpLogLevel: RequestInterceptor.Level? = null
         internal var formatPrinter: FormatPrinter? = null
         internal var cacheFactory: Cache.Factory? = null
@@ -263,22 +252,22 @@ class GlobalConfigModule private constructor(builder: Builder) {
             return this
         }
 
-        fun retrofitConfiguration(retrofitConfiguration: ClientModule.RetrofitConfiguration): Builder {
+        fun retrofitConfiguration(retrofitConfiguration: NetModule.RetrofitConfig): Builder {
             this.retrofitConfiguration = retrofitConfiguration
             return this
         }
 
-        fun okhttpConfiguration(okhttpConfiguration: ClientModule.OkhttpConfiguration): Builder {
+        fun okhttpConfiguration(okhttpConfiguration: NetModule.OkhttpConfig): Builder {
             this.okhttpConfiguration = okhttpConfiguration
             return this
         }
 
-        fun rxCacheConfiguration(rxCacheConfiguration: ClientModule.RxCacheConfiguration): Builder {
+        fun rxCacheConfiguration(rxCacheConfiguration: RxCacheModule.RxCacheConfig): Builder {
             this.rxCacheConfiguration = rxCacheConfiguration
             return this
         }
 
-        fun gsonConfiguration(gsonConfiguration: ClientModule.GsonConfiguration): Builder {
+        fun gsonConfiguration(gsonConfiguration: NetModule.GsonConfig): Builder {
             this.gsonConfiguration = gsonConfiguration
             return this
         }
