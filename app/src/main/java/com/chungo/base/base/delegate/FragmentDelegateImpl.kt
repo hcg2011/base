@@ -57,7 +57,7 @@ class FragmentDelegateImpl(private var mFragmentManager: android.support.v4.app.
     override fun onCreate(savedInstanceState: Bundle?) {
         if (iFragment!!.useEventBus())
         //如果要使用eventbus请将此方法返回true
-            EventBusManager.instance!!.register(this!!.mFragment!!)//注册到事件主线
+            EventBusManager.instance.register(mFragment!!)//注册到事件主线
         iFragment!!.setupFragmentComponent(ArmsUtils.obtainAppComponentFromContext(mFragment!!.activity!!))
     }
 
@@ -107,7 +107,7 @@ class FragmentDelegateImpl(private var mFragmentManager: android.support.v4.app.
     override fun onDestroy() {
         if (iFragment != null && iFragment!!.useEventBus())
         //如果要使用eventbus请将此方法返回true
-            EventBusManager.instance!!.unregister(this!!.mFragment!!)//注册到事件主线
+            EventBusManager.instance.unregister(mFragment!!)//注册到事件主线
         this.mUnbinder = null
         this.mFragmentManager = null
         this.mFragment = null

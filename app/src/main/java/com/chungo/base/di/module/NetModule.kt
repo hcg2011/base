@@ -46,7 +46,7 @@ class NetModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(application: Application, config: RetrofitConfig?, builder: Retrofit.Builder, client: OkHttpClient, httpUrl: HttpUrl?, gson: Gson): Retrofit {
+    fun provideRetrofit(application: Application, config: RetrofitConfig?, builder: Retrofit.Builder, client: OkHttpClient, httpUrl: HttpUrl, gson: Gson): Retrofit {
         builder.baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
 
