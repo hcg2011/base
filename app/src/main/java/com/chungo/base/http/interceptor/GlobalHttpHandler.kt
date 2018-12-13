@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.base.http
+package com.chungo.base.http.interceptor
 
 import com.chungo.base.di.module.GlobalConfigModule
 
@@ -26,11 +26,6 @@ import okhttp3.Response
  * 处理 Http 请求和响应结果的处理类
  * 使用 [GlobalConfigModule.Builder.globalHttpHandler] 方法配置
  *
- * @see [GlobalHttpHandler Wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.3.2)
- * Created by JessYan on 8/30/16 17:47
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 interface GlobalHttpHandler {
     fun onHttpResultResponse(httpResult: String, chain: Interceptor.Chain, response: Response): Response
@@ -38,7 +33,6 @@ interface GlobalHttpHandler {
     fun onHttpRequestBefore(chain: Interceptor.Chain, request: Request): Request
 
     companion object {
-
         //空实现
         val EMPTY: GlobalHttpHandler = object : GlobalHttpHandler {
             override fun onHttpResultResponse(httpResult: String, chain: Interceptor.Chain, response: Response): Response {

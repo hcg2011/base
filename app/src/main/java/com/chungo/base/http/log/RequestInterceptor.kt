@@ -16,7 +16,7 @@
 package com.chungo.base.http.log
 
 import com.chungo.base.di.module.GlobalConfigModule
-import com.chungo.base.http.GlobalHttpHandler
+import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.utils.CharacterHandler
 import com.chungo.base.utils.UrlEncoderUtils
 import com.chungo.base.utils.ZipHelper

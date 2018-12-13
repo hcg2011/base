@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.chungo.base.lifecyclemodel
+package com.chungo.base.lifecycle.lifecyclemodel
 
 import android.support.annotation.MainThread
 import android.support.v4.app.Fragment

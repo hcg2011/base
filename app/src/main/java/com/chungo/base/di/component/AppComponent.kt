@@ -5,7 +5,7 @@ import com.chungo.base.base.delegate.AppDelegate
 import com.chungo.base.di.module.*
 import com.chungo.base.http.imageloader.BaseImageLoaderStrategy
 import com.chungo.base.http.imageloader.ImageLoader
-import com.chungo.base.integration.ConfigModule
+import com.chungo.base.config.ConfigModule
 import com.chungo.base.integration.IRepositoryManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.rxerrorhandler.core.RxErrorHandler

@@ -32,7 +32,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
-import com.chungo.base.base.App
+import com.chungo.base.base.delegate.App
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.integration.AppManager
 import java.security.MessageDigest

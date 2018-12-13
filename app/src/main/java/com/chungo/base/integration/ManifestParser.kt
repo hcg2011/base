@@ -17,6 +17,7 @@ package com.chungo.base.integration
 
 import android.content.Context
 import android.content.pm.PackageManager
+import com.chungo.base.config.ConfigModule
 import java.util.*
 
 /**

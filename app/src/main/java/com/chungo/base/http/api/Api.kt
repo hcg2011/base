@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.basemore.mvp.model.api.cache
-
-
-import com.chungo.basemore.mvp.model.entity.User
-import io.reactivex.Observable
-import io.rx_cache2.DynamicKey
-import io.rx_cache2.EvictProvider
-import io.rx_cache2.LifeCache
-import io.rx_cache2.Reply
-import io.rx_cache2.internal.RxCache
-import java.util.concurrent.TimeUnit
+package com.chungo.base.http.api
 
 /**
  * ================================================
- * 展示 [RxCache.using] 中需要传入的 Providers 的使用方式
+ * 存放一些与 API 有关的东西,如请求地址,请求码等
  *
  *
- * Created by JessYan on 08/30/2016 13:53
+ * Created by JessYan on 08/05/2016 11:25
  * [Contact me](mailto:jess.yan.effort@gmail.com)
  * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-interface CommonCache {
+interface Api {
+    companion object {
+        val APP_DOMAIN = "https://api.github.com"
+        val RequestSuccess = "0"
+        //切换url
+        val HEADER_DOMAIN_KEY_BASE = "header_key"
+        val HEADER_DOMAIN_KEY = "$HEADER_DOMAIN_KEY_BASE:"
+    }
 
-    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    fun getUsers(users: Observable<List<User>>, idLastUserQueried: DynamicKey, evictProvider: EvictProvider): Observable<Reply<List<User>>>
 }

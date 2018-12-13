@@ -2,7 +2,7 @@ package com.chungo.base.di.module
 
 import android.app.Application
 import android.content.Context
-import com.chungo.base.http.GlobalHttpHandler
+import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.rxerrorhandler.core.RxErrorHandler
 import com.chungo.base.rxerrorhandler.handler.listener.ResponseErrorListener
 import com.google.gson.Gson

@@ -13,25 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.base.base.delegate
 
+package com.chungo.base.lifecycle.lifecyclemodel
+
+import android.app.Activity
 import android.app.Application
-import android.content.Context
+import android.os.Bundle
 
 /**
- * ================================================
- * 用于代理 [Application] 的生命周期
- *
- * @see AppDelegate
- * Created by JessYan on 18/07/2017 17:43
+ * Created by JessYan on 21/11/2017 16:57
  * [Contact me](mailto:jess.yan.effort@gmail.com)
  * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
-interface AppLifecycles {
-    fun attachBaseContext(base: Context)
+internal open class EmptyActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {}
 
-    fun onCreate(application: Application)
+    override fun onActivityStarted(activity: Activity) {}
 
-    fun onTerminate(application: Application)
+    override fun onActivityResumed(activity: Activity) {}
+
+    override fun onActivityPaused(activity: Activity) {}
+
+    override fun onActivityStopped(activity: Activity) {}
+
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+
+    override fun onActivityDestroyed(activity: Activity) {}
 }

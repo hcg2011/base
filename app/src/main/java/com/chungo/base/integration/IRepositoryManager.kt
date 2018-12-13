@@ -17,7 +17,7 @@ package com.chungo.base.integration
 
 import android.content.Context
 
-import com.chungo.base.mvp.IModel
+import com.chungo.basemore.mvp.model.IModel
 
 
 /**

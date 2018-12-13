@@ -26,6 +26,7 @@ import android.support.v4.app.SupportActivity
 import android.view.View
 import com.chungo.base.integration.EventBusManager
 import com.chungo.base.utils.Preconditions
+import com.chungo.basemore.mvp.model.IModel
 import com.trello.rxlifecycle2.RxLifecycle
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

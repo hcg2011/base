@@ -16,8 +16,8 @@
 package com.chungo.basemore.mvp.contract
 
 import android.app.Activity
-import com.chungo.base.mvp.IModel
 import com.chungo.base.mvp.IView
+import com.chungo.basemore.mvp.model.IModel
 import com.chungo.basemore.mvp.model.entity.User
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable

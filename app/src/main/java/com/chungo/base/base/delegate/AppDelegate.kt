@@ -23,18 +23,18 @@ import android.content.ContentProvider
 import android.content.Context
 import android.content.res.Configuration
 import android.support.v4.app.Fragment
-import com.chungo.base.base.App
 import com.chungo.base.base.BaseApplication
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.di.component.DaggerAppComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
-import com.chungo.base.integration.ConfigModule
+import com.chungo.base.config.ConfigModule
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.utils.ArmsUtils
 import com.chungo.base.utils.Preconditions
-import com.chungo.basemore.advance.GlobalConfiguration
+import com.chungo.base.config.GlobalConfiguration
+import com.chungo.base.lifecycle.AppLifecycles
 import java.util.*
 import javax.inject.Inject
 

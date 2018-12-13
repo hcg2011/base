@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.basemore.mvp.model.api.service
+package com.chungo.base.http.api.service
 
 /**
  * ================================================

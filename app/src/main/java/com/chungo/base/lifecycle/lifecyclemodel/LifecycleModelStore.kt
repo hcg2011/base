@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.chungo.base.lifecyclemodel
+package com.chungo.base.lifecycle.lifecyclemodel
 
 import android.app.Activity
 import android.support.v4.app.Fragment
-import com.chungo.base.lifecyclemodel.cache.LruCache
+import com.chungo.base.lifecycle.lifecyclemodel.cache.LruCache
 
 
 /**

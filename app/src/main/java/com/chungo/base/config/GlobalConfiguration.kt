@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.basemore.advance
+package com.chungo.base.config
 
 import android.app.Application
 import android.content.Context
 import android.support.v4.app.FragmentManager
-import com.chungo.base.base.delegate.AppLifecycles
+import com.chungo.base.lifecycle.AppLifecycles
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.module.NetModule
 import com.chungo.base.di.module.RxCacheModule
 import com.chungo.base.http.SSLTrustManager
 import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
+import com.chungo.base.http.interceptor.GlobalHttpHandlerImpl
 import com.chungo.base.http.log.RequestInterceptor
-import com.chungo.base.integration.ConfigModule
 import com.chungo.base.progressmanager.ProgressManager
 import com.chungo.baseapp.BuildConfig
-import com.chungo.basemore.mvp.model.api.Api
+import com.chungo.base.lifecycle.ActivityLifecycleCallbacksImpl
+import com.chungo.base.lifecycle.AppLifecyclesImpl
+import com.chungo.base.lifecycle.FragmentLifecycleCallbacksImpl
+import com.chungo.base.rxerrorhandler.handler.listener.ResponseErrorListenerImpl
+import com.chungo.base.http.api.Api
 import com.google.gson.GsonBuilder
 import io.rx_cache2.internal.RxCache
 import okhttp3.OkHttpClient

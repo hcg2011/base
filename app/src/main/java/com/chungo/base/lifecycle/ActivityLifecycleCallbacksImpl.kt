@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.basemore.advance
+package com.chungo.base.lifecycle
 
 import android.app.Activity
 import android.app.Application

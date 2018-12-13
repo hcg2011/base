@@ -19,7 +19,7 @@ import android.app.Application
 import android.content.Context
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
-import com.chungo.base.mvp.IModel
+import com.chungo.basemore.mvp.model.IModel
 import com.chungo.base.utils.Preconditions
 import dagger.Lazy
 import io.reactivex.Observable

@@ -1,10 +1,10 @@
-package com.chungo.base.integration
+package com.chungo.base.config
 
 import android.app.Application
 import android.content.Context
 import android.support.v4.app.FragmentManager
 
-import com.chungo.base.base.delegate.AppLifecycles
+import com.chungo.base.lifecycle.AppLifecycles
 import com.chungo.base.di.module.GlobalConfigModule
 
 /**

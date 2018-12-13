@@ -13,26 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.base.mvp
+package com.chungo.base.http.api.service
+
+
+import com.chungo.basemore.mvp.model.entity.User
+
+import io.reactivex.Observable
+import retrofit2.Retrofit
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
 
 /**
  * ================================================
- * 框架要求框架中的每个 Model 都需要实现此类,以满足规范
+ * 展示 [Retrofit.create] 中需要传入的 ApiService 的使用方式
+ * 存放关于用户的一些 API
  *
- * @see BaseModel
  *
- * @see [Model wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.3)
- * Created by JessYan on 15/12/2016 10:45
+ * Created by JessYan on 08/05/2016 12:05
  * [Contact me](mailto:jess.yan.effort@gmail.com)
  * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-interface IModel {
+interface UserService {
 
-    /**
-     * 在框架中 [BasePresenter.onDestroy] 时会默认调用 [IModel.onDestroy]
-     */
-    fun onDestroy()
+    companion object {
+        const val HEADER_API_VERSION = "Accept: application/vnd.github.v3+json"
+    }
+
+    @Headers(HEADER_API_VERSION)
+    @GET("/users")
+    fun getUsers(@Query("since") lastIdQueried: Int, @Query("per_page") perPage: Int): Observable<List<User>>
 
 
 }

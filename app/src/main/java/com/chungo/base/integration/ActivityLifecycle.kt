@@ -24,6 +24,7 @@ import com.chungo.base.base.delegate.ActivityDelegate
 import com.chungo.base.base.delegate.ActivityDelegateImpl
 import com.chungo.base.base.delegate.FragmentDelegate
 import com.chungo.base.base.delegate.IActivity
+import com.chungo.base.config.ConfigModule
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.utils.Preconditions

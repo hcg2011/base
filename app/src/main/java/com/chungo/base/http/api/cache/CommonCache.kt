@@ -13,29 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.base.base
+package com.chungo.base.http.api.cache
 
-import com.chungo.base.di.component.AppComponent
 
+import com.chungo.basemore.mvp.model.entity.User
+import io.reactivex.Observable
+import io.rx_cache2.DynamicKey
+import io.rx_cache2.EvictProvider
+import io.rx_cache2.LifeCache
+import io.rx_cache2.Reply
+import io.rx_cache2.internal.RxCache
+import java.util.concurrent.TimeUnit
 
 /**
  * ================================================
- * 框架要求框架中的每个 [android.app.Application] 都需要实现此类, 以满足规范
+ * 展示 [RxCache.using] 中需要传入的 Providers 的使用方式
  *
- * @see BaseApplication
  *
- * @see [请配合官方 Wiki 文档学习本框架](https://github.com/JessYanCoding/MVPArms/wiki)
- *
- * @see [更新日志, 升级必看!](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
- *
- * @see [常见 Issues, 踩坑必看!](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
- *
- * @see [MVPArms 官方组件化方案 ArmsComponent, 进阶指南!](https://github.com/JessYanCoding/ArmsComponent/wiki)
- * Created by JessYan on 25/04/2017 14:54
+ * Created by JessYan on 08/30/2016 13:53
  * [Contact me](mailto:jess.yan.effort@gmail.com)
  * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-interface App {
-    val appComponent: AppComponent
+interface CommonCache {
+
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    fun getUsers(users: Observable<List<User>>, idLastUserQueried: DynamicKey, evictProvider: EvictProvider): Observable<Reply<List<User>>>
 }

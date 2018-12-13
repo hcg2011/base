@@ -3,7 +3,7 @@ package com.chungo.base.di.module
 import android.app.Application
 import android.text.TextUtils
 import com.bumptech.glide.Glide
-import com.chungo.base.http.GlobalHttpHandler
+import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.http.imageloader.BaseImageLoaderStrategy
 import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
 import com.chungo.base.http.log.DefaultFormatPrinter

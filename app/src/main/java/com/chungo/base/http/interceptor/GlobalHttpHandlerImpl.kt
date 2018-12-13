@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.basemore.advance
+package com.chungo.base.http.interceptor
 
 import android.content.Context
 import android.text.TextUtils
-
-import com.chungo.base.http.GlobalHttpHandler
 import com.chungo.base.http.log.RequestInterceptor
 import com.chungo.base.utils.ArmsUtils
-import com.chungo.basemore.mvp.model.api.Api
+import com.chungo.base.http.api.Api
 import com.chungo.basemore.mvp.model.entity.User
 import com.google.gson.reflect.TypeToken
-
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request

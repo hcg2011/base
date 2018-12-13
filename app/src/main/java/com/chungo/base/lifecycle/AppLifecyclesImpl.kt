@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.basemore.advance
+package com.chungo.base.lifecycle
 
 import android.app.Application
 import android.content.Context
 import butterknife.ButterKnife
-import com.chungo.base.base.delegate.AppLifecycles
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.utils.ArmsUtils

@@ -13,25 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chungo.basemore.mvp.model.api
+package com.chungo.base.base.delegate
+
+import com.chungo.base.di.component.AppComponent
+
 
 /**
  * ================================================
- * 存放一些与 API 有关的东西,如请求地址,请求码等
+ * 框架要求框架中的每个 [android.app.Application] 都需要实现此类, 以满足规范
  *
+ * @see BaseApplication
  *
- * Created by JessYan on 08/05/2016 11:25
+ * @see [请配合官方 Wiki 文档学习本框架](https://github.com/JessYanCoding/MVPArms/wiki)
+ *
+ * @see [更新日志, 升级必看!](https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog)
+ *
+ * @see [常见 Issues, 踩坑必看!](https://github.com/JessYanCoding/MVPArms/wiki/Issues)
+ *
+ * @see [MVPArms 官方组件化方案 ArmsComponent, 进阶指南!](https://github.com/JessYanCoding/ArmsComponent/wiki)
+ * Created by JessYan on 25/04/2017 14:54
  * [Contact me](mailto:jess.yan.effort@gmail.com)
  * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-interface Api {
-    companion object {
-        val APP_DOMAIN = "https://api.github.com"
-        val RequestSuccess = "0"
-        //切换url
-        val HEADER_DOMAIN_KEY_BASE = "header_key"
-        val HEADER_DOMAIN_KEY = "$HEADER_DOMAIN_KEY_BASE:"
-    }
-
+interface App {
+    val appComponent: AppComponent
 }
