@@ -92,7 +92,7 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
      */
     private fun initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this)
-        ArmsUtils.configRecyclerView(mRecyclerView!!, mLayoutManager)
+        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager)
     }
 
 

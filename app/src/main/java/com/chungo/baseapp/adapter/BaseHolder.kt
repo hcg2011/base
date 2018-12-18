@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 JessYan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.baseapp.adapter
 
 import android.support.v7.widget.RecyclerView
@@ -20,17 +5,6 @@ import android.view.View
 
 import com.chungo.base.utils.ThirdViewUtil
 
-
-/**
- * ================================================
- * 基类 [RecyclerView.ViewHolder]
- *
- *
- * Created by JessYan on 2015/11/24.
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
 abstract class BaseHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     protected var mOnViewClickListener: OnViewClickListener? = null
     protected val TAG = this.javaClass.simpleName

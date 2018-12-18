@@ -18,21 +18,21 @@ package com.chungo.base.config
 import android.app.Application
 import android.content.Context
 import android.support.v4.app.FragmentManager
-import com.chungo.base.lifecycle.AppLifecycles
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.module.NetModule
 import com.chungo.base.di.module.RxCacheModule
 import com.chungo.base.http.SSLTrustManager
+import com.chungo.base.http.api.Api
 import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
 import com.chungo.base.http.interceptor.GlobalHttpHandlerImpl
 import com.chungo.base.http.log.RequestInterceptor
-import com.chungo.base.progressmanager.ProgressManager
-import com.chungo.baseapp.BuildConfig
 import com.chungo.base.lifecycle.ActivityLifecycleCallbacksImpl
+import com.chungo.base.lifecycle.AppLifecycles
 import com.chungo.base.lifecycle.AppLifecyclesImpl
 import com.chungo.base.lifecycle.FragmentLifecycleCallbacksImpl
+import com.chungo.base.progressmanager.ProgressManager
 import com.chungo.base.rxerrorhandler.handler.listener.ResponseErrorListenerImpl
-import com.chungo.base.http.api.Api
+import com.chungo.baseapp.BuildConfig
 import com.google.gson.GsonBuilder
 import io.rx_cache2.internal.RxCache
 import okhttp3.OkHttpClient
@@ -133,7 +133,7 @@ class GlobalConfiguration : ConfigModule {
                                     e.printStackTrace()
                                 }
                                 //使用一行代码监听 Retrofit／Okhttp 上传下载进度监听,以及 Glide 加载进度监听 详细使用方法查看 https://github.com/JessYanCoding/ProgressManager
-                                ProgressManager.getInstance().with(builder)
+                                ProgressManager.instance.with(builder)
                             }
                         })
                 .rxCacheConfiguration(
