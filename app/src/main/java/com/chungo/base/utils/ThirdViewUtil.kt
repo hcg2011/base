@@ -8,13 +8,6 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 
 
-/**
- * ================================================
- * Created by JessYan on 17/03/2016 13:59
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
 class ThirdViewUtil private constructor() {
 
     init {

@@ -116,19 +116,8 @@ class EventBusManager private constructor() {
     }
 
     companion object {
-        @Volatile
-        private var sInstance: EventBusManager? = null
-
-        val instance: EventBusManager
-            get() {
-                if (sInstance == null) {
-                    synchronized(EventBusManager::class.java) {
-                        if (sInstance == null) {
-                            sInstance = EventBusManager()
-                        }
-                    }
-                }
-                return sInstance!!
-            }
+        val instance: EventBusManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            EventBusManager()
+        }
     }
 }

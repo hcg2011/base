@@ -12,16 +12,6 @@ import timber.log.Timber
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-/**
- * ================================================
- * 展示 [ResponseErrorListener] 的用法
- *
- *
- * Created by JessYan on 04/09/2017 17:18
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
 class ResponseErrorListenerImpl : ResponseErrorListener {
 
     override fun handleResponseError(context: Context, t: Throwable) {

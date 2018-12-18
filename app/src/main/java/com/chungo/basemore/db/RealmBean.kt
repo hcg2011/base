@@ -11,7 +11,7 @@ import java.io.Serializable
  * @Author huangchangguo
  * @Created 2018/11/22 14:06
  */
-class RealmBean : RealmObject(), Serializable {
+open class RealmBean : RealmObject(), Serializable {
 
     @PrimaryKey
     var id: String? = null

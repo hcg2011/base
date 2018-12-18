@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 JessYan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.base.widget
 
 import android.graphics.drawable.ColorDrawable
@@ -25,16 +10,10 @@ import android.widget.LinearLayout.LayoutParams
 import android.widget.PopupWindow
 
 /**
- * ================================================
  * 因为继承于 [PopupWindow] ,所以它本身就是一个 [PopupWindow]
  * 因此如果此类里封装的功能并不能满足您的需求(不想过多封装 UI 的东西,这里只提供思想,觉得不满足需求可以自己仿照着封装)
  * 您可以直接调用 [PopupWindow] 的 Api 满足需求
  *
- * @see [CustomPopupWindow wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.3.7)
- * Created by JessYan on 4/22/2016
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 class CustomPopupWindow private constructor(builder: Builder) : PopupWindow() {
     private val mContentView: View?

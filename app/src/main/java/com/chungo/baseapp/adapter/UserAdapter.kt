@@ -17,8 +17,6 @@ package com.chungo.baseapp.adapter
 
 import android.view.View
 
-import com.chungo.base.base.BaseHolder
-import com.chungo.base.base.DefaultAdapter
 import com.chungo.baseapp.R
 import com.chungo.baseapp.holder.UserItemHolder
 import com.chungo.basemore.mvp.model.entity.User

@@ -21,20 +21,40 @@ ext {
             blockcanary             : "1.5.0"
     ]
 
-    dependencies = [
+    supports = [
             //support
-            "appcompat-v7"             : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
-            "design"                   : "com.android.support:design:${version["androidSupportSdkVersion"]}",
-            "support-v4"               : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
-            "cardview-v7"              : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
-            "annotations"              : "com.android.support:support-annotations:${version["androidSupportSdkVersion"]}",
-            "recyclerview-v7"          : "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
+            "appcompat-v7"   : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
+            "design"         : "com.android.support:design:${version["androidSupportSdkVersion"]}",
+            "support-v4"     : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
+            "cardview-v7"    : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
+            "annotations"    : "com.android.support:support-annotations:${version["androidSupportSdkVersion"]}",
+            "recyclerview-v7": "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
+    ]
+
+    retrofit=[
+            //network
+            "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
+            "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
+            "retrofit-converter-moshi" : "com.squareup.retrofit2:converter-moshi:${version["retrofitSdkVersion"]}",
+            "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
+            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.11.0",
+            "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
+    ]
+
+    dependencies = [
+
+            //support
+            "appcompat-v7"   : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
+            "design"         : "com.android.support:design:${version["androidSupportSdkVersion"]}",
+            "support-v4"     : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
+            "cardview-v7"    : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
+            "annotations"    : "com.android.support:support-annotations:${version["androidSupportSdkVersion"]}",
+            "recyclerview-v7": "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
 
             //network
             "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
             "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
             "retrofit-converter-moshi" : "com.squareup.retrofit2:converter-moshi:${version["retrofitSdkVersion"]}",
-
             "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
             "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.11.0",
             "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",

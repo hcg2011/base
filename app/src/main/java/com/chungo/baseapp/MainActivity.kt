@@ -7,9 +7,9 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import butterknife.BindView
 import com.chungo.base.base.BaseActivity
-import com.chungo.base.base.DefaultAdapter
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.utils.ArmsUtils
+import com.chungo.baseapp.adapter.DefaultAdapter
 import com.chungo.basemore.di.component.DaggerUserComponent
 import com.chungo.basemore.mvp.contract.UserContract
 import com.chungo.basemore.mvp.presenter.UserPresenter
@@ -78,32 +78,32 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
 
     override fun initData(savedInstanceState: Bundle?) {
         initRecyclerView()
-        mRecyclerView!!.adapter = mAdapter
+        mRecyclerView.adapter = mAdapter
         initPaginate()
     }
 
 
     override fun onRefresh() {
-        mPresenter!!.requestUsers(true)
+        mPresenter.requestUsers(true)
     }
 
     /**
      * 初始化RecyclerView
      */
     private fun initRecyclerView() {
-        mSwipeRefreshLayout!!.setOnRefreshListener(this)
+        mSwipeRefreshLayout.setOnRefreshListener(this)
         ArmsUtils.configRecyclerView(mRecyclerView!!, mLayoutManager)
     }
 
 
     override fun showLoading() {
         Timber.tag(TAG).w("showLoading")
-        mSwipeRefreshLayout!!.isRefreshing = true
+        mSwipeRefreshLayout.isRefreshing = true
     }
 
     override fun hideLoading() {
         Timber.tag(TAG).w("hideLoading")
-        mSwipeRefreshLayout!!.isRefreshing = false
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
     override fun showMessage(message: String) {
@@ -141,7 +141,7 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
         if (mPaginate == null) {
             val callbacks = object : Paginate.Callbacks {
                 override fun onLoadMore() {
-                    mPresenter!!.requestUsers(false)
+                    mPresenter.requestUsers(false)
                 }
 
                 override fun isLoading(): Boolean {

@@ -24,10 +24,6 @@ import java.util.*
  * 当此 `url` 地址存在下载或者上传的动作时,管理器会主动调用所有使用此 `url` 地址注册过的监听器,达到多个模块的同步更新
  *
  *
- * Created by JessYan on 02/06/2017 18:37
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 class ProgressManager private constructor() {
 
@@ -50,40 +46,13 @@ class ProgressManager private constructor() {
 
     companion object {
 
-        @Volatile //使用本管理器必须依赖 Okhttp
-        private lateinit var sInstance: ProgressManager
-
-        val OKHTTP_PACKAGE_NAME = "okhttp3.OkHttpClient"
-        val DEPENDENCY_OKHTTP: Boolean
         val DEFAULT_REFRESH_TIME = 150
         val IDENTIFICATION_NUMBER = "?NUMBER="
         val IDENTIFICATION_HEADER = "HEADER"
         val LOCATION_HEADER = "Location"
 
-        init {
-            var hasDependency: Boolean
-            try {
-                Class.forName(OKHTTP_PACKAGE_NAME)
-                hasDependency = true
-            } catch (e: ClassNotFoundException) {
-                hasDependency = false
-            }
-            DEPENDENCY_OKHTTP = hasDependency
-        }
-
-        fun getInstance(): ProgressManager {
-
-            if (sInstance == null) {
-                if (!DEPENDENCY_OKHTTP) {
-                    throw IllegalStateException("Must be dependency Okhttp")
-                }
-                synchronized(ProgressManager::class.java) {
-                    if (sInstance == null) {
-                        sInstance = ProgressManager()
-                    }
-                }
-            }
-            return sInstance!!
+        val instance: ProgressManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            ProgressManager()
         }
     }
 

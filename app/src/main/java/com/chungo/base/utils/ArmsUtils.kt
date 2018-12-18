@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 JessYan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.base.utils
 
 import android.app.Activity
@@ -37,16 +22,6 @@ import com.chungo.base.di.component.AppComponent
 import com.chungo.base.integration.AppManager
 import java.security.MessageDigest
 
-/**
- * ================================================
- * 一些框架常用的工具
- *
- *
- * Created by JessYan on 2015/11/23.
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
 class ArmsUtils private constructor() {
 
 
@@ -55,7 +30,7 @@ class ArmsUtils private constructor() {
     }
 
     companion object {
-        var mToast: Toast? = null
+        lateinit var mToast: Toast
 
         /**
          * 设置hint大小
@@ -235,8 +210,8 @@ class ArmsUtils private constructor() {
             if (mToast == null) {
                 mToast = Toast.makeText(context, string, Toast.LENGTH_SHORT)
             }
-            mToast!!.setText(string)
-            mToast!!.show()
+            mToast.setText(string)
+            mToast.show()
         }
 
         /**

@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 JessYan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.base.utils
 
 import android.text.InputFilter
@@ -34,11 +19,6 @@ import javax.xml.transform.stream.StreamSource
  * ================================================
  * 处理字符串的工具类
  *
- *
- * Created by JessYan on 2016/3/16
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 class CharacterHandler private constructor() {
 
@@ -50,7 +30,7 @@ class CharacterHandler private constructor() {
 
         val emojiFilter: InputFilter = object : InputFilter {//emoji过滤器
 
-            internal var emoji = Pattern.compile(
+            var emoji = Pattern.compile(
                     "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                     Pattern.UNICODE_CASE or Pattern.CASE_INSENSITIVE)
 
