@@ -35,6 +35,10 @@ import com.chungo.base.utils.ArmsUtils
 import com.chungo.base.utils.Preconditions
 import com.chungo.base.config.GlobalConfiguration
 import com.chungo.base.lifecycle.AppLifecycles
+import com.chungo.baseapp.BuildConfig
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import java.util.*
 import javax.inject.Inject
 
@@ -113,6 +117,7 @@ class AppDelegate(context: Context) : App, AppLifecycles {
                 .build()
         mAppComponent.inject(this)
 
+
         //将 ConfigModule 的实现类的集合存放到缓存 Cache, 可以随时获取
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
         //否则存储在 LRU 算法的存储空间中 (大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目)
@@ -144,6 +149,23 @@ class AppDelegate(context: Context) : App, AppLifecycles {
 
     }
 
+    /**
+     * 初始化配置
+     */
+    private fun initConfig() {
+
+        val formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)  // 隐藏线程信息 默认：显示
+                .methodCount(0)         // 决定打印多少行（每一行代表一个方法）默认：2
+                .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
+                .tag("hao_zz")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build()
+        Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                return BuildConfig.DEBUG
+            }
+        })
+    }
 
     override fun onTerminate(application: Application) {
         if (mActivityLifecycle != null) {
