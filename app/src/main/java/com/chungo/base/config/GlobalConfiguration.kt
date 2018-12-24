@@ -22,7 +22,7 @@ import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.module.NetModule
 import com.chungo.base.di.module.RxCacheModule
 import com.chungo.base.http.SSLTrustManager
-import com.chungo.base.http.api.Api
+import com.chungo.base.api.Api
 import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
 import com.chungo.base.http.interceptor.GlobalHttpHandlerImpl
 import com.chungo.base.http.log.RequestInterceptor

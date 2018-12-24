@@ -2,7 +2,7 @@ package com.chungo.base.http.interceptor
 
 import android.content.Context
 import android.text.TextUtils
-import com.chungo.base.http.api.Api
+import com.chungo.base.api.Api
 import com.chungo.base.http.log.RequestInterceptor
 import com.chungo.base.utils.ArmsUtils
 import com.chungo.basemore.mvp.model.entity.User

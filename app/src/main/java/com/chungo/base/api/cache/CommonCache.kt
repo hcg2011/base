@@ -1,4 +1,4 @@
-package com.chungo.base.http.api.cache
+package com.chungo.base.api.cache
 
 
 import com.chungo.basemore.mvp.model.entity.User

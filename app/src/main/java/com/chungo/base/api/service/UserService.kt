@@ -1,6 +1,7 @@
-package com.chungo.base.http.api.service
+package com.chungo.base.api.service
 
 
+import com.chungo.base.api.Api.Companion.HEADER_API_VERSION
 import com.chungo.basemore.mvp.model.entity.User
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -8,10 +9,6 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface UserService {
-
-    companion object {
-        const val HEADER_API_VERSION = "Accept: application/vnd.github.v3+json"
-    }
 
     @Headers(HEADER_API_VERSION)
     @GET("/users")
