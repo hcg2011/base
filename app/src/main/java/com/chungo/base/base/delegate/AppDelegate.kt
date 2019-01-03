@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 JessYan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.base.base.delegate
 
 import android.app.Activity
@@ -23,22 +8,15 @@ import android.content.ContentProvider
 import android.content.Context
 import android.content.res.Configuration
 import android.support.v4.app.Fragment
-import com.chungo.base.base.BaseApplication
+import com.chungo.base.config.ConfigModule
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.di.component.DaggerAppComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
-import com.chungo.base.config.ConfigModule
-import com.chungo.base.integration.cache.Cache
+import com.chungo.base.integration.ManifestParser
 import com.chungo.base.integration.cache.IntelligentCache
-import com.chungo.base.utils.ArmsUtils
-import com.chungo.base.utils.Preconditions
-import com.chungo.base.config.GlobalConfiguration
 import com.chungo.base.lifecycle.AppLifecycles
-import com.chungo.baseapp.BuildConfig
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.orhanobut.logger.PrettyFormatStrategy
+import com.chungo.base.utils.Preconditions
 import java.util.*
 import javax.inject.Inject
 
@@ -51,28 +29,20 @@ import javax.inject.Inject
  *
  * @see BaseApplication
  *
- * @see [AppDelegate wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.3.12)
- * Created by JessYan on 24/04/2017 09:44
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 class AppDelegate(context: Context) : App, AppLifecycles {
-    private lateinit var mApplication: Application
-    private lateinit var mAppComponent: AppComponent
-
+    private var mApplication: Application? = null
+    private var mAppComponent: AppComponent? = null
+    @Inject
     //@Qualifiers.Lifecycle
-    @Inject
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
-
-    @Qualifiers.RxLifecycle
     @Inject
+    @Qualifiers.RxLifecycle
     lateinit var mActivityLifecycleForRxLifecycle: Application.ActivityLifecycleCallbacks
-
-    private var mModule: ConfigModule
-    private var mAppLifecycles: MutableList<AppLifecycles> = ArrayList()
-    private var mActivityLifecycles: MutableList<Application.ActivityLifecycleCallbacks> = ArrayList()
-    private lateinit var mComponentCallback: ComponentCallbacks2
+    private var mModules: ArrayList<ConfigModule>
+    private var mAppLifecycles = ArrayList<AppLifecycles>()
+    private var mActivityLifecycles = ArrayList<Application.ActivityLifecycleCallbacks>()
+    private var mComponentCallback: ComponentCallbacks2? = null
 
 
     /**
@@ -83,110 +53,100 @@ class AppDelegate(context: Context) : App, AppLifecycles {
      */
     override val appComponent: AppComponent
         get() {
-            Preconditions.checkNotNull<AppComponent>(mAppComponent,
-                    "%s == null, first call %s#onCreate(Application) in %s#onCreate()",
-                    AppComponent::class.java.name, javaClass.name, if (mApplication == null)
-                Application::class.java.name
-            else
-                mApplication.javaClass.name)
-            return mAppComponent
+            Preconditions.checkNotNull(mAppComponent,
+                    "%s cannot be null,first call %s#onCreate(Application) in %s#onCreate()",
+                    AppComponent::class.java!!.getName(), javaClass.name, Application::class.java.name)
+            return this!!.mAppComponent!!
         }
 
     init {
-        mModule = GlobalConfiguration()
-        //将框架外部, 开发者实现的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
-        mModule.injectAppLifecycle(context, mAppLifecycles)
-        //将框架外部, 开发者实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLifecycles 集合 (此时还未注册回调)
-        mModule.injectActivityLifecycle(context, mActivityLifecycles)
+
+        //用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
+        this.mModules = ManifestParser(context).parse()
+        //遍历之前获得的集合, 执行每一个 ConfigModule 实现类的某些方法
+        for (module in mModules!!) {
+
+            //将框架外部, 开发者实现的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
+            module.injectAppLifecycle(context, mAppLifecycles)
+
+            //将框架外部, 开发者实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLifecycles 集合 (此时还未注册回调)
+            module.injectActivityLifecycle(context, mActivityLifecycles)
+        }
     }
 
     override fun attachBaseContext(base: Context) {
 
         //遍历 mAppLifecycles, 执行所有已注册的 AppLifecycles 的 attachBaseContext() 方法 (框架外部, 开发者扩展的逻辑)
-        for (lifecycle in mAppLifecycles) {
+        for (lifecycle in mAppLifecycles!!) {
             lifecycle.attachBaseContext(base)
         }
     }
 
     override fun onCreate(application: Application) {
-        mApplication = application
+        this.mApplication = application
         mAppComponent = DaggerAppComponent
                 .builder()
-                .application(mApplication)//提供application
-                .globalConfigModule(applyGlobalConfigModule(mApplication, mModule))//全局配置
+                .application(application)//提供application
+                .globalConfigModule(getGlobalConfigModule(application, mModules!!))//全局配置
                 .build()
-        mAppComponent.inject(this)
-
+        mAppComponent!!.inject(this)
 
         //将 ConfigModule 的实现类的集合存放到缓存 Cache, 可以随时获取
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
         //否则存储在 LRU 算法的存储空间中 (大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目)
         //前提是 extras 使用的是 IntelligentCache (框架默认使用)
-        val cache = mAppComponent.extras() as Cache<String, Any>
-        cache.put(IntelligentCache.getKeyOfKeep(ConfigModule::class.java.name), mModule)
+        mAppComponent!!.extras().put(IntelligentCache.KEY_KEEP + ConfigModule::class.java!!.getName(), mModules)
+
+        this.mModules.clear()
         //注册框架内部已实现的 Activity 生命周期逻辑
-        mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle)
+        mApplication!!.registerActivityLifecycleCallbacks(mActivityLifecycle)
 
         //注册框架内部已实现的 RxLifecycle 逻辑
-        mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
+        mApplication!!.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
 
         //注册框架外部, 开发者扩展的 Activity 生命周期逻辑
         //每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
         //也可以有 N 个 ConfigModule 的实现类 (完美支持组件化项目 各个 Module 的各种独特需求)
-        for (lifecycle in mActivityLifecycles) {
-            mApplication.registerActivityLifecycleCallbacks(lifecycle)
+        for (lifecycle in mActivityLifecycles!!) {
+            mApplication!!.registerActivityLifecycleCallbacks(lifecycle)
         }
 
-        mComponentCallback = AppComponentCallbacks(mApplication, mAppComponent)
+        mComponentCallback = AppComponentCallbacks(application, mAppComponent!!)
 
         //注册回掉: 内存紧张时释放部分内存
-        mApplication.registerComponentCallbacks(mComponentCallback)
+        mApplication!!.registerComponentCallbacks(mComponentCallback)
 
         //执行框架外部, 开发者扩展的 App onCreate 逻辑
-        for (lifecycle in mAppLifecycles) {
-            lifecycle.onCreate(mApplication)
+        for (lifecycle in mAppLifecycles!!) {
+            lifecycle.onCreate(application)
         }
 
     }
 
-    /**
-     * 初始化配置
-     */
-    private fun initConfig() {
 
-        val formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)  // 隐藏线程信息 默认：显示
-                .methodCount(0)         // 决定打印多少行（每一行代表一个方法）默认：2
-                .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
-                .tag("hao_zz")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
-                .build()
-        Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
-            override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG
-            }
-        })
-    }
-
-    override fun onTerminate(application: Application) {
+    fun onTerminate(application: Application) {
         if (mActivityLifecycle != null) {
-            mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycle)
+            mApplication!!.unregisterActivityLifecycleCallbacks(mActivityLifecycle)
         }
         if (mActivityLifecycleForRxLifecycle != null) {
-            mApplication.unregisterActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
+            mApplication!!.unregisterActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
         }
         if (mComponentCallback != null) {
-            mApplication.unregisterComponentCallbacks(mComponentCallback)
+            mApplication!!.unregisterComponentCallbacks(mComponentCallback)
         }
-        if (mActivityLifecycles != null && mActivityLifecycles.size > 0) {
-            for (lifecycle in mActivityLifecycles) {
-                mApplication.unregisterActivityLifecycleCallbacks(lifecycle)
+        if (mActivityLifecycles != null && mActivityLifecycles!!.size > 0) {
+            for (lifecycle in mActivityLifecycles!!) {
+                mApplication!!.unregisterActivityLifecycleCallbacks(lifecycle)
             }
         }
-        if (mAppLifecycles != null && mAppLifecycles.size > 0) {
-            for (lifecycle in mAppLifecycles) {
-                lifecycle.onTerminate(mApplication)
+        if (mAppLifecycles != null && mAppLifecycles!!.size > 0) {
+            for (lifecycle in mAppLifecycles!!) {
+                lifecycle.onTerminate(application)
             }
         }
+        this.mAppComponent = null
+        this.mComponentCallback = null
+        this.mApplication = null
     }
 
 
@@ -196,12 +156,16 @@ class AppDelegate(context: Context) : App, AppLifecycles {
      *
      * @return GlobalConfigModule
      */
-    private fun applyGlobalConfigModule(context: Context, module: ConfigModule): GlobalConfigModule {
+    private fun getGlobalConfigModule(context: Context, modules: List<ConfigModule>): GlobalConfigModule {
 
         val builder = GlobalConfigModule
                 .builder()
-        // 给全局配置 GlobalConfigModule 添加参数
-        module.applyOptions(context, builder)
+
+        //遍历 ConfigModule 集合, 给全局配置 GlobalConfigModule 添加参数
+        for (module in modules) {
+            module.applyOptions(context, builder)
+        }
+
         return builder.build()
     }
 
@@ -252,7 +216,7 @@ class AppDelegate(context: Context) : App, AppLifecycles {
             //                case TRIM_MEMORY_MODERATE:
 
 
-            //系统正运行于低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
+            //系统正运行与低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
             //低于 API 14 的 App 可以使用 onLowMemory 回调
             //                case TRIM_MEMORY_COMPLETE:
         }
@@ -269,8 +233,9 @@ class AppDelegate(context: Context) : App, AppLifecycles {
          * @see .TRIM_MEMORY_COMPLETE
          */
         override fun onLowMemory() {
-            //系统正运行于低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
+            //系统正运行与低内存的状态并且你的进程正处于 LRU 列表中最容易被杀掉的位置, 你应该释放任何不影响你的 App 恢复状态的资源
         }
     }
 
 }
+

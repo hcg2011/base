@@ -73,7 +73,7 @@ interface Cache<K, V> {
      * @param value `value`
      * @return 如果这个 `key` 在容器中已经储存有 `value`, 则返回之前的 `value` 否则返回 `null`
      */
-    fun put(key: K, value: V): V?
+     fun put(key: K, value: V): V?
 
     /**
      * 移除缓存中这个 `key` 所对应的条目,并返回所移除条目的 value
