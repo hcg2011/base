@@ -2,9 +2,10 @@ package com.chungo.basemore.mvp.model
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
-import com.chungo.base.api.cache.CommonCache
-import com.chungo.base.api.service.UserService
 import com.chungo.base.integration.IRepositoryManager
+import com.chungo.base.mvp.BaseModel
+import com.chungo.basemore.api.cache.CommonCache
+import com.chungo.basemore.api.service.UserService
 import com.chungo.basemore.mvp.contract.UserContract
 import com.chungo.basemore.mvp.model.entity.User
 import io.reactivex.Observable

@@ -19,13 +19,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
-import com.chungo.baseapp.adapter.BaseHolder
-import com.chungo.baseapp.adapter.DefaultAdapter
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.http.imageloader.ImageLoader
 import com.chungo.base.http.imageloader.glide.ImageConfigImpl
 import com.chungo.base.utils.ArmsUtils
 import com.chungo.baseapp.R
+import com.chungo.baseapp.adapter.BaseHolder
+import com.chungo.baseapp.adapter.DefaultAdapter
 import com.chungo.basemore.mvp.model.entity.User
 import io.reactivex.Observable
 
@@ -57,7 +57,7 @@ class UserItemHolder(itemView: View) : BaseHolder<User>(itemView) {
 
     override fun setData(data: User, position: Int) {
         Observable.just(data.login)
-                .subscribe { s -> mName!!.text = s }
+                .subscribe { s -> mName.text = s }
 
         //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
         mImageLoader!!.loadImage(itemView.context,
@@ -77,7 +77,7 @@ class UserItemHolder(itemView: View) : BaseHolder<User>(itemView) {
         //只要传入的 Context 为 Activity, Glide 就会自己做好生命周期的管理, 其实在上面的代码中传入的 Context 就是 Activity
         //所以在 onRelease 方法中不做 clear 也是可以的, 但是在这里想展示一下 clear 的用法
         mImageLoader!!.clear(mAppComponent!!.application(), ImageConfigImpl.builder()
-                .imageViews(mutableListOf<ImageView>(this!!.mAvatar!!))
+                .imageViews(mutableListOf<ImageView>(mAvatar))
                 .build())
         this.mAppComponent = null
         this.mImageLoader = null

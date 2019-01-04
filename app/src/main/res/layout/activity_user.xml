@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/include_title"/>
 
@@ -21,8 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            tools:listitem="@layout/recycle_list"
-            />
+            tools:listitem="@layout/recycle_list"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

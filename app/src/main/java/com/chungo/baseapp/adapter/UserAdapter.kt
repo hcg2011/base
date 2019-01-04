@@ -16,7 +16,6 @@
 package com.chungo.baseapp.adapter
 
 import android.view.View
-
 import com.chungo.baseapp.R
 import com.chungo.baseapp.holder.UserItemHolder
 import com.chungo.basemore.mvp.model.entity.User
@@ -32,7 +31,7 @@ import com.chungo.basemore.mvp.model.entity.User
  * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-class UserAdapter(infos: List<User>) : DefaultAdapter<User>(infos) {
+class UserAdapter (infos: List<User>) : DefaultAdapter<User>(infos) {
 
     override fun getHolder(v: View, viewType: Int): BaseHolder<User> {
         return UserItemHolder(v)

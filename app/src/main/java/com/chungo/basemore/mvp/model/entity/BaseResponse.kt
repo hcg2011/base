@@ -15,7 +15,7 @@
  */
 package com.chungo.basemore.mvp.model.entity
 
-import com.chungo.base.api.Api
+import com.chungo.basemore.api.Api
 
 import java.io.Serializable
 

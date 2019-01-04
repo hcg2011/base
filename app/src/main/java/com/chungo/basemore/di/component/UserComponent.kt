@@ -18,7 +18,7 @@ package com.chungo.basemore.di.component
 
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.di.scope.Scopes
-import com.chungo.baseapp.MainActivity
+import com.chungo.baseapp.activity.MainActivity
 import com.chungo.basemore.di.module.UserModule
 import com.chungo.basemore.di.module.UserModuleBinds
 import com.chungo.basemore.mvp.contract.UserContract
@@ -30,11 +30,6 @@ import dagger.Component
  * ================================================
  * 展示 Component 的用法
  *
- * @see [Component wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.6)
- * Created by JessYan on 09/04/2016 11:17
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 @Scopes.Activity
 @Component(

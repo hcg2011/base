@@ -34,7 +34,7 @@ class UserModule {
 
     @Scopes.Activity
     @Provides
-    fun provideUserAdapter(list: List<User>): RecyclerView.Adapter<*> {
+    fun provideUserAdapter(list: List<User>): UserAdapter {
         return UserAdapter(list)
     }
 
