@@ -51,7 +51,7 @@ class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
                 (activity.findViewById<View>(R.id.toolbar_title) as TextView).text = activity.title
             }
             if (activity.findViewById<View>(R.id.toolbar_back) != null) {
-                activity.findViewById<View>(R.id.toolbar_back).setOnClickListener({ v -> activity.onBackPressed() })
+                activity.findViewById<View>(R.id.toolbar_back).setOnClickListener { activity.onBackPressed() }
             }
         }
     }

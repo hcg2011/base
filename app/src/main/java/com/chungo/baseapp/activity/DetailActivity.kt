@@ -49,7 +49,7 @@ class DetailActivity : BaseActivity<UserPresenter>(), UserContract.View {
     override fun initData(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar)
         val data = intent.extras
-        val url = data.get(User.KEY_URL) as String
+        val url = data?.get(User.KEY_URL) as String
         fab.setOnClickListener { view ->
             Snackbar.make(view, url, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()

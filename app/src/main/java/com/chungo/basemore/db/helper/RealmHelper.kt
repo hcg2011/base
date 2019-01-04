@@ -5,20 +5,15 @@ import io.realm.RealmConfiguration
 import javax.inject.Inject
 
 
-/**
- * Created by codeest on 16/8/16.
- */
-
-class RealmHelper : DBHelper<Any?> {
+class RealmHelper @Inject
+constructor() : DBHelper<Any?> {
 
 
     companion object {
 
-        private val DB_NAME = "myRealm.realm"
+        val DB_NAME = "myRealm.realm"
     }
 
-    @Inject
-    constructor()
     private val mRealm: Realm
 
     override//使用findAllSort ,先findAll再result.sort无效

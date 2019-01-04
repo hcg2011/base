@@ -1,11 +1,5 @@
 package com.chungo.basemore.db.helper
 
-/**
- * @author: Est <codeest.dev></codeest.dev>@gmail.com>
- * @date: 2017/4/21
- * @description:
- */
-
 interface DBHelper<T> {
 
     val likeList: List<Any?>?

@@ -174,7 +174,7 @@ class TipsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, -1.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f)
-                mShowAction!!.duration = mBtnStartAnimDuration.toLong()
+                mShowAction.duration = mBtnStartAnimDuration.toLong()
             }
             startAnimation(mShowAction)
             addAimationListener(mShowAction, true)
@@ -250,7 +250,7 @@ class TipsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                     0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, -1.0f)
-            mHiddenAction!!.duration = duration.toLong()
+            mHiddenAction.duration = duration.toLong()
         }
         startAnimation(mHiddenAction)
         addAimationListener(mHiddenAction, false)

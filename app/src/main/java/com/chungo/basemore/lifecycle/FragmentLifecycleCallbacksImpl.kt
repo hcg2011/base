@@ -71,6 +71,7 @@ class FragmentLifecycleCallbacksImpl : FragmentManager.FragmentLifecycleCallback
         Timber.i(f.toString() + " - onFragmentViewDestroyed")
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
         Timber.i(f.toString() + " - onFragmentDestroyed")
         var cache = ArmsUtils
