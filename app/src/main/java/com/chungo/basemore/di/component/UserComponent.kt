@@ -18,6 +18,7 @@ package com.chungo.basemore.di.component
 
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.di.scope.Scopes
+import com.chungo.baseapp.activity.DetailActivity
 import com.chungo.baseapp.activity.MainActivity
 import com.chungo.basemore.di.module.UserModule
 import com.chungo.basemore.di.module.UserModuleBinds
@@ -39,6 +40,7 @@ import dagger.Component
         dependencies = arrayOf(AppComponent::class))
 interface UserComponent {
     fun inject(activity: MainActivity)
+    fun inject(activity: DetailActivity)
 
     @Component.Builder
     interface Builder {
