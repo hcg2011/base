@@ -15,14 +15,8 @@ import timber.log.Timber
 
 
 /**
- * ================================================
  * 展示 [FragmentManager.FragmentLifecycleCallbacks] 的用法
  *
- *
- * Created by JessYan on 23/08/2018 17:14
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 class FragmentLifecycleCallbacksImpl : FragmentManager.FragmentLifecycleCallbacks() {
 

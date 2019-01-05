@@ -2,6 +2,8 @@ package com.chungo.base.base.delegate
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.view.View
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -15,7 +17,7 @@ import timber.log.Timber
  *
  *
  */
-class FragmentDelegateImpl(private var mFragmentManager: android.support.v4.app.FragmentManager?, private var mFragment: android.support.v4.app.Fragment?) : FragmentDelegate {
+class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, private var mFragment: Fragment?) : FragmentDelegate {
     private var iFragment: IFragment? = null
     private var mUnbinder: Unbinder? = null
 

@@ -7,7 +7,6 @@ import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.lifecycle.IAppLifecycles
 
 /**
- * ================================================
  * [ConfigModule] 可以给框架配置一些参数,需要实现 [ConfigModule] 后,在 AndroidManifest 中声明该实现类
  *
  */

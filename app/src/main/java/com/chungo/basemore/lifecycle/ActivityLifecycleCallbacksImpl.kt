@@ -14,14 +14,8 @@ import com.chungo.baseapp.R
 import timber.log.Timber
 
 /**
- * ================================================
  * 展示 [Application.ActivityLifecycleCallbacks] 的用法
  *
- *
- * Created by JessYan on 04/09/2017 17:14
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
 
