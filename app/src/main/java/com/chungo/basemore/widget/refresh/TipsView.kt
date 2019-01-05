@@ -42,8 +42,8 @@ class TipsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
 
     private var isTVShown = false
     private var isTipsBtnShown = false
-    private lateinit var mHiddenAction: TranslateAnimation
-    private lateinit var mShowAction: TranslateAnimation
+    private var mHiddenAction: TranslateAnimation? = null
+    private var mShowAction: TranslateAnimation? = null
 
     private val mTvStartAnimDuration = 800// 提示条展示的动画间隔时间
     private val mBtnStartAnimDuration = 500// 按钮展示的动画间隔时间
@@ -174,10 +174,10 @@ class TipsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, -1.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f)
-                mShowAction.duration = mBtnStartAnimDuration.toLong()
+                mShowAction!!.duration = mBtnStartAnimDuration.toLong()
             }
             startAnimation(mShowAction)
-            addAimationListener(mShowAction, true)
+            addAimationListener(mShowAction!!, true)
         }
     }
 
@@ -250,10 +250,10 @@ class TipsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                     0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, -1.0f)
-            mHiddenAction.duration = duration.toLong()
+            mHiddenAction!!.duration = duration.toLong()
         }
         startAnimation(mHiddenAction)
-        addAimationListener(mHiddenAction, false)
+        addAimationListener(mHiddenAction!!, false)
     }
 
     /**
