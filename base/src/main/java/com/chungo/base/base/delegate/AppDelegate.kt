@@ -32,10 +32,10 @@ import javax.inject.Inject
  */
 class AppDelegate(context: Context) : IApp, IAppLifecycles {
     @Inject
-    //@Qualifiers.Lifecycle
+    @field:[Qualifiers.Lifecycle]
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
     @Inject
-    @Qualifiers.RxLifecycle
+    @field:[Qualifiers.RxLifecycle]
     lateinit var mActivityLifecycleForRxLifecycle: Application.ActivityLifecycleCallbacks
     //参考glide。用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
     private var mModules: ArrayList<ConfigModule> = ManifestParser(context).parse()
@@ -113,7 +113,6 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
 
         //注册框架内部已实现的 RxLifecycle 逻辑
         mApplication!!.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
-
         //注册框架外部, 开发者扩展的 Activity 生命周期逻辑
         //每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
         //也可以有 N 个 ConfigModule 的实现类 (完美支持组件化项目 各个 Module 的各种独特需求)

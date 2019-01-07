@@ -36,13 +36,13 @@ class BaseApplication : Application(), IApp {
      * 这里会在 [BaseApplication.onCreate] 之前被调用,可以做一些较早的初始化
      * 常用于 MultiDex 以及插件化框架的初始化
      *
-     * @param base
+     * @param context
      */
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
+    override fun attachBaseContext(context: Context) {
+        super.attachBaseContext(context)
         if (mAppDelegate == null)
-            this.mAppDelegate = AppDelegate(base)
-        this.mAppDelegate!!.attachBaseContext(base)
+            this.mAppDelegate = AppDelegate(context)
+        this.mAppDelegate!!.attachBaseContext(context)
     }
 
     override fun onCreate() {

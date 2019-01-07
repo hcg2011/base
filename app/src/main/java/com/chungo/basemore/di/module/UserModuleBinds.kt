@@ -12,4 +12,5 @@ abstract class UserModuleBinds {
     @Scopes.Activity
     @Binds
     abstract fun bindUserModel(model: UserModel): UserContract.Model
+
 }

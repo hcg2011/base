@@ -19,19 +19,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-
-/**
- * ================================================
- * 展示 Presenter 的用法
- *
- * @see [Presenter wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.4)
- * Created by JessYan on 09/04/2016 10:59
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
 @Scopes.Activity
-class UserPresenter @Inject
+class UserPresenter
+@Inject
 constructor(model: UserContract.Model, rootView: UserContract.View) : BasePresenter<UserContract.Model, UserContract.View>(model, rootView) {
     @Inject
     lateinit var mErrorHandler: RxErrorHandler

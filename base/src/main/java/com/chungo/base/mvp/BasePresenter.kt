@@ -16,14 +16,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 /**
- * ================================================
  * 基类 Presenter
  *
- * @see [Presenter wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.4)
- * Created by JessYan on 4/28/2016
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 open class BasePresenter<M : IModel, V : IView> : IPresenter, LifecycleObserver {
     protected val TAG = this.javaClass.simpleName

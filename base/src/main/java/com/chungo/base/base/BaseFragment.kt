@@ -23,7 +23,7 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, FragmentLif
     private var mCache: Cache<String, Any>? = null
     protected var mContext: Context? = null
     @Inject
-    protected lateinit var mPresenter: P//如果当前页面逻辑简单, Presenter 可以为 null
+    lateinit var mPresenter: P//如果当前页面逻辑简单, Presenter 可以为 null
 
     @Synchronized
     override fun provideCache(): Cache<String, Any> {
@@ -47,7 +47,7 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, FragmentLif
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter.onDestroy()//释放资源
+        mPresenter?.onDestroy()//释放资源
     }
 
     override fun onDetach() {

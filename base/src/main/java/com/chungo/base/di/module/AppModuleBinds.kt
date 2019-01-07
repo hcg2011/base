@@ -21,8 +21,8 @@ abstract class AppModuleBinds {
     @Binds
     abstract fun bindRepositoryManager(repositoryManager: RepositoryManager): IRepositoryManager
 
-    //@Qualifiers.Lifecycle
     @Binds
+    @Qualifiers.Lifecycle
     abstract fun bindActivityLifecycle(activityLifecycle: ActivityLifecycle): Application.ActivityLifecycleCallbacks
 
     @Qualifiers.RxLifecycle

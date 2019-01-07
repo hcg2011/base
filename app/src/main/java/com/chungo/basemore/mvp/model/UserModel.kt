@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class UserModel : BaseModel, UserContract.Model {
     companion object {
-        val USERS_PER_PAGE = 10
+       const val USERS_PER_PAGE = 10
     }
 
     @Inject

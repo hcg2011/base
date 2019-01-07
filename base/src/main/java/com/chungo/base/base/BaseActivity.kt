@@ -30,7 +30,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, Ac
     private var mUnbinder: Unbinder? = null
 
     @Inject
-    protected lateinit var mPresenter: P
+    lateinit var mPresenter: P
 
     @Synchronized
     override fun provideCache(): Cache<*, *> {
@@ -68,7 +68,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, Ac
         if (mUnbinder != null && mUnbinder !== Unbinder.EMPTY)
             mUnbinder!!.unbind()
         this.mUnbinder = null
-        mPresenter.onDestroy()//释放资源
+        mPresenter?.onDestroy()//释放资源
     }
 
     /**

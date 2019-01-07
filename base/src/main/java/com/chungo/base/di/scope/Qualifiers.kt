@@ -11,13 +11,16 @@ annotation class Qualifiers {
 
     @Qualifier
     @Retention
+    @MustBeDocumented
     annotation class Lifecycle
 
     @Qualifier
     @Retention
+    @MustBeDocumented
     annotation class RxLifecycle
 
     @Qualifier
     @Retention
+    @MustBeDocumented
     annotation class RxCacheDir
 }
