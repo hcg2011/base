@@ -19,21 +19,16 @@ import javax.inject.Singleton
 
 
 /**
- * ================================================
  * [Application.ActivityLifecycleCallbacks] 默认实现类
  * 通过 [ActivityDelegate] 管理 [Activity]
  *
- * @see [ActivityLifecycleCallbacks 分析文章](http://www.jianshu.com/p/75a5c24174b2)
- * Created by JessYan on 21/02/2017 14:23
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 @Singleton
 class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
 
     @Inject
     constructor()
+
     @Inject
     lateinit var mApplication: Application
     @Inject
@@ -50,7 +45,7 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
             isNotAdd = activity.intent.getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false)
 
         if (!isNotAdd)
-            AppManager.getManager().addActivity(activity)
+            AppManager.instance.addActivity(activity)
 
         //配置ActivityDelegate
         if (activity is IActivity) {
@@ -75,7 +70,7 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityResumed(activity: Activity) {
-        AppManager.getManager().currentActivity = activity
+        AppManager.instance.currentActivity = activity
 
         val activityDelegate = fetchActivityDelegate(activity)
         activityDelegate?.onResume()
@@ -87,8 +82,8 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStopped(activity: Activity) {
-        if (AppManager.getManager().currentActivity === activity) {
-            AppManager.getManager().currentActivity = null
+        if (AppManager.instance.currentActivity === activity) {
+            AppManager.instance.currentActivity = null
         }
 
         val activityDelegate = fetchActivityDelegate(activity)
@@ -101,7 +96,7 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        AppManager.getManager().removeActivity(activity)
+        AppManager.instance.removeActivity(activity)
 
         val activityDelegate = fetchActivityDelegate(activity)
         if (activityDelegate != null) {

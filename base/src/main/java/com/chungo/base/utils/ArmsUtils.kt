@@ -224,7 +224,7 @@ class ArmsUtils private constructor() {
          * @param text
          */
         fun snackbarText(text: String) {
-            AppManager.getManager().showSnackbar(text, false)
+            AppManager.instance.showSnackbar(text, false)
         }
 
         /**
@@ -237,7 +237,7 @@ class ArmsUtils private constructor() {
          * @param text
          */
         fun snackbarTextWithLong(text: String) {
-            AppManager.getManager().showSnackbar(text, true)
+            AppManager.instance.showSnackbar(text, true)
         }
 
 
@@ -258,7 +258,7 @@ class ArmsUtils private constructor() {
          * @param activityClass
          */
         fun startActivity(activityClass: Class<*>) {
-            AppManager.getManager().startActivity(activityClass)
+            AppManager.instance.startActivity(activityClass)
         }
 
         /**
@@ -267,7 +267,7 @@ class ArmsUtils private constructor() {
          * @param
          */
         fun startActivity(content: Intent) {
-            AppManager.getManager().startActivity(content)
+            AppManager.instance.startActivity(content)
         }
 
 
@@ -415,14 +415,14 @@ class ArmsUtils private constructor() {
          * 执行 [AppManager.killAll]
          */
         fun killAll() {
-            AppManager.getManager().killAll()
+            AppManager.instance.killAll()
         }
 
         /**
          * 执行 [AppManager.appExit]
          */
         fun exitApp() {
-            AppManager.getManager().appExit()
+            AppManager.instance.appExit()
         }
 
         fun obtainAppComponentFromContext(context: Context): AppComponent {

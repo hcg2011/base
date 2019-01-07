@@ -8,7 +8,6 @@ import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.module.NetModule
 import com.chungo.base.di.module.RxCacheModule
 import com.chungo.base.http.SSLTrustManager
-import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
 import com.chungo.base.http.interceptor.GlobalHttpHandlerImpl
 import com.chungo.base.http.log.RequestInterceptor
 import com.chungo.base.lifecycle.ActivityLifecycleCallbacksImpl
@@ -41,9 +40,6 @@ class MainConfiguration : ConfigModule {
         }
 
         builder.apply { mApiUrl = HttpUrl.parse(Api.APP_DOMAIN) }
-                //强烈建议自己自定义图片加载逻辑, 因为 arms-imageloader-glide 提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
-                //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
-                .apply { mLoaderStrategy = GlideImageLoaderStrategy() }
                 //可根据当前项目的情况以及环境为框架某些部件提供自定义的缓存策略, 具有强大的扩展性
                 //                .cacheFactory(new Cache.Factory() {
                 //                    @NonNull

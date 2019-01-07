@@ -1,9 +1,7 @@
 package com.chungo.base.di.module
 
 import android.app.Application
-import com.bumptech.glide.Glide
 import com.chungo.base.http.imageloader.BaseImageLoaderStrategy
-import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
 import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.http.log.DefaultFormatPrinter
 import com.chungo.base.http.log.FormatPrinter
@@ -58,16 +56,16 @@ class GlobalConfigModule {
     }
 
 
-    /**
-     * 提供图片加载框架,默认使用 [Glide]
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    fun provideImageLoaderStrategy(): GlideImageLoaderStrategy {
-        return mLoaderStrategy as GlideImageLoaderStrategy
-    }
+//    /**
+//     * 提供图片加载框架,默认使用 [Glide]
+//     *
+//     * @return
+//     */
+//    @Singleton
+//    @Provides
+//    fun provideImageLoaderStrategy(): GlideImageLoaderStrategy {
+//        return mLoaderStrategy as GlideImageLoaderStrategy
+//    }
 
     /**
      * 提供处理 Http 请求和响应结果的处理类

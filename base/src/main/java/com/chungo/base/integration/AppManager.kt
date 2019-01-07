@@ -7,8 +7,8 @@ import android.app.Service
 import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.view.View
-import com.chungo.base.utils.DependencyUtils.SUPPORT_DESIGN
 import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.DependencyUtils.SUPPORT_DESIGN
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -108,7 +108,7 @@ class AppManager private constructor() {
                 val view = activity!!.window.decorView.findViewById<View>(android.R.id.content)
                 Snackbar.make(view, message, if (isLong) Snackbar.LENGTH_LONG else Snackbar.LENGTH_SHORT).show()
             } else {
-                ArmsUtils.makeText(this!!.mApplication!!, message)
+                ArmsUtils.makeText(mApplication!!, message)
             }
         }.subscribeOn(AndroidSchedulers.mainThread()).subscribe()
 
@@ -280,9 +280,6 @@ class AppManager private constructor() {
      * 关闭所有 [Activity]
      */
     fun killAll() {
-        //        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
-        //            getActivityList().remove(0).finish();
-        //        }
         synchronized(AppManager::class.java) {
             val iterator = activityList.iterator()
             while (iterator.hasNext()) {
@@ -355,25 +352,15 @@ class AppManager private constructor() {
 
     }
 
-    fun init(application: Application): AppManager? {
+    fun init(application: Application): AppManager {
         this.mApplication = application
-        return sAppManager
+        return instance
     }
 
     companion object {
-        val IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list"
-        @Volatile
-        private var sAppManager: AppManager? = null
-
-        fun getManager(): AppManager {
-            if (sAppManager == null) {
-                synchronized(AppManager::class.java) {
-                    if (sAppManager == null) {
-                        sAppManager = AppManager()
-                    }
-                }
-            }
-            return sAppManager!!
+        const val IS_NOT_ADD_ACTIVITY_LIST = "is_not_add_activity_list"
+        val instance: AppManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            AppManager()
         }
     }
 }

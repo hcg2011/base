@@ -36,7 +36,7 @@
 
 ################common###############
 
--keep public class * implements com.jess.arms.integration.ConfigModule
+-keep public class * implements com.chungo.base.config.ConfigModule
 
  #实体类不参与混淆
 -keep class com.chungo.base.widget.** { *; } #自定义控件不参与混淆

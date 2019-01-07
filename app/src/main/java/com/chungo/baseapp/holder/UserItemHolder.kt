@@ -47,12 +47,10 @@ class UserItemHolder(itemView: View) : BaseHolder<User>(itemView) {
     @BindView(R.id.tv_name)
     lateinit var mName: TextView
     private var mAppComponent: AppComponent? = null
-    private var mImageLoader: ImageLoader? = null//用于加载图片的管理类,默认使用 Glide,使用策略模式,可替换框架
 
     init {
         //可以在任何可以拿到 Context 的地方,拿到 AppComponent,从而得到用 Dagger 管理的单例对象
         mAppComponent = ArmsUtils.obtainAppComponentFromContext(itemView.context)
-        mImageLoader = mAppComponent!!.imageLoader()
     }
 
     override fun setData(data: User, position: Int) {
@@ -60,7 +58,7 @@ class UserItemHolder(itemView: View) : BaseHolder<User>(itemView) {
                 .subscribe { s -> mName.text = s }
 
         //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
-        mImageLoader!!.loadImage(itemView.context,
+        ImageLoader.instance.loadImage(itemView.context,
                 ImageConfigImpl
                         .builder()
                         .url(data.avatarUrl)
@@ -76,10 +74,9 @@ class UserItemHolder(itemView: View) : BaseHolder<User>(itemView) {
     override fun onRelease() {
         //只要传入的 Context 为 Activity, Glide 就会自己做好生命周期的管理, 其实在上面的代码中传入的 Context 就是 Activity
         //所以在 onRelease 方法中不做 clear 也是可以的, 但是在这里想展示一下 clear 的用法
-        mImageLoader!!.clear(mAppComponent!!.application(), ImageConfigImpl.builder()
+        ImageLoader.instance.clear(mAppComponent!!.application(), ImageConfigImpl.builder()
                 .imageViews(mutableListOf<ImageView>(mAvatar))
                 .build())
         this.mAppComponent = null
-        this.mImageLoader = null
     }
 }

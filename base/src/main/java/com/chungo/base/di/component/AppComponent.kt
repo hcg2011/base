@@ -4,8 +4,6 @@ import android.app.Application
 import com.chungo.base.base.delegate.AppDelegate
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.di.module.*
-import com.chungo.base.http.imageloader.BaseImageLoaderStrategy
-import com.chungo.base.http.imageloader.ImageLoader
 import com.chungo.base.integration.IRepositoryManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.rxerrorhandler.handler.RxErrorHandler
@@ -53,16 +51,6 @@ interface AppComponent {
      * @return [RxErrorHandler]
      */
     fun rxErrorHandler(): RxErrorHandler
-
-    /**
-     * 图片加载管理器, 用于加载图片的管理类, 使用策略者模式, 可在运行时动态替换任何图片加载框架
-     * arms-imageloader-glide 提供 Glide 的策略实现类, 也可以自行实现
-     * 需要在 [ConfigModule.applyOptions] 中
-     * 手动注册 [BaseImageLoaderStrategy], [ImageLoader] 才能正常使用
-     *
-     * @return
-     */
-    fun imageLoader(): ImageLoader
 
     /**
      * 网络请求框架

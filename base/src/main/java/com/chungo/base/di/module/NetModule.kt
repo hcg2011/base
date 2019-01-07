@@ -88,13 +88,11 @@ class NetModule {
     @Provides
     fun provideClient(application: Application, config: OkhttpConfig?, intercept: Interceptor?, interceptors: MutableList<Interceptor>?, handler: GlobalHttpHandler?, executorService: ExecutorService): OkHttpClient {
         var builder = OkHttpClient.Builder()
-        builder
-                .connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
+        builder.connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
                 .addNetworkInterceptor(intercept)
                 .addInterceptor { chain -> chain.proceed(handler?.onHttpRequestBefore(chain, chain.request())) }
                 .dispatcher(Dispatcher(executorService)) // 为 OkHttp 设置默认的线程池
-
         if (interceptors != null) //如果外部提供了interceptor的集合则遍历添加
             for (interceptor in interceptors)
                 builder.addInterceptor(interceptor)
