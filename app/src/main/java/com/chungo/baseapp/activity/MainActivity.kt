@@ -25,18 +25,8 @@ import me.jessyan.autosize.internal.CustomAdapt
 import timber.log.Timber
 import javax.inject.Inject
 
-
-/**
- * ================================================
- * 展示 View 的用法
- *
- * @see [View wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.2)
- * Created by JessYan on 09/04/2016 10:59
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
 class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefreshLayout.OnRefreshListener, CustomAdapt, OnRecyclerViewItemClickListener<User> {
+
     @BindView(R.id.recyclerView)
     lateinit var mRecyclerView: RecyclerView
     @BindView(R.id.swipeRefreshLayout)

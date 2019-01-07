@@ -17,7 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
-import com.chungo.base.base.delegate.App
+import com.chungo.base.base.delegate.IApp
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.integration.AppManager
 import java.security.MessageDigest
@@ -427,8 +427,8 @@ class ArmsUtils private constructor() {
 
         fun obtainAppComponentFromContext(context: Context): AppComponent {
             Preconditions.checkNotNull(context, "%s cannot be null", Context::class.java.name)
-            Preconditions.checkState(context.applicationContext is App, "%s must be implements %s", context.applicationContext.javaClass.name, App::class.java.name)
-            return (context.applicationContext as App).appComponent
+            Preconditions.checkState(context.applicationContext is IApp, "%s must be implements %s", context.applicationContext.javaClass.name, IApp::class.java.name)
+            return (context.applicationContext as IApp).appComponent
         }
     }
 

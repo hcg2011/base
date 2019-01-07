@@ -1,18 +1,3 @@
-/*
- * Copyright 2017 JessYan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.baseapp.adapter
 
 import android.support.v7.widget.RecyclerView
@@ -21,14 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
- * ================================================
  * 基类 [RecyclerView.Adapter] ,如果需要实现非常复杂的 [RecyclerView] ,请尽量使用其他优秀的三方库
  *
  *
- * Created by jess on 2015/11/27.
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 abstract class DefaultAdapter<T>(infos: List<T>) : RecyclerView.Adapter<BaseHolder<T>>() {
     var infos: List<T>
@@ -88,9 +68,7 @@ abstract class DefaultAdapter<T>(infos: List<T>) : RecyclerView.Adapter<BaseHold
      * @param position
      * @return
      */
-    fun getItem(position: Int): T? {
-        return if (infos == null) null else infos[position]
-    }
+    fun getItem(position: Int): T? = if (infos == null) null else infos.let { it[position] }
 
     /**
      * 让子类实现用以提供 [BaseHolder]

@@ -1,11 +1,10 @@
 package com.chungo.base.di.module
 
 import android.app.Application
-import android.text.TextUtils
 import com.bumptech.glide.Glide
-import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.http.imageloader.BaseImageLoaderStrategy
 import com.chungo.base.http.imageloader.glide.GlideImageLoaderStrategy
+import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.http.log.DefaultFormatPrinter
 import com.chungo.base.http.log.FormatPrinter
 import com.chungo.base.http.log.RequestInterceptor
@@ -13,54 +12,35 @@ import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheFactory
 import com.chungo.base.rxerrorhandler.handler.listener.ResponseErrorListener
 import com.chungo.base.utils.DataHelper
-import com.chungo.base.utils.Preconditions
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.internal.Util
 import java.io.File
-import java.util.*
 import java.util.concurrent.*
 import javax.inject.Singleton
 
 @Module
-class GlobalConfigModule private constructor(builder: Builder) {
-    private val mApiUrl: HttpUrl?
-    private val mLoaderStrategy: BaseImageLoaderStrategy<*>?
-    private val mHandler: GlobalHttpHandler?
-    private val mInterceptors: MutableList<Interceptor>?
-    private val mErrorListener: ResponseErrorListener?
-    private val mCacheFile: File?
+class GlobalConfigModule {
+    var mApiUrl: HttpUrl? = null
+    var mLoaderStrategy: BaseImageLoaderStrategy<*>? = null
+    var mHandler: GlobalHttpHandler? = null
+    var mInterceptors: MutableList<Interceptor>? = null
+    var mErrorListener: ResponseErrorListener? = null
+    var mCacheFile: File? = null
 
-    private val mRetrofitConfiguration: NetModule.RetrofitConfig?
-    private val mOkhttpConfiguration: NetModule.OkhttpConfig?
-    private val mGsonConfiguration: NetModule.GsonConfig?
+    var mRetrofitConfiguration: NetModule.RetrofitConfig? = null
+    var mOkhttpConfiguration: NetModule.OkhttpConfig? = null
+    var mGsonConfiguration: NetModule.GsonConfig? = null
+    var mMoshiConfiguration: NetModule.MoshiConfig? = null
 
-    private val mRxCacheConfiguration: RxCacheModule.RxCacheConfig?
+    var mRxCacheConfiguration: RxCacheModule.RxCacheConfig? = null
 
-    private val mPrintHttpLogLevel: RequestInterceptor.Level?
-    private val mFormatPrinter: FormatPrinter?
-    private val mCacheFactory: Cache.Factory?
-    private val mExecutorService: ExecutorService?
-
-    init {
-        this.mApiUrl = builder.apiUrl
-        this.mLoaderStrategy = builder.loaderStrategy
-        this.mHandler = builder.handler
-        this.mInterceptors = builder.interceptors
-        this.mErrorListener = builder.responseErrorListener
-        this.mCacheFile = builder.cacheFile
-        this.mRetrofitConfiguration = builder.retrofitConfiguration
-        this.mOkhttpConfiguration = builder.okhttpConfiguration
-        this.mRxCacheConfiguration = builder.rxCacheConfiguration
-        this.mGsonConfiguration = builder.gsonConfiguration
-        this.mPrintHttpLogLevel = builder.printHttpLogLevel
-        this.mFormatPrinter = builder.formatPrinter
-        this.mCacheFactory = builder.cacheFactory
-        this.mExecutorService = builder.executorService
-    }
-
+    var mPrintHttpLogLevel: RequestInterceptor.Level? = null
+    var mFormatPrinter: FormatPrinter? = null
+    var mCacheFactory: Cache.Factory? = null
+    var mExecutorService: ExecutorService? = null
 
     @Singleton
     @Provides
@@ -72,7 +52,7 @@ class GlobalConfigModule private constructor(builder: Builder) {
     @Provides
     fun provideBaseUrl(): HttpUrl {
         return if (mApiUrl != null)
-            mApiUrl
+            mApiUrl!!
         else
             HttpUrl.parse("https://api.github.com/")!!
     }
@@ -142,6 +122,12 @@ class GlobalConfigModule private constructor(builder: Builder) {
 
     @Singleton
     @Provides
+    fun provideMoshiConfig(): NetModule.MoshiConfig? {
+        return mMoshiConfiguration
+    }
+
+    @Singleton
+    @Provides
     fun provideRxCacheConfig(): RxCacheModule.RxCacheConfig? {
         return mRxCacheConfiguration
     }
@@ -161,7 +147,7 @@ class GlobalConfigModule private constructor(builder: Builder) {
     @Singleton
     @Provides
     fun provideCacheFactory(application: Application): Cache.Factory {
-        return if (mCacheFactory != null) mCacheFactory else CacheFactory(application)
+        return if (mCacheFactory != null) mCacheFactory!! else CacheFactory(application)
     }
 
     /**
@@ -176,111 +162,4 @@ class GlobalConfigModule private constructor(builder: Builder) {
         return mExecutorService ?: ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS,
                 SynchronousQueue(), Util.threadFactory("Arms Executor", false))
     }
-
-    companion object {
-
-        fun builder(): Builder {
-            return Builder()
-        }
-    }
-
-    class Builder {
-        internal var handler: GlobalHttpHandler? = null
-        internal var apiUrl: HttpUrl? = null
-        internal var loaderStrategy: BaseImageLoaderStrategy<*>? = null
-        internal var interceptors: MutableList<Interceptor>? = null
-        internal var responseErrorListener: ResponseErrorListener? = null
-        internal var cacheFile: File? = null
-        internal var retrofitConfiguration: NetModule.RetrofitConfig? = null
-        internal var okhttpConfiguration: NetModule.OkhttpConfig? = null
-        internal var rxCacheConfiguration: RxCacheModule.RxCacheConfig? = null
-        internal var gsonConfiguration: NetModule.GsonConfig? = null
-        internal var printHttpLogLevel: RequestInterceptor.Level? = null
-        internal var formatPrinter: FormatPrinter? = null
-        internal var cacheFactory: Cache.Factory? = null
-        internal var executorService: ExecutorService? = null
-
-        fun baseurl(baseUrl: String): Builder {
-            if (TextUtils.isEmpty(baseUrl)) {
-                throw NullPointerException("BaseUrl can not be empty")
-            }
-            this.apiUrl = HttpUrl.parse(baseUrl)
-            return this
-        }
-
-        fun imageLoaderStrategy(loaderStrategy: BaseImageLoaderStrategy<*>): Builder {//用来请求网络图片
-            this.loaderStrategy = loaderStrategy
-            return this
-        }
-
-        fun globalHttpHandler(handler: GlobalHttpHandler?): Builder {//用来处理http响应结果
-            this.handler = handler
-            return this
-        }
-
-        fun addInterceptor(interceptor: Interceptor): Builder {//动态添加任意个interceptor
-            if (interceptors == null)
-                interceptors = ArrayList()
-            this.interceptors!!.add(interceptor)
-            return this
-        }
-
-
-        fun responseErrorListener(listener: ResponseErrorListener): Builder {//处理所有RxJava的onError逻辑
-            this.responseErrorListener = listener
-            return this
-        }
-
-
-        fun cacheFile(cacheFile: File): Builder {
-            this.cacheFile = cacheFile
-            return this
-        }
-
-        fun retrofitConfiguration(retrofitConfiguration: NetModule.RetrofitConfig): Builder {
-            this.retrofitConfiguration = retrofitConfiguration
-            return this
-        }
-
-        fun okhttpConfiguration(okhttpConfiguration: NetModule.OkhttpConfig): Builder {
-            this.okhttpConfiguration = okhttpConfiguration
-            return this
-        }
-
-        fun rxCacheConfiguration(rxCacheConfiguration: RxCacheModule.RxCacheConfig): Builder {
-            this.rxCacheConfiguration = rxCacheConfiguration
-            return this
-        }
-
-        fun gsonConfiguration(gsonConfiguration: NetModule.GsonConfig): Builder {
-            this.gsonConfiguration = gsonConfiguration
-            return this
-        }
-
-        fun printHttpLogLevel(printHttpLogLevel: RequestInterceptor.Level): Builder {//是否让框架打印 Http 的请求和响应信息
-            this.printHttpLogLevel = Preconditions.checkNotNull(printHttpLogLevel, "The printHttpLogLevel can not be null, use RequestInterceptor.Level.NONE instead.")
-            return this
-        }
-
-        fun formatPrinter(formatPrinter: FormatPrinter): Builder {
-            this.formatPrinter = Preconditions.checkNotNull(formatPrinter, FormatPrinter::class.java.canonicalName!! + "can not be null.")
-            return this
-        }
-
-        fun cacheFactory(cacheFactory: Cache.Factory): Builder {
-            this.cacheFactory = cacheFactory
-            return this
-        }
-
-        fun executorService(executorService: ExecutorService): Builder {
-            this.executorService = executorService
-            return this
-        }
-
-        fun build(): GlobalConfigModule {
-            return GlobalConfigModule(this)
-        }
-
-    }
-
 }

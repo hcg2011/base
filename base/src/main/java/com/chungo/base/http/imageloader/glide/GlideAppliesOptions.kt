@@ -8,11 +8,8 @@ import com.chungo.base.http.imageloader.BaseImageLoaderStrategy
 
 
 /**
- * ================================================
  * 如果你想具有配置 @[Glide] 的权利,则需要让 [BaseImageLoaderStrategy]
  * 的实现类也必须实现 [GlideAppliesOptions]
- *
- *
  */
 
 interface GlideAppliesOptions {

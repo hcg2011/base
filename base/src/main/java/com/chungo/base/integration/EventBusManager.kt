@@ -1,6 +1,6 @@
 package com.chungo.base.integration
 
-import com.chungo.base.base.Platform.DEPENDENCY_EVENTBUS
+import com.chungo.base.utils.DependencyUtils.EVENTBUS
 import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.Method
 
@@ -12,7 +12,7 @@ class EventBusManager private constructor() {
      * @param subscriber 订阅者
      */
     fun register(subscriber: Any) {
-        if (DEPENDENCY_EVENTBUS && haveAnnotation(subscriber)) {
+        if (EVENTBUS && haveAnnotation(subscriber)) {
             EventBus.getDefault().register(subscriber)
         }
     }
@@ -23,7 +23,7 @@ class EventBusManager private constructor() {
      * @param subscriber 订阅者
      */
     fun unregister(subscriber: Any) {
-        if (DEPENDENCY_EVENTBUS && haveAnnotation(subscriber)) {
+        if (EVENTBUS && haveAnnotation(subscriber)) {
             EventBus.getDefault().unregister(subscriber)
         }
     }
@@ -34,7 +34,7 @@ class EventBusManager private constructor() {
      * @param event 事件
      */
     fun post(event: Any) {
-        if (DEPENDENCY_EVENTBUS) {
+        if (EVENTBUS) {
             EventBus.getDefault().post(event)
         }
     }
@@ -45,7 +45,7 @@ class EventBusManager private constructor() {
      * @param event 事件
      */
     fun postSticky(event: Any) {
-        if (DEPENDENCY_EVENTBUS) {
+        if (EVENTBUS) {
             EventBus.getDefault().postSticky(event)
         }
     }
@@ -58,7 +58,7 @@ class EventBusManager private constructor() {
      * @return
     </T> */
     fun <T> removeStickyEvent(eventType: Class<T>): T? {
-        return if (DEPENDENCY_EVENTBUS) {
+        return if (EVENTBUS) {
             EventBus.getDefault().removeStickyEvent(eventType)
         } else null
     }
@@ -67,7 +67,7 @@ class EventBusManager private constructor() {
      * 清除订阅者和事件的缓存
      */
     fun clear() {
-        if (DEPENDENCY_EVENTBUS) {
+        if (EVENTBUS) {
             EventBus.clearCaches()
         }
     }

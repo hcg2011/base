@@ -2,6 +2,7 @@ package com.chungo.base.di.module
 
 import android.app.Application
 import android.content.Context
+import com.chungo.base.di.scope.Qualifiers
 import com.chungo.base.utils.DataHelper
 import com.google.gson.Gson
 import dagger.Module
@@ -9,7 +10,6 @@ import dagger.Provides
 import io.rx_cache2.internal.RxCache
 import io.victoralbertos.jolyglot.GsonSpeaker
 import java.io.File
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -36,7 +36,7 @@ class RxCacheModule {
      */
     @Singleton
     @Provides
-    fun provideRxCache(application: Application, configuration: RxCacheConfig?, @Named("RxCacheDirectory") cacheDirectory: File, gson: Gson): RxCache {
+    fun provideRxCache(application: Application, configuration: RxCacheConfig?, @Qualifiers.RxCacheDir cacheDirectory: File, gson: Gson): RxCache {
         val builder = RxCache.Builder()
         var rxCache: RxCache? = null
         if (configuration != null) {
@@ -53,7 +53,7 @@ class RxCacheModule {
      */
     @Singleton
     @Provides
-    @Named("RxCacheDirectory")
+    @Qualifiers.RxCacheDir
     fun provideRxCacheDirectory(cacheDir: File): File {
         val cacheDirectory = File(cacheDir, "RxCache")
         return DataHelper.makeDirs(cacheDirectory)

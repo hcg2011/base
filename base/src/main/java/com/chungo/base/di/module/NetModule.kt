@@ -7,6 +7,7 @@ import com.chungo.base.rxerrorhandler.handler.RxErrorHandler
 import com.chungo.base.rxerrorhandler.handler.listener.ResponseErrorListener
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import okhttp3.Dispatcher
@@ -15,14 +16,16 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 class NetModule {
-    private val TIME_OUT = 10
+    companion object {
+        private const val TIME_OUT = 10
+    }
 
     interface RetrofitConfig {
         fun configRetrofit(context: Context, builder: Retrofit.Builder)
@@ -36,6 +39,11 @@ class NetModule {
         fun configGson(context: Context, builder: GsonBuilder)
     }
 
+    interface MoshiConfig {
+        fun configMoshi(context: Context, builder: Moshi.Builder)
+    }
+
+
     @Singleton
     @Provides
     fun provideGson(application: Application, config: GsonConfig?): Gson {
@@ -46,14 +54,22 @@ class NetModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(application: Application, config: RetrofitConfig?, builder: Retrofit.Builder, client: OkHttpClient, httpUrl: HttpUrl, gson: Gson): Retrofit {
+    fun provideMoshi(application: Application, config: MoshiConfig?): Moshi {
+        val builder = Moshi.Builder()
+        config?.configMoshi(application, builder)
+        return builder.build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(application: Application, config: RetrofitConfig?, builder: Retrofit.Builder, client: OkHttpClient, httpUrl: HttpUrl, gson: Gson, moshi: Moshi): Retrofit {
         builder.baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
 
         config?.configRetrofit(application, builder)
-
         builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用 Rxjava
-                .addConverterFactory(GsonConverterFactory.create(gson))//使用 Gson
+                //.addConverterFactory(GsonConverterFactory.create(gson))//使用 Gson
+                .addConverterFactory(MoshiConverterFactory.create(moshi))//使用 moshi
         return builder.build()
     }
 

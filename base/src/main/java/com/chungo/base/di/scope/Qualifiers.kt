@@ -16,4 +16,8 @@ annotation class Qualifiers {
     @Qualifier
     @Retention
     annotation class RxLifecycle
+
+    @Qualifier
+    @Retention
+    annotation class RxCacheDir
 }

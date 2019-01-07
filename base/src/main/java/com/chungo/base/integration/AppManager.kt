@@ -7,7 +7,7 @@ import android.app.Service
 import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.view.View
-import com.chungo.base.base.Platform.DEPENDENCY_SUPPORT_DESIGN
+import com.chungo.base.utils.DependencyUtils.SUPPORT_DESIGN
 import com.chungo.base.utils.ArmsUtils
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -103,7 +103,7 @@ class AppManager private constructor() {
             //因为 Snackbar 在 com.android.support:design 库中, 所以如果框架使用者没有自行依赖 com.android.support:design
             //Arms 则会使用 Toast 替代 Snackbar 显示信息, 如果框架使用者依赖了 arms-autolayout 库就不用依赖 com.android.support:design 了
             //因为在 arms-autolayout 库中已经依赖有 com.android.support:design
-            if (DEPENDENCY_SUPPORT_DESIGN) {
+            if (SUPPORT_DESIGN) {
                 val activity = if (currentActivity == null) topActivity else currentActivity
                 val view = activity!!.window.decorView.findViewById<View>(android.R.id.content)
                 Snackbar.make(view, message, if (isLong) Snackbar.LENGTH_LONG else Snackbar.LENGTH_SHORT).show()

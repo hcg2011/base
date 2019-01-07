@@ -30,7 +30,7 @@ import javax.inject.Inject
  * @see BaseApplication
  *
  */
-class AppDelegate(context: Context) : App, IAppLifecycles {
+class AppDelegate(context: Context) : IApp, IAppLifecycles {
     @Inject
     //@Qualifiers.Lifecycle
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
@@ -135,15 +135,15 @@ class AppDelegate(context: Context) : App, IAppLifecycles {
 
 
     override fun onTerminate(application: Application) {
-        if (mActivityLifecycle != null) {
+        if (mActivityLifecycle != null)
             mApplication!!.unregisterActivityLifecycleCallbacks(mActivityLifecycle)
-        }
-        if (mActivityLifecycleForRxLifecycle != null) {
+
+        if (mActivityLifecycleForRxLifecycle != null)
             mApplication!!.unregisterActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
-        }
-        if (mComponentCallback != null) {
+
+        if (mComponentCallback != null)
             mApplication!!.unregisterComponentCallbacks(mComponentCallback)
-        }
+
         if (mActivityLifecycles != null && mActivityLifecycles.size > 0) {
             for (lifecycle in mActivityLifecycles) {
                 mApplication!!.unregisterActivityLifecycleCallbacks(lifecycle)
@@ -168,17 +168,13 @@ class AppDelegate(context: Context) : App, IAppLifecycles {
      */
     private fun getGlobalConfigModule(context: Context, modules: List<ConfigModule>): GlobalConfigModule {
 
-        val builder = GlobalConfigModule
-                .builder()
-
+        val congfig = GlobalConfigModule()
         //遍历 ConfigModule 集合, 给全局配置 GlobalConfigModule 添加参数
         for (module in modules) {
-            module.applyOptions(context, builder)
+            module.applyOptions(context, congfig)
         }
-
-        return builder.build()
+        return congfig
     }
-
 
     /**
      * [ComponentCallbacks2] 是一个细粒度的内存回收管理回调

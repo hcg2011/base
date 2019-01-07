@@ -170,9 +170,9 @@ class DeviceUtils private constructor() {
          * @return
          */
         fun getStatusBarHeight(context: Context): Int {
-            var c: Class<*>? = null
-            var obj: Any? = null
-            var field: Field? = null
+            var c: Class<*>?
+            var obj: Any?
+            var field: Field?
             var x = 0
             try {
                 c = Class.forName("com.android.internal.R\$dimen")

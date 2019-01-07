@@ -14,7 +14,7 @@ interface ConfigModule {
     /**
      * 使用[GlobalConfigModule.Builder]给框架配置一些配置参数
      */
-    fun applyOptions(context: Context, builder: GlobalConfigModule.Builder)
+    fun applyOptions(context: Context, builder: GlobalConfigModule)
 
     /**
      * 使用[IAppLifecycles]在Application的生命周期中注入一些操作

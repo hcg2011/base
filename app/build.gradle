@@ -68,9 +68,9 @@ dependencies {
 //        exclude module: 'support-annotations'
 //        exclude module: 'support-compat'
 //    }
-//    kapt(rootProject.ext.dependencies["butterknife-compiler"]) {
-//        exclude module: 'support-annotations'
-//    }
+    kapt(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
 //    //rx
 //    api rootProject.ext.dependencies["rxjava2"]
 //    api(rootProject.ext.dependencies["rxandroid2"]) {

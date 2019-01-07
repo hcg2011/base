@@ -2,8 +2,8 @@ package com.chungo.base
 
 import android.app.Application
 import android.content.Context
-import com.chungo.base.base.delegate.App
 import com.chungo.base.base.delegate.AppDelegate
+import com.chungo.base.base.delegate.IApp
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.lifecycle.IAppLifecycles
 import com.chungo.base.utils.ArmsUtils
@@ -16,7 +16,7 @@ import com.chungo.base.utils.Preconditions
  * 并提供给开发者使用, 使用本框架开发您的项目, 就意味着您已经拥有一个 MVP + Dagger2 + Retrofit + RxJava 项目
  *
  */
-class BaseApplication : Application(), App {
+class BaseApplication : Application(), IApp {
     private var mAppDelegate: IAppLifecycles? = null
 
     /**
@@ -28,8 +28,8 @@ class BaseApplication : Application(), App {
     override val appComponent: AppComponent
         get() {
             Preconditions.checkNotNull<IAppLifecycles>(mAppDelegate, "%s cannot be null", AppDelegate::class.java.name)
-            Preconditions.checkState(mAppDelegate is App, "%s must be implements %s", mAppDelegate!!.javaClass.name, App::class.java.name)
-            return (mAppDelegate as App).appComponent
+            Preconditions.checkState(mAppDelegate is IApp, "%s must be implements %s", mAppDelegate!!.javaClass.name, IApp::class.java.name)
+            return (mAppDelegate as IApp).appComponent
         }
 
     /**

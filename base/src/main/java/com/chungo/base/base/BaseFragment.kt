@@ -27,9 +27,8 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, FragmentLif
 
     @Synchronized
     override fun provideCache(): Cache<String, Any> {
-        if (mCache == null) {
+        if (mCache == null)
             mCache = ArmsUtils.obtainAppComponentFromContext(this.activity!!).cacheFactory().build(CacheType.FRAGMENT_CACHE) as Cache<String, Any>
-        }
         return mCache!!
     }
 

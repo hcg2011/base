@@ -242,9 +242,9 @@ class DataHelper private constructor() {
         @Throws(IOException::class)
         fun byteToString(inPut: InputStream): String {
             val output = ByteArrayOutputStream()
-            var read: Int = -1
+            var read: Int
             inPut.use { input ->
-                output.use {
+                output.use { it ->
                     while (input.read().also { read = it } != -1) {
                         it.write(read)
                     }

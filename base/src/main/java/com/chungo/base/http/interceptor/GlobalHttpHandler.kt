@@ -7,10 +7,8 @@ import okhttp3.Request
 import okhttp3.Response
 
 /**
- * ================================================
  * 处理 Http 请求和响应结果的处理类
  * 使用 [GlobalConfigModule.Builder.globalHttpHandler] 方法配置
- *
  */
 interface GlobalHttpHandler {
     fun onHttpResultResponse(httpResult: String, chain: Interceptor.Chain, response: Response): Response

@@ -7,7 +7,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * ================================================
  * [ImageLoader] 使用策略模式和建造者模式,可以动态切换图片请求框架(比如说切换成 Picasso )
  * 当需要切换图片请求框架或图片请求框架升级后变更了 Api 时
  * 这里可以将影响范围降到最低,所以封装 [ImageLoader] 是为了屏蔽这个风险

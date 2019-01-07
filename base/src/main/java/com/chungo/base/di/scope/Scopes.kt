@@ -1,6 +1,5 @@
 package com.chungo.base.di.scope
 
-import java.lang.annotation.Documented
 import javax.inject.Scope
 
 /**
@@ -12,13 +11,13 @@ annotation class Scopes {
 
     //Activity 的生命周期，对于activity单例
     @Scope
-    @Documented
+    @MustBeDocumented
     @Retention
     annotation class Activity
 
     //Fragment 的生命周期，对于fragment单例
     @Scope
-    @Documented
+    @MustBeDocumented
     @Retention
     annotation class Fragment
 }

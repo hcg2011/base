@@ -19,7 +19,6 @@ import java.util.concurrent.ExecutorService
 import javax.inject.Singleton
 
 /**
- * ================================================
  * 可通过 [ArmsUtils.obtainAppComponentFromContext] 拿到此接口的实现类
  * 拥有此接口的实现类即可调用对应的方法拿到 Dagger 提供的对应实例
  *
