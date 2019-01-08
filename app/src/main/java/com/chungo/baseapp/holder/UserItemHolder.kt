@@ -22,7 +22,7 @@ import butterknife.BindView
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.imageloader.ImageLoader
 import com.chungo.base.imageloader.glide.ImageConfigImpl
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.R
 import com.chungo.baseapp.adapter.BaseHolder
 import com.chungo.baseapp.adapter.DefaultAdapter
@@ -50,7 +50,7 @@ class UserItemHolder(itemView: View) : BaseHolder<User>(itemView) {
 
     init {
         //可以在任何可以拿到 Context 的地方,拿到 AppComponent,从而得到用 Dagger 管理的单例对象
-        mAppComponent = ArmsUtils.obtainAppComponentFromContext(itemView.context)
+        mAppComponent = AppUtils.obtainAppComponentFromContext(itemView.context)
     }
 
     override fun setData(data: User, position: Int) {

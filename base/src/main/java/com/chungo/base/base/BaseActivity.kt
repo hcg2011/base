@@ -11,7 +11,7 @@ import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
 import com.chungo.base.lifecycle.rx.IActivityLifecycleable
 import com.chungo.base.mvp.IPresenter
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.trello.rxlifecycle2.android.ActivityEvent
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -35,7 +35,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
     @Synchronized
     override fun provideCache(): Cache<*, *> {
         if (mCache == null) {
-            mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE)
+            mCache = AppUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE)
         }
         return mCache!!
     }
@@ -68,7 +68,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
         if (mUnbinder != null && mUnbinder !== Unbinder.EMPTY)
             mUnbinder!!.unbind()
         this.mUnbinder = null
-        mPresenter?.onDestroy()//释放资源
+        mPresenter.onDestroy()//释放资源
     }
 
     /**

@@ -9,11 +9,11 @@ import android.content.Context
 import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import com.chungo.base.config.ConfigModule
+import com.chungo.base.config.ManifestParser
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.di.component.DaggerAppComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
-import com.chungo.base.config.ManifestParser
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles
@@ -134,21 +134,24 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
 
 
     override fun onTerminate(application: Application) {
-        if (mActivityLifecycle != null)
-            mApplication!!.unregisterActivityLifecycleCallbacks(mActivityLifecycle)
+        mActivityLifecycle?.let {
+            mApplication?.unregisterActivityLifecycleCallbacks(it)
+        }
 
-        if (mActivityLifecycleForRxLifecycle != null)
-            mApplication!!.unregisterActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
+        mActivityLifecycleForRxLifecycle?.let {
+            mApplication?.unregisterActivityLifecycleCallbacks(it)
+        }
 
-        if (mComponentCallback != null)
-            mApplication!!.unregisterComponentCallbacks(mComponentCallback)
+        mComponentCallback?.let {
+            mApplication?.unregisterComponentCallbacks(it)
+        }
 
-        if (mActivityLifecycles != null && mActivityLifecycles.size > 0) {
+        if (mActivityLifecycles.size > 0) {
             for (lifecycle in mActivityLifecycles) {
                 mApplication!!.unregisterActivityLifecycleCallbacks(lifecycle)
             }
         }
-        if (mAppLifecycles != null && mAppLifecycles.size > 0) {
+        if (mAppLifecycles.size > 0) {
             for (lifecycle in mAppLifecycles) {
                 lifecycle.onTerminate(application)
             }

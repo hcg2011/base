@@ -9,7 +9,7 @@ import android.view.View
 import butterknife.BindView
 import com.chungo.base.base.BaseActivity
 import com.chungo.base.di.component.AppComponent
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.R
 import com.chungo.baseapp.adapter.DefaultAdapter
 import com.chungo.baseapp.adapter.DefaultAdapter.OnRecyclerViewItemClickListener
@@ -86,7 +86,7 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
      */
     private fun initRecyclerView() {
         mSwipeRefreshLayout.setOnRefreshListener(this)
-        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager)
+        AppUtils.configRecyclerView(mRecyclerView, mLayoutManager)
         mAdapter.setOnItemClickListener(this)
     }
 
@@ -108,12 +108,12 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
 
     override fun showMessage(message: String) {
         checkNotNull(message)
-        ArmsUtils.snackbarText(message)
+        AppUtils.snackbarText(message)
     }
 
     override fun launchActivity(intent: Intent) {
         checkNotNull(intent)
-        ArmsUtils.startActivity(intent)
+        AppUtils.startActivity(intent)
     }
 
     override fun killMyself() {

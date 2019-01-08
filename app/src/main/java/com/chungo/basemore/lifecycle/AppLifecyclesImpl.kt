@@ -5,7 +5,7 @@ import android.content.Context
 import butterknife.ButterKnife
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.BuildConfig
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -46,7 +46,7 @@ class AppLifecyclesImpl : IAppLifecycles {
         else
             RefWatcher.DISABLED
 
-        var cache = ArmsUtils.obtainAppComponentFromContext(application).extras() as? Cache<String, Any>
+        var cache = AppUtils.obtainAppComponentFromContext(application).extras() as? Cache<String, Any>
 
         cache?.put(IntelligentCache.getKeyOfKeep(RefWatcher::class.java.name), refWatcher)
     }

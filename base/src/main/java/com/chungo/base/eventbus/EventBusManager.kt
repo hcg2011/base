@@ -1,4 +1,4 @@
-package com.chungo.base.integration
+package com.chungo.base.eventbus
 
 import com.chungo.base.utils.DependencyUtils.EVENTBUS
 import org.greenrobot.eventbus.EventBus

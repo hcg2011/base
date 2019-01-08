@@ -8,7 +8,7 @@ import android.view.View
 import com.chungo.base.integration.cache.Cache
 
 import com.chungo.base.integration.cache.IntelligentCache
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.squareup.leakcanary.RefWatcher
 
 import timber.log.Timber
@@ -68,7 +68,7 @@ class FragmentLifecycleCallbacksImpl : FragmentManager.FragmentLifecycleCallback
     @Suppress("UNCHECKED_CAST")
     override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
         Timber.i(f.toString() + " - onFragmentDestroyed")
-        var cache = ArmsUtils
+        var cache = AppUtils
                 .obtainAppComponentFromContext(f.activity as Context)
                 .extras() as Cache<String, Any>
 

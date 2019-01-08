@@ -7,8 +7,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chungo.base.di.module.GlobalConfigModule
-import com.chungo.base.http.imageloader.glide.GlideArms
-import com.chungo.base.http.imageloader.glide.GlideRequests
 import com.chungo.base.imageloader.BaseStrategy
 import com.chungo.base.imageloader.ImageConfig
 import com.chungo.base.utils.Preconditions
@@ -32,7 +30,7 @@ class GlideStrategy : BaseStrategy<ImageConfigImpl>, GlideAppliesOptions {
 
         val requests: GlideRequests
 
-        requests = GlideArms.with(ctx)//如果context是activity则自动使用Activity的生命周期
+        requests = Glides.with(ctx)//如果context是activity则自动使用Activity的生命周期
 
         val glideRequest = requests.load(config.url)
 
@@ -91,12 +89,12 @@ class GlideStrategy : BaseStrategy<ImageConfigImpl>, GlideAppliesOptions {
         Preconditions.checkNotNull(config, "ImageConfigImpl is required")
 
         if (config.imageView != null) {
-            GlideArms.get(ctx).getRequestManagerRetriever().get(ctx).clear(config.imageView!!)
+            Glides.get(ctx).getRequestManagerRetriever().get(ctx).clear(config.imageView!!)
         }
 
         if (config.imageViews != null && config.imageViews!!.size > 0) {//取消在执行的任务并且释放资源
             for (imageView in config.imageViews!!) {
-                GlideArms.get(ctx).getRequestManagerRetriever().get(ctx).clear(imageView)
+                Glides.get(ctx).getRequestManagerRetriever().get(ctx).clear(imageView)
             }
         }
 

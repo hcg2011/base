@@ -7,7 +7,7 @@ import com.chungo.base.di.module.*
 import com.chungo.base.http.IRepositoryManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.rxerror.RxErrorHandler
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.google.gson.Gson
 import dagger.BindsInstance
 import dagger.Component
@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutorService
 import javax.inject.Singleton
 
 /**
- * 可通过 [ArmsUtils.obtainAppComponentFromContext] 拿到此接口的实现类
+ * 可通过 [AppUtils.obtainAppComponentFromContext] 拿到此接口的实现类
  * 拥有此接口的实现类即可调用对应的方法拿到 Dagger 提供的对应实例
  *
  */

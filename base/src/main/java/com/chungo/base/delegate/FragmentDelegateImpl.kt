@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentManager
 import android.view.View
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.chungo.base.integration.EventBusManager
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.eventbus.EventBusManager
+import com.chungo.base.utils.AppUtils
 import timber.log.Timber
 
 
@@ -40,7 +40,7 @@ class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, priva
         if (iFragment!!.useEventBus())
         //如果要使用eventbus请将此方法返回true
             EventBusManager.instance.register(mFragment!!)//注册到事件主线
-        iFragment!!.setupFragmentComponent(ArmsUtils.obtainAppComponentFromContext(mFragment!!.activity!!))
+        iFragment!!.setupFragmentComponent(AppUtils.obtainAppComponentFromContext(mFragment!!.activity!!))
     }
 
     override fun onCreateView(view: View?, savedInstanceState: Bundle?) {

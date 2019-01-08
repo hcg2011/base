@@ -11,7 +11,7 @@ import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
 import com.chungo.base.lifecycle.rx.IFragmentLifecycleable
 import com.chungo.base.mvp.IPresenter
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.trello.rxlifecycle2.android.FragmentEvent
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -28,7 +28,7 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, IFragmentLi
     @Synchronized
     override fun provideCache(): Cache<String, Any> {
         if (mCache == null)
-            mCache = ArmsUtils.obtainAppComponentFromContext(this.activity!!).cacheFactory().build(CacheType.FRAGMENT_CACHE) as Cache<String, Any>
+            mCache = AppUtils.obtainAppComponentFromContext(this.activity!!).cacheFactory().build(CacheType.FRAGMENT_CACHE) as Cache<String, Any>
         return mCache!!
     }
 
@@ -47,7 +47,7 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, IFragmentLi
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter?.onDestroy()//释放资源
+        mPresenter.onDestroy()//释放资源
     }
 
     override fun onDetach() {

@@ -6,7 +6,7 @@ import com.chungo.base.delegate.AppDelegate
 import com.chungo.base.delegate.IApp
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.lifecycle.IAppLifecycles
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.chungo.base.utils.Preconditions
 
 
@@ -22,7 +22,7 @@ class BaseApplication : Application(), IApp {
     /**
      * 将 [AppComponent] 返回出去, 供其它地方使用, [AppComponent] 接口中声明的方法所返回的实例, 在 [.getAppComponent] 拿到对象后都可以直接使用
      *
-     * @see ArmsUtils.obtainAppComponentFromContext
+     * @see AppUtils.obtainAppComponentFromContext
      * @return AppComponent
      */
     override val appComponent: AppComponent
@@ -48,7 +48,7 @@ class BaseApplication : Application(), IApp {
     override fun onCreate() {
         super.onCreate()
         if (mAppDelegate != null)
-            this.mAppDelegate!!.onCreate(this)
+            mAppDelegate!!.onCreate(this)
     }
 
     /**
@@ -57,7 +57,7 @@ class BaseApplication : Application(), IApp {
     override fun onTerminate() {
         super.onTerminate()
         if (mAppDelegate != null)
-            this.mAppDelegate!!.onTerminate(this)
+            mAppDelegate!!.onTerminate(this)
     }
 
 }

@@ -9,7 +9,7 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.support.v4.app.Fragment
 import android.support.v4.app.SupportActivity
 import android.view.View
-import com.chungo.base.integration.EventBusManager
+import com.chungo.base.eventbus.EventBusManager
 import com.chungo.base.utils.Preconditions
 import com.trello.rxlifecycle2.RxLifecycle
 import io.reactivex.disposables.CompositeDisposable

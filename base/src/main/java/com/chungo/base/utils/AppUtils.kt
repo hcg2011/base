@@ -22,7 +22,7 @@ import com.chungo.base.di.component.AppComponent
 import com.chungo.base.integration.AppManager
 import java.security.MessageDigest
 
-class ArmsUtils private constructor() {
+class AppUtils private constructor() {
 
 
     init {

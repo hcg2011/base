@@ -3,7 +3,7 @@ package com.chungo.base.http.interceptor
 import android.content.Context
 import android.text.TextUtils
 import com.chungo.base.http.log.RequestInterceptor
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.chungo.basemore.api.Api
 import com.chungo.basemore.mvp.model.entity.User
 import com.google.gson.reflect.TypeToken
@@ -27,7 +27,7 @@ class GlobalHttpHandlerImpl(private val context: Context) : GlobalHttpHandler {
     override fun onHttpResultResponse(httpResult: String, chain: Interceptor.Chain, response: Response): Response {
         if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body()!!.contentType())) {
             try {
-                val list = ArmsUtils.obtainAppComponentFromContext(context).gson()!!.fromJson<List<User>>(httpResult, object : TypeToken<List<User>>() {
+                val list = AppUtils.obtainAppComponentFromContext(context).gson()!!.fromJson<List<User>>(httpResult, object : TypeToken<List<User>>() {
 
                 }.type)
                 val user = list[0]

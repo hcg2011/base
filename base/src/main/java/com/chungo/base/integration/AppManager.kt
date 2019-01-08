@@ -7,13 +7,12 @@ import android.app.Service
 import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.view.View
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.chungo.base.utils.DependencyUtils.SUPPORT_DESIGN
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import java.util.*
-
 
 /**
  * 用于管理所有 [Activity],和在前台的 [Activity]
@@ -108,7 +107,7 @@ class AppManager private constructor() {
                 val view = activity!!.window.decorView.findViewById<View>(android.R.id.content)
                 Snackbar.make(view, message, if (isLong) Snackbar.LENGTH_LONG else Snackbar.LENGTH_SHORT).show()
             } else {
-                ArmsUtils.makeText(mApplication!!, message)
+                AppUtils.makeText(mApplication!!, message)
             }
         }.subscribeOn(AndroidSchedulers.mainThread()).subscribe()
 

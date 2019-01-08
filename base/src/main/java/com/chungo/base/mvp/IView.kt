@@ -2,7 +2,7 @@ package com.chungo.base.mvp
 
 import android.app.Activity
 import android.content.Intent
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 
 
 interface IView {
@@ -35,7 +35,7 @@ interface IView {
      */
     fun launchActivity(intent: Intent) {
         checkNotNull(intent)
-        ArmsUtils.startActivity(intent)
+        AppUtils.startActivity(intent)
     }
 
     /**

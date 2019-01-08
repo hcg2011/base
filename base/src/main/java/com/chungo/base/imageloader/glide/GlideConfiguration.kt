@@ -13,7 +13,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
 import com.chungo.base.http.ssl.OkHttpUrlLoader
 import com.chungo.base.imageloader.ImageLoader
-import com.chungo.base.utils.ArmsUtils
+import com.chungo.base.utils.AppUtils
 import com.chungo.base.utils.DataHelper
 import java.io.File
 import java.io.InputStream
@@ -27,7 +27,7 @@ import java.io.InputStream
 class GlideConfiguration : AppGlideModule() {
 
     override fun applyOptions(context: Context, builder: GlideBuilder) {
-        val appComponent = ArmsUtils.obtainAppComponentFromContext(context)
+        val appComponent = AppUtils.obtainAppComponentFromContext(context)
         builder.setDiskCache {
             // Careful: the external cache directory doesn't enforce permissions
             DiskLruCacheWrapper.create(DataHelper.makeDirs(File(appComponent.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE.toLong())
@@ -54,7 +54,7 @@ class GlideConfiguration : AppGlideModule() {
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         //Glide 默认使用 HttpURLConnection 做网络请求,在这切换成 Okhttp 请求
-        val appComponent = ArmsUtils.obtainAppComponentFromContext(context)
+        val appComponent = AppUtils.obtainAppComponentFromContext(context)
         registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(appComponent.okHttpClient()))
     }
 

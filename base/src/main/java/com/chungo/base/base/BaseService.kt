@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 
-import com.chungo.base.integration.EventBusManager
+import com.chungo.base.eventbus.EventBusManager
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
