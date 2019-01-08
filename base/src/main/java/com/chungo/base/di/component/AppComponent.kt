@@ -1,12 +1,12 @@
 package com.chungo.base.di.component
 
 import android.app.Application
-import com.chungo.base.base.delegate.AppDelegate
+import com.chungo.base.delegate.AppDelegate
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.di.module.*
-import com.chungo.base.integration.IRepositoryManager
+import com.chungo.base.http.IRepositoryManager
 import com.chungo.base.integration.cache.Cache
-import com.chungo.base.rxerrorhandler.handler.RxErrorHandler
+import com.chungo.base.rxerror.RxErrorHandler
 import com.chungo.base.utils.ArmsUtils
 import com.google.gson.Gson
 import dagger.BindsInstance

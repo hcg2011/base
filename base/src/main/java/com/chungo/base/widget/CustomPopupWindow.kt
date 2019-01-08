@@ -93,7 +93,6 @@ class CustomPopupWindow private constructor(builder: Builder) : PopupWindow() {
             return this
         }
 
-
         fun customListener(listener: CustomPopupWindowListener): Builder {
             this.listener = listener
             return this

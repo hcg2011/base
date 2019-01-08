@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 
 
 /**
+ * 参考google 推荐的mvvm架构中的关键v部分
  * [LifecycleModelProviders] 配合 [LifecycleModel] 的实现类可以帮助 [Activity] 和 [Fragment]
  * 储存存和管理一些与 UI 相关以及他们必需的数据, 并且这些数据在屏幕旋转或配置更改引起的 [Activity] 重建的情况下也会被保留, 直到最后被 finish
  * 但是 [LifecycleModel] 的实现类切勿直接引用 [Activity] 和 [Fragment] 以及他们里面 UI 元素

@@ -2,6 +2,7 @@ package com.chungo.base.utils
 
 import android.text.TextUtils
 import android.util.Log
+import com.chungo.base.BuildConfig
 
 /**
  * 日志工具类
@@ -13,7 +14,7 @@ class LogUtils private constructor() {
     }
 
     companion object {
-        private val DEFAULT_TAG = "MVPArms"
+        private val DEFAULT_TAG = BuildConfig.APPLICATION_ID
         var isLog = true
 
         fun debugInfo(tag: String, msg: String) {

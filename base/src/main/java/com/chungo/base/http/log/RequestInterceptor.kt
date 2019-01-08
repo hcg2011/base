@@ -1,7 +1,7 @@
 package com.chungo.base.http.log
 
 import com.chungo.base.http.interceptor.GlobalHttpHandler
-import com.chungo.base.utils.CharacterHandler
+import com.chungo.base.utils.StringUtils
 import com.chungo.base.utils.UrlEncoderUtils
 import com.chungo.base.utils.ZipHelper
 import okhttp3.*
@@ -183,7 +183,7 @@ constructor() : Interceptor {
                 if (UrlEncoderUtils.hasUrlEncoded(json)) {
                     json = URLDecoder.decode(json, convertCharset(charset))
                 }
-                return CharacterHandler.jsonFormat(json)
+                return StringUtils.jsonFormat(json)
             } catch (e: IOException) {
                 e.printStackTrace()
                 return "{\"error\": \"" + e.message + "\"}"

@@ -7,9 +7,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.SupportActivity
 import com.chungo.base.di.scope.Scopes
 import com.chungo.base.mvp.BasePresenter
-import com.chungo.base.rxerrorhandler.handler.ErrorHandleSubscriber
-import com.chungo.base.rxerrorhandler.handler.RetryWithDelay
-import com.chungo.base.rxerrorhandler.handler.RxErrorHandler
+import com.chungo.base.rxerror.ErrorHandleSubscriber
+import com.chungo.base.rxerror.RetryWithDelay
+import com.chungo.base.rxerror.RxErrorHandler
 import com.chungo.base.utils.PermissionUtil
 import com.chungo.base.utils.RxLifecycleUtils
 import com.chungo.baseapp.adapter.UserAdapter

@@ -1,8 +1,8 @@
 package com.chungo.base.utils
 
-import com.chungo.base.integration.lifecycle.ActivityLifecycleable
-import com.chungo.base.integration.lifecycle.FragmentLifecycleable
-import com.chungo.base.integration.lifecycle.Lifecycleable
+import com.chungo.base.lifecycle.rx.IActivityLifecycleable
+import com.chungo.base.lifecycle.rx.IFragmentLifecycleable
+import com.chungo.base.lifecycle.rx.ILifecycleable
 import com.chungo.base.mvp.IView
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle
@@ -36,8 +36,8 @@ class RxLifecycleUtils private constructor() {
         fun <T> bindUntilEvent(@NonNull view: IView,
                                event: ActivityEvent): LifecycleTransformer<T> {
             Preconditions.checkNotNull(view, "view == null")
-            return if (view is ActivityLifecycleable) {
-                bindUntilEvent(view as ActivityLifecycleable, event)
+            return if (view is IActivityLifecycleable) {
+                bindUntilEvent(view as IActivityLifecycleable, event)
             } else {
                 throw IllegalArgumentException("view isn't ActivityLifecycleable")
             }
@@ -54,14 +54,14 @@ class RxLifecycleUtils private constructor() {
         fun <T> bindUntilEvent(@NonNull view: IView,
                                event: FragmentEvent): LifecycleTransformer<T> {
             Preconditions.checkNotNull(view, "view == null")
-            return if (view is FragmentLifecycleable) {
-                bindUntilEvent(view as FragmentLifecycleable, event)
+            return if (view is IFragmentLifecycleable) {
+                bindUntilEvent(view as IFragmentLifecycleable, event)
             } else {
                 throw IllegalArgumentException("view isn't FragmentLifecycleable")
             }
         }
 
-        fun <T, R> bindUntilEvent(@NonNull lifecycleable: Lifecycleable<R>,
+        fun <T, R> bindUntilEvent(@NonNull lifecycleable: ILifecycleable<R>,
                                   event: R): LifecycleTransformer<T> {
             Preconditions.checkNotNull(lifecycleable, "lifecycleable == null")
             return RxLifecycle.bindUntilEvent(lifecycleable.provideLifecycleSubject(), event)
@@ -77,18 +77,18 @@ class RxLifecycleUtils private constructor() {
         </T> */
         fun <T> bindToLifecycle(@NonNull view: IView): LifecycleTransformer<T> {
             Preconditions.checkNotNull(view, "view == null")
-            return if (view is Lifecycleable<*>) {
-                bindToLifecycle(view as Lifecycleable<*>)
+            return if (view is ILifecycleable<*>) {
+                bindToLifecycle(view as ILifecycleable<*>)
             } else {
                 throw IllegalArgumentException("view isn't Lifecycleable")
             }
         }
 
-        fun <T> bindToLifecycle(@NonNull lifecycleable: Lifecycleable<*>): LifecycleTransformer<T> {
-            Preconditions.checkNotNull<Lifecycleable<*>>(lifecycleable, "lifecycleable == null")
-            return if (lifecycleable is ActivityLifecycleable) {
+        fun <T> bindToLifecycle(@NonNull lifecycleable: ILifecycleable<*>): LifecycleTransformer<T> {
+            Preconditions.checkNotNull<ILifecycleable<*>>(lifecycleable, "lifecycleable == null")
+            return if (lifecycleable is IActivityLifecycleable) {
                 RxLifecycleAndroid.bindActivity(lifecycleable.provideLifecycleSubject())
-            } else if (lifecycleable is FragmentLifecycleable) {
+            } else if (lifecycleable is IFragmentLifecycleable) {
                 RxLifecycleAndroid.bindFragment(lifecycleable.provideLifecycleSubject())
             } else {
                 throw IllegalArgumentException("Lifecycleable not match")

@@ -1,16 +1,13 @@
 package com.chungo.base.http.log
 
 import android.text.TextUtils
-
 import com.chungo.base.di.module.GlobalConfigModule
-import com.chungo.base.utils.CharacterHandler
 import com.chungo.base.utils.LogUtils
-
+import com.chungo.base.utils.StringUtils
 import okhttp3.MediaType
 import okhttp3.Request
 
 /**
- * ================================================
  * 对 OkHttp 的请求和响应信息进行更规范和清晰的打印, 此类为框架默认实现, 以默认格式打印信息, 若觉得默认打印格式
  * 并不能满足自己的需求, 可自行扩展自己理想的打印格式
  *
@@ -68,8 +65,8 @@ class DefaultFormatPrinter : FormatPrinter {
                                    bodyString: String, segments: List<String>, message: String, responseUrl: String) {
         var bodyString = bodyString
         bodyString = if (RequestInterceptor.isJson(contentType))
-            CharacterHandler.jsonFormat(bodyString)
-        else if (RequestInterceptor.isXml(contentType)) CharacterHandler.xmlFormat(bodyString) else bodyString
+            StringUtils.jsonFormat(bodyString)
+        else if (RequestInterceptor.isXml(contentType)) StringUtils.xmlFormat(bodyString) else bodyString
 
         val responseBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString
         val tag = getTag(false)

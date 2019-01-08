@@ -4,7 +4,7 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.OnLifecycleEvent
-import com.chungo.base.integration.IRepositoryManager
+import com.chungo.base.http.IRepositoryManager
 
 /**
  * 基类 Model

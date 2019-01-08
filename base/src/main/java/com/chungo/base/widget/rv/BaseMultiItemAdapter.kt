@@ -23,15 +23,9 @@ abstract class BaseMultiItemAdapter<T : MultiItemEntity, V : BaseViewHolder> : B
     protected lateinit var mProvider: MultiDelegateProvider<T, BaseItemDelegate<T, BaseViewHolder>>
     protected lateinit var mClickTypes: MutableMap<Int, Boolean>
 
-    constructor(data: List<T>?) : super(data) {
-        initialize()
-    }
 
-    constructor(@LayoutRes layoutResId: Int, data: List<T>?) : super(layoutResId, data) {
-        initialize()
-    }
-
-    constructor(@LayoutRes layoutResId: Int) : super(layoutResId) {
+    @JvmOverloads
+    constructor(@LayoutRes layoutResId: Int = 0, data: List<T>? = null) : super(layoutResId, data) {
         initialize()
     }
 

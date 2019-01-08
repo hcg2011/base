@@ -20,8 +20,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import com.chungo.base.di.component.AppComponent
-import com.chungo.base.http.imageloader.ImageLoader
-import com.chungo.base.http.imageloader.glide.ImageConfigImpl
+import com.chungo.base.imageloader.ImageLoader
+import com.chungo.base.imageloader.glide.ImageConfigImpl
 import com.chungo.base.utils.ArmsUtils
 import com.chungo.baseapp.R
 import com.chungo.baseapp.adapter.BaseHolder

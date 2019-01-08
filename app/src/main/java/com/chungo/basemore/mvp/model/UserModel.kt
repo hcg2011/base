@@ -2,7 +2,7 @@ package com.chungo.basemore.mvp.model
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
-import com.chungo.base.integration.IRepositoryManager
+import com.chungo.base.http.IRepositoryManager
 import com.chungo.base.mvp.BaseModel
 import com.chungo.basemore.api.cache.CommonCache
 import com.chungo.basemore.api.service.UserService

@@ -19,10 +19,6 @@ import com.chungo.base.lifecycle.lifecyclemodel.cache.LruCache
  *
  * 通过 [LifecycleModelStores] 可向 [Activity] 和 [Fragment] 提供 `LifecycleModelStore`
  *
- *
- * Created by JessYan on 21/11/2017 16:57
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
  */
 class LifecycleModelStore {
 

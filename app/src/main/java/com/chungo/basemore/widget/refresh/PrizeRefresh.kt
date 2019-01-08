@@ -14,16 +14,9 @@ import com.scwang.smartrefresh.layout.util.DensityUtil
  * @Author huangchangguo
  * @Created 2018/5/22 15:29
  */
-class PrizeRefresh : SmartRefreshLayout {
+class PrizeRefresh @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : SmartRefreshLayout(context, attrs, defStyleAttr) {
     private var mTipsSpinner = DensityUtil.dp2px(32f)
     private var mTips: TipsView? = null
-
-
-    constructor(context: Context) : super(context) {}
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
     private fun initView() {
         val parent = this.parent

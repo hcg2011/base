@@ -1,8 +1,8 @@
 package com.chungo.base.utils
 
 import android.Manifest
-import com.chungo.base.rxerrorhandler.handler.RxErrorHandler
-import com.chungo.base.rxerrorhandler.handler.ErrorHandleSubscriber
+import com.chungo.base.rxerror.RxErrorHandler
+import com.chungo.base.rxerror.ErrorHandleSubscriber
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.annotations.NonNull

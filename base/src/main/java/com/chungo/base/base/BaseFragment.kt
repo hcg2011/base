@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chungo.base.base.delegate.IFragment
+import com.chungo.base.delegate.IFragment
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
-import com.chungo.base.integration.lifecycle.FragmentLifecycleable
+import com.chungo.base.lifecycle.rx.IFragmentLifecycleable
 import com.chungo.base.mvp.IPresenter
 import com.chungo.base.utils.ArmsUtils
 import com.trello.rxlifecycle2.android.FragmentEvent
@@ -17,7 +17,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
-abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, FragmentLifecycleable {
+abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, IFragmentLifecycleable {
     protected val TAG = this.javaClass.simpleName
     private val mLifecycleSubject = BehaviorSubject.create<FragmentEvent>()
     private var mCache: Cache<String, Any>? = null

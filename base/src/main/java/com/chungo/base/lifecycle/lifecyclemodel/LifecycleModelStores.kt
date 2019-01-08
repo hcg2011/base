@@ -8,10 +8,6 @@ import android.support.v4.app.FragmentActivity
 /**
  * Factory methods for [LifecycleModelStore] class.
  *
- *
- * Created by JessYan on 21/11/2017 16:57
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
  */
 object LifecycleModelStores {
 

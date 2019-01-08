@@ -3,8 +3,8 @@ package com.chungo.base.di.module
 import android.app.Application
 import android.content.Context
 import com.chungo.base.http.interceptor.GlobalHttpHandler
-import com.chungo.base.rxerrorhandler.handler.RxErrorHandler
-import com.chungo.base.rxerrorhandler.handler.listener.ResponseErrorListener
+import com.chungo.base.rxerror.RxErrorHandler
+import com.chungo.base.rxerror.listener.ResponseErrorListener
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
