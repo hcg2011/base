@@ -109,10 +109,7 @@ open class BasePresenter<M : IModel, V : IView> : IPresenter, LifecycleObserver 
      *
      * @return 返回 `true` (默认为使用 `true`), Arms 会自动注册 EventBus
      */
-    fun useEventBus(): Boolean {
-        return true
-    }
-
+    open fun useEventBus(): Boolean = true
 
     /**
      * 将 [Disposable] 添加到 [CompositeDisposable] 中统一管理

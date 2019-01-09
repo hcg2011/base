@@ -1,8 +1,10 @@
 package com.chungo.basemore.mvp.contract
 
 import android.app.Activity
-import com.chungo.base.mvp.IView
+import android.content.Intent
 import com.chungo.base.mvp.IModel
+import com.chungo.base.mvp.IView
+import com.chungo.base.utils.AppUtils
 import com.chungo.basemore.mvp.model.entity.User
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
@@ -21,6 +23,20 @@ interface UserContract {
 
         fun startLoadMore()
         fun endLoadMore()
+        fun showLoading() {
+
+        }
+
+        fun hideLoading() {
+
+        }
+
+        fun showMessage(message: String)
+
+        fun launchActivity(intent: Intent) {
+            checkNotNull(intent)
+            AppUtils.startActivity(intent)
+        }
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,如是否使用缓存

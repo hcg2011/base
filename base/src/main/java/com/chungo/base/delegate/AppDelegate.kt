@@ -9,11 +9,11 @@ import android.content.Context
 import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import com.chungo.base.config.ConfigModule
-import com.chungo.base.config.ManifestParser
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.di.component.DaggerAppComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
+import com.chungo.base.config.ManifestParser
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles
