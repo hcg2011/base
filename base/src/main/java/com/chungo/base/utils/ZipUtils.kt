@@ -35,7 +35,7 @@ class ZipUtils {
         val buf = ByteArray(1024)
         input.use { inputs ->
             out.use {
-                while (input.read(buf).also { length = it } != -1) {
+                while (inputs.read(buf).also { length = it } != -1) {
                     it.write(buf, 0, length)
                 }
                 it.flush()

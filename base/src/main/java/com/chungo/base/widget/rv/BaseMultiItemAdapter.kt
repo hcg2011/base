@@ -18,10 +18,9 @@ import java.util.*
  * @Author huangchangguo
  * @Created 2018/7/13 14:51
  */
-
 abstract class BaseMultiItemAdapter<T : MultiItemEntity, V : BaseViewHolder> : BaseQuickAdapter<T, V> {
     protected lateinit var mProvider: MultiDelegateProvider<T, BaseItemDelegate<T, BaseViewHolder>>
-    protected lateinit var mClickTypes: MutableMap<Int, Boolean>
+    protected var mClickTypes: MutableMap<Int, Boolean>? = null
 
 
     @JvmOverloads
@@ -35,10 +34,9 @@ abstract class BaseMultiItemAdapter<T : MultiItemEntity, V : BaseViewHolder> : B
     abstract fun registerDelegate()
 
     protected fun initialize() {
-        if (mProvider == null)
-            mProvider = MultiDelegateProvider()
+        mProvider = MultiDelegateProvider()
         registerDelegate()
-        setMultiTypeDelegate(mProvider)
+        multiTypeDelegate = mProvider
     }
 
     /**
@@ -48,14 +46,13 @@ abstract class BaseMultiItemAdapter<T : MultiItemEntity, V : BaseViewHolder> : B
      * @return
      */
     fun addItemDelegate(delegate: BaseItemDelegate<T, V>): BaseMultiItemAdapter<T, V> {
-        if (mProvider != null)
-            mProvider.registerDelegate(delegate as BaseItemDelegate<T, BaseViewHolder>)
+        this.mProvider.registerDelegate(delegate as BaseItemDelegate<T, BaseViewHolder>)
         return this
     }
 
     override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): V {
         var layoutId = mLayoutResId
-        val delegate = mProvider!!.getItemViewDelegate(viewType)
+        val delegate = mProvider.getItemViewDelegate(viewType)
                 ?: return createBaseViewHolder(parent, layoutId)
         val itemView = delegate.getItemView(parent)
         //是否使用的layout形式创建item。通过delegate.getItemView() 是否为空来判断
@@ -73,7 +70,7 @@ abstract class BaseMultiItemAdapter<T : MultiItemEntity, V : BaseViewHolder> : B
     override fun convert(helper: V, item: T) {
         val position = helper.layoutPosition - headerLayoutCount
 
-        val delegate = mProvider!!.convert(helper, item, position)
+        val delegate = mProvider.convert(helper, item, position)
 
         bindClick(helper, item, position, delegate as BaseItemDelegate<T, V>)
     }
@@ -111,9 +108,9 @@ abstract class BaseMultiItemAdapter<T : MultiItemEntity, V : BaseViewHolder> : B
      * @param viewType
      */
     fun setClickEnableForViewType(isEnable: Boolean, viewType: Int) {
-        if (mClickTypes == null && mClickTypes!!.size <= 0)
+        if (mClickTypes == null || mClickTypes!!.size <= 0)
             mClickTypes = HashMap()
-        mClickTypes[viewType] = isEnable
+        mClickTypes!![viewType] = isEnable
     }
 
     /**
@@ -237,7 +234,6 @@ abstract class BaseMultiItemAdapter<T : MultiItemEntity, V : BaseViewHolder> : B
     }
 
     companion object {
-        val MAX_CACHE = 30 //item的最大缓存数，超过则清除。用于控制无限下拉导致数据过多的情况
+        const val MAX_CACHE = 30 //item的最大缓存数，超过则清除。用于控制无限下拉导致数据过多的情况
     }
-
 }

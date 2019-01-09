@@ -57,7 +57,7 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         clear(mEmptyView, mLoadingView, mErrorView, mNoNetworkView)
-        mOtherIds?.clear()
+        mOtherIds.clear()
         if (null != mOnRetryClickListener) {
             mOnRetryClickListener = null
         }

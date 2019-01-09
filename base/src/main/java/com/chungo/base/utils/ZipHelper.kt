@@ -40,7 +40,7 @@ class ZipHelper private constructor() {
                         bytesDecompressed!!,
                         0,
                         bytesDecompressed.size,
-                        charsetName as Charset
+                        Charset.forName(charsetName)
                 )
             } catch (uee: UnsupportedEncodingException) {
                 uee.printStackTrace()

@@ -87,7 +87,7 @@ constructor() : IRepositoryManager {
     </T> */
     private fun <T> getRetrofitService(serviceClass: Class<T>): T {
         if (mRetrofitServiceCache == null) {
-            mRetrofitServiceCache = mCachefactory!!.build(CacheType.RETROFIT_SERVICE_CACHE) as Cache<String, Any>
+            mRetrofitServiceCache = mCachefactory.build(CacheType.RETROFIT_SERVICE_CACHE) as Cache<String, Any>
         }
         Preconditions.checkNotNull<Cache<String, Any>>(mRetrofitServiceCache,
                 "Cannot return null from a Cache.Factory#build(int) method")
@@ -113,10 +113,11 @@ constructor() : IRepositoryManager {
      * @param <T>        Cache class
      * @return Cache
      */
+    @Suppress("UNCHECKED_CAST")
     @Synchronized
     override fun <T : Any> obtainCacheService(cacheClass: Class<T>): T {
         if (mCacheServiceCache == null) {
-            mCacheServiceCache = mCachefactory!!.build(CacheType.CACHE_SERVICE_CACHE) as Cache<String, Any>
+            mCacheServiceCache = mCachefactory.build(CacheType.CACHE_SERVICE_CACHE) as Cache<String, Any>
         }
         Preconditions.checkNotNull<Cache<String, Any>>(mCacheServiceCache,
                 "Cannot return null from a Cache.Factory#build(int) method")

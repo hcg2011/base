@@ -17,6 +17,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
+@Suppress("UNCHECKED_CAST")
 abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, IFragmentLifecycleable {
     protected val TAG = this.javaClass.simpleName
     private val mLifecycleSubject = BehaviorSubject.create<FragmentEvent>()
