@@ -14,10 +14,10 @@ import com.chungo.baseapp.R
 import com.chungo.baseapp.adapter.DefaultAdapter
 import com.chungo.baseapp.adapter.DefaultAdapter.OnRecyclerViewItemClickListener
 import com.chungo.baseapp.adapter.UserAdapter
-import com.chungo.basemore.di.component.DaggerUserComponent
-import com.chungo.basemore.mvp.contract.UserContract
-import com.chungo.basemore.mvp.model.entity.User
-import com.chungo.basemore.mvp.presenter.UserPresenter
+import com.chungo.baseapp.di.component.DaggerUserComponent
+import com.chungo.baseapp.mvp.contract.UserContract
+import com.chungo.baseapp.mvp.model.entity.User
+import com.chungo.baseapp.mvp.presenter.UserPresenter
 import com.paginate.Paginate
 import com.tbruyelle.rxpermissions2.RxPermissions
 import me.jessyan.autosize.AutoSize

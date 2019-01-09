@@ -39,7 +39,7 @@
             android:value="640"/>
         <!-- arms配置 -->
         <meta-data
-            android:name="com.chungo.basemore.config.MainConfiguration"
+            android:name="com.chungo.baseapp.config.MainConfiguration"
             android:value="ConfigModule"/>
     </application>
 

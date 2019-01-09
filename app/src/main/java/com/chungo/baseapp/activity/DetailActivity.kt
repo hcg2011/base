@@ -6,10 +6,10 @@ import android.support.design.widget.Snackbar
 import com.chungo.base.base.BaseActivity
 import com.chungo.base.di.component.AppComponent
 import com.chungo.baseapp.R
-import com.chungo.basemore.di.component.DaggerUserComponent
-import com.chungo.basemore.mvp.contract.UserContract
-import com.chungo.basemore.mvp.model.entity.User
-import com.chungo.basemore.mvp.presenter.UserPresenter
+import com.chungo.baseapp.di.component.DaggerUserComponent
+import com.chungo.baseapp.mvp.contract.UserContract
+import com.chungo.baseapp.mvp.model.entity.User
+import com.chungo.baseapp.mvp.presenter.UserPresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject

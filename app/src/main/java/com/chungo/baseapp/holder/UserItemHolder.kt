@@ -26,7 +26,7 @@ import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.R
 import com.chungo.baseapp.adapter.BaseHolder
 import com.chungo.baseapp.adapter.DefaultAdapter
-import com.chungo.basemore.mvp.model.entity.User
+import com.chungo.baseapp.mvp.model.entity.User
 import io.reactivex.Observable
 
 

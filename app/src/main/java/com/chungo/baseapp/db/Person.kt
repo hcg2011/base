@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.realm.examples.kotlin.model
+package com.chungo.baseapp.db
 
 import io.realm.RealmList
 import io.realm.RealmObject
