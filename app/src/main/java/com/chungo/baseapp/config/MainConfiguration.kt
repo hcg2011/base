@@ -7,17 +7,17 @@ import com.chungo.base.config.ConfigModule
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.module.NetModule
 import com.chungo.base.di.module.RxCacheModule
-import com.chungo.baseapp.http.GlobalHttpHandlerImpl
 import com.chungo.base.http.log.RequestInterceptor
 import com.chungo.base.http.progress.ProgressManager
 import com.chungo.base.http.ssl.SSLTrustManager
-import com.chungo.baseapp.lifecycle.ActivityLifecycleCallbacksImpl
-import com.chungo.baseapp.lifecycle.AppLifecyclesImpl
-import com.chungo.baseapp.lifecycle.FragmentLifecycleCallbacksImpl
 import com.chungo.base.lifecycle.IAppLifecycles
 import com.chungo.base.rxerror.listener.ResponseErrorListenerImpl
 import com.chungo.baseapp.BuildConfig
 import com.chungo.baseapp.api.Api
+import com.chungo.baseapp.http.GlobalHttpHandlerImpl
+import com.chungo.baseapp.lifecycle.ActivityLifecycleCallbacksImpl
+import com.chungo.baseapp.lifecycle.AppLifecyclesImpl
+import com.chungo.baseapp.lifecycle.FragmentLifecycleCallbacksImpl
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
 import io.rx_cache2.internal.RxCache
@@ -46,7 +46,8 @@ class MainConfiguration : ConfigModule {
                 //                    @Override
                 //                    public Cache build(CacheType type) {
                 //                        switch (type.getCacheTypeId()){
-                //                            case CacheType.EXTRAS_TYPE_ID:
+                //
+                //               case CacheType.EXTRAS_TYPE_ID:
                 //                                return new IntelligentCache(500);
                 //                            case CacheType.CACHE_SERVICE_CACHE_TYPE_ID:
                 //                                return new Cache(type.calculateCacheSize(context));//自定义 Cache

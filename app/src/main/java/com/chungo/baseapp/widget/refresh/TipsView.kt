@@ -94,7 +94,7 @@ class TipsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         btnView = TextView(mCtx)
         // mButton.setHeight(LayoutParams.WRAP_CONTENT);
         // mButton.setWidth(LayoutParams.WRAP_CONTENT);
-        btnView!!.background = mCtx!!.getDrawable(R.drawable.bg_tips_selector)
+        btnView!!.background = mCtx!!.getDrawable(R.drawable.tips_selector)
         btnView!!.setTextColor(Color.parseColor("#3da8f2"))
         btnView!!.textSize = mTipsTextSize.toFloat()
         btnView!!.gravity = Gravity.CENTER

@@ -147,7 +147,7 @@ dependencies {
     // implementation 'me.jessyan:arms-autolayout:2.5.0'
    implementation rootProject.ext.dependencies["autosize"]
     //log
-//    api rootProject.ext.dependencies["timber"]
+    implementation rootProject.ext.dependencies["timber"]
 //    api rootProject.ext.dependencies["logger"]
 //    //tools
 //    compileOnly rootProject.ext.dependencies["javax.annotation"]

@@ -7,9 +7,9 @@ import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles
 import com.chungo.base.utils.AppUtils
+import com.chungo.base.utils.log.TagTree
 import com.chungo.baseapp.BuildConfig
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
+import com.chungo.baseapp.config.Config
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import timber.log.Timber
@@ -24,19 +24,16 @@ class AppLifecyclesImpl : IAppLifecycles {
         if (LeakCanary.isInAnalyzerProcess(application)) {
             return
         }
+        Timber.plant(TagTree().addTag(Config.DEVELOPER))
         if (BuildConfig.DEBUG) {//Timber初始化
             //Timber 是一个日志框架容器,外部使用统一的Api,内部可以动态的切换成任何日志框架(打印策略)进行日志打印
             //并且支持添加多个日志框架(打印策略),做到外部调用一次 Api,内部却可以做到同时使用多个策略
             //比如添加三个策略,一个打印日志,一个将日志保存本地,一个将日志上传服务器
-            Timber.plant(Timber.DebugTree())
-
-            Logger.addLogAdapter(AndroidLogAdapter())
-
-            Timber.plant(object : Timber.DebugTree() {
-                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                    Logger.log(priority, tag, message, t)
-                }
-            })
+//            Timber.plant(Timber.DebugTree())
+//            Timber.plant(object : Timber.DebugTree() {
+//                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+//                }
+//            })
             ButterKnife.setDebug(true)
         }
         //LeakCanary 内存泄露检查

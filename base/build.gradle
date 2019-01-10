@@ -129,7 +129,7 @@ dependencies {
     implementation rootProject.ext.dependencies["autosize"]
     //log
     api rootProject.ext.dependencies["timber"]
-    api rootProject.ext.dependencies["logger"]
+    //api rootProject.ext.dependencies["logger"]
     //tools
     compileOnly rootProject.ext.dependencies["javax.annotation"]
     implementation rootProject.ext.dependencies["dagger2"]
