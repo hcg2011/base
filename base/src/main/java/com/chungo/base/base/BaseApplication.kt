@@ -11,13 +11,10 @@ import com.chungo.base.utils.Preconditions
 
 
 /**
- * MVPArms 是一个整合了大量主流开源项目的 Android MVP 快速搭建框架, 其中包含 Dagger2、Retrofit、RxJava 以及
- * RxLifecycle、RxCache 等 Rx 系三方库, 并且提供 UI 自适应方案, 本框架将它们结合起来, 并全部使用 Dagger2 管理
- * 并提供给开发者使用, 使用本框架开发您的项目, 就意味着您已经拥有一个 MVP + Dagger2 + Retrofit + RxJava 项目
- *
+ * 基于MVPArms，改造为 kotlin版本 是一个整合了 MVP + Dagger2 + Retrofit + RxJava
  */
-class BaseApplication : Application(), IApp {
-    private var mAppDelegate: IAppLifecycles? = null
+open class BaseApplication : Application(), IApp {
+    protected var mAppDelegate: IAppLifecycles? = null
 
     /**
      * 将 [AppComponent] 返回出去, 供其它地方使用, [AppComponent] 接口中声明的方法所返回的实例, 在 [.getAppComponent] 拿到对象后都可以直接使用
