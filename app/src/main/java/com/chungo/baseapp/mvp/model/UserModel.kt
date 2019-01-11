@@ -14,13 +14,10 @@ import io.rx_cache2.EvictDynamicKey
 import timber.log.Timber
 import javax.inject.Inject
 
-class UserModel : BaseModel, UserContract.Model {
+class UserModel @Inject constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager), UserContract.Model {
     companion object {
-       const val USERS_PER_PAGE = 10
+        const val USERS_PER_PAGE = 10
     }
-
-    @Inject
-    constructor(repositoryManager: IRepositoryManager) : super(repositoryManager)
 
     override fun getUsers(lastIdQueried: Int, update: Boolean): Observable<List<User>> {
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存

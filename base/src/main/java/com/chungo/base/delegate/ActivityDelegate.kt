@@ -25,6 +25,6 @@ interface ActivityDelegate {
     fun onDestroy()
 
     companion object {
-        val ACTIVITY_DELEGATE = "ACTIVITY_DELEGATE"
+        const val ACTIVITY_DELEGATE = "ACTIVITY_DELEGATE"
     }
 }

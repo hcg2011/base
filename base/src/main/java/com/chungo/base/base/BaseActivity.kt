@@ -1,6 +1,7 @@
 package com.chungo.base.base
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.InflateException
@@ -35,7 +36,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
     @Synchronized
     override fun provideCache(): Cache<*, *> {
         if (mCache == null) {
-            mCache = AppUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE)
+            mCache = AppUtils.obtainAppComponentFromContext(this as Context).cacheFactory().build(CacheType.ACTIVITY_CACHE)
         }
         return mCache!!
     }
@@ -48,11 +49,10 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
         super.onCreate(savedInstanceState)
         try {
             val layoutResID = initView(savedInstanceState)
-            //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
-            if (layoutResID != 0) {
+            if (layoutResID != 0) {  //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
                 setContentView(layoutResID)
                 //绑定到butterknife
-                mUnbinder = ButterKnife.bind(this)
+                mUnbinder = ButterKnife.bind(this as Activity)
             }
         } catch (e: Exception) {
             if (e is InflateException)
@@ -68,24 +68,15 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
         if (mUnbinder != null && mUnbinder !== Unbinder.EMPTY)
             mUnbinder!!.unbind()
         this.mUnbinder = null
-        mPresenter.onDestroy()//释放资源
+        mPresenter.onDestroy()
     }
 
-    /**
-     * 是否使用 EventBus
-     * @return 返回 `true` (默认为使用 `true`), Arms 会自动注册 EventBus
-     */
-    override fun useEventBus(): Boolean {
-        return true
-    }
-
+    override fun useEventBus(): Boolean = true
     /**
      * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册[android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks]
      * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 [BaseFragment] 的Fragment将不起任何作用
      *
      * @return
      */
-    override fun useFragment(): Boolean {
-        return true
-    }
+    override fun useFragment(): Boolean = true
 }

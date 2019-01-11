@@ -3,6 +3,7 @@ package com.chungo.baseapp.config
 import android.app.Application
 import android.content.Context
 import android.support.v4.app.FragmentManager
+import com.chungo.base.BuildConfig
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.module.NetModule
@@ -12,7 +13,6 @@ import com.chungo.base.http.progress.ProgressManager
 import com.chungo.base.http.ssl.SSLTrustManager
 import com.chungo.base.lifecycle.IAppLifecycles
 import com.chungo.base.rxerror.listener.ResponseErrorListenerImpl
-import com.chungo.baseapp.BuildConfig
 import com.chungo.baseapp.api.Api
 import com.chungo.baseapp.http.GlobalHttpHandlerImpl
 import com.chungo.baseapp.lifecycle.ActivityLifecycleCallbacksImpl

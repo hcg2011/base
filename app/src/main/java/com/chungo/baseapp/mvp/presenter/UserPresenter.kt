@@ -4,7 +4,6 @@ import android.app.Application
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
 import android.support.v4.app.Fragment
-import android.support.v4.app.SupportActivity
 import com.chungo.base.di.scope.Scopes
 import com.chungo.base.mvp.BasePresenter
 import com.chungo.base.rxerror.ErrorHandleSubscriber
@@ -22,7 +21,7 @@ import javax.inject.Inject
 @Scopes.Activity
 class UserPresenter
 @Inject
-constructor(model: UserContract.Model, rootView: UserContract.View) : BasePresenter<UserContract.Model, UserContract.View>(model, rootView) {
+constructor(rootView: UserContract.View, model: UserContract.Model) : BasePresenter<UserContract.View, UserContract.Model>(rootView, model) {
     @Inject
     lateinit var mErrorHandler: RxErrorHandler
     @Inject
@@ -54,7 +53,7 @@ constructor(model: UserContract.Model, rootView: UserContract.View) : BasePresen
 
             override fun onRequestPermissionFailure(permissions: List<String>) {
                 mRootView.showMessage("Request permissions failure")
-                mRootView.hideLoading()//隐藏下拉刷新的进度条
+                mRootView?.hideLoading()//隐藏下拉刷新的进度条
             }
 
             override fun onRequestPermissionFailureWithAskNeverAgain(permissions: List<String>) {
@@ -71,13 +70,12 @@ constructor(model: UserContract.Model, rootView: UserContract.View) : BasePresen
         //关于RxCache缓存库的使用请参考 http://www.jianshu.com/p/b58ef6b0624b
 
         var isEvictCache = pullToRefresh//是否驱逐缓存,为ture即不使用缓存,每次下拉刷新即需要最新数据,则不使用缓存
-
         if (pullToRefresh && isFirst) {//默认在第一次下拉刷新时使用缓存
             isFirst = false
             isEvictCache = false
         }
 
-        mModel.getUsers(lastUserId, isEvictCache)
+        mModel!!.getUsers(lastUserId, isEvictCache)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe {
@@ -106,9 +104,5 @@ constructor(model: UserContract.Model, rootView: UserContract.View) : BasePresen
                             mAdapter.notifyItemRangeInserted(preEndIndex, users.size)
                     }
                 })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

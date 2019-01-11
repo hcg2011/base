@@ -72,7 +72,6 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityResumed(activity: Activity) {
         AppManager.instance.currentActivity = activity
-
         val activityDelegate = fetchActivityDelegate(activity)
         activityDelegate?.onResume()
     }
@@ -83,10 +82,8 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStopped(activity: Activity) {
-        if (AppManager.instance.currentActivity === activity) {
+        if (AppManager.instance.currentActivity === activity)
             AppManager.instance.currentActivity = null
-        }
-
         val activityDelegate = fetchActivityDelegate(activity)
         activityDelegate?.onStop()
     }
