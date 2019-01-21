@@ -10,12 +10,9 @@ import com.chungo.base.R
 import java.util.*
 
 /**
- * 类描述：  一个方便在多种状态切换的view
- *
- *
- * 创建时间: 2016/1/15 10:20.
+ *一个方便在多种状态切换的view
  */
-class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
+open class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private var mEmptyView: View? = null
     private var mErrorView: View? = null
@@ -69,7 +66,7 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
      *
      * @param onRetryClickListener 重试点击事件
      */
-    fun setOnRetryClickListener(onRetryClickListener: View.OnClickListener) {
+    open fun setOnRetryClickListener(onRetryClickListener: View.OnClickListener) {
         this.mOnRetryClickListener = onRetryClickListener
     }
 
@@ -80,7 +77,7 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
      * @param layoutParams 布局参数
      */
     @JvmOverloads
-    fun showEmpty(layoutId: Int = mEmptyViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
+    open fun showEmpty(layoutId: Int = mEmptyViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
         showEmpty(inflateView(layoutId), layoutParams)
     }
 
@@ -112,7 +109,7 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
      * @param layoutParams 布局参数
      */
     @JvmOverloads
-    fun showError(layoutId: Int = mErrorViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
+    open fun showError(layoutId: Int = mErrorViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
         showError(inflateView(layoutId), layoutParams)
     }
 
@@ -144,7 +141,7 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
      * @param layoutParams 布局参数
      */
     @JvmOverloads
-    fun showLoading(layoutId: Int = mLoadingViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
+    open fun showLoading(layoutId: Int = mLoadingViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
         showLoading(inflateView(layoutId), layoutParams)
     }
 
@@ -172,7 +169,7 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
      * @param layoutParams 布局参数
      */
     @JvmOverloads
-    fun showNoNetwork(layoutId: Int = mNoNetworkViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
+    open fun showNoNetwork(layoutId: Int = mNoNetworkViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
         showNoNetwork(inflateView(layoutId), layoutParams)
     }
 
@@ -200,7 +197,7 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
     /**
      * 显示内容视图
      */
-    fun showContent() {
+    open fun showContent() {
         viewStatus = STATUS_CONTENT
         if (null == mContentView && mContentViewResId != NULL_RESOURCE_ID) {
             mContentView = mInflater!!.inflate(mContentViewResId, null)
@@ -229,8 +226,8 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
         }
     }
 
-    private fun checkNull(`object`: Any?, hint: String) {
-        if (null == `object`) {
+    private fun checkNull(obj: Any?, hint: String) {
+        if (null == obj) {
             throw NullPointerException(hint)
         }
     }
@@ -246,17 +243,17 @@ class MultipleStatusView @JvmOverloads constructor(context: Context, attrs: Attr
     }
 
     companion object {
-        private val TAG = "MultipleStatusView"
+        private const val TAG = "MultipleStatusView"
 
         private val DEFAULT_LAYOUT_PARAMS = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT)
-        private val NULL_RESOURCE_ID = -1
+        private const val NULL_RESOURCE_ID = -1
 
-        val STATUS_CONTENT = 0x00
-        val STATUS_LOADING = 0x01
-        val STATUS_EMPTY = 0x02
-        val STATUS_ERROR = 0x03
-        val STATUS_NO_NETWORK = 0x04
+        const val STATUS_CONTENT = 0x00
+        const val STATUS_LOADING = 0x01
+        const val STATUS_EMPTY = 0x02
+        const val STATUS_ERROR = 0x03
+        const val STATUS_NO_NETWORK = 0x04
     }
 }
 /**

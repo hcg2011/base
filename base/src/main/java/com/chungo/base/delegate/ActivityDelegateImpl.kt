@@ -11,8 +11,8 @@ import com.chungo.base.utils.AppUtils
  * [ActivityDelegate] 默认实现类
  *
  */
-class ActivityDelegateImpl(private var mActivity: Activity?) : ActivityDelegate {
-    private var iActivity: IActivity? = null
+open class ActivityDelegateImpl(private var mActivity: Activity?) : ActivityDelegate {
+    protected var iActivity: IActivity? = null
 
     init {
         this.iActivity = mActivity as IActivity

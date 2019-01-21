@@ -33,26 +33,13 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
     @Inject
     lateinit var mPresenter: P
 
-    @Synchronized
-    override fun provideCache(): Cache<*, *> {
-        if (mCache == null) {
-            mCache = AppUtils.obtainAppComponentFromContext(this as Context).cacheFactory().build(CacheType.ACTIVITY_CACHE)
-        }
-        return mCache!!
-    }
-
-    override fun provideLifecycleSubject(): Subject<ActivityEvent> {
-        return mLifecycleSubject
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
             val layoutResID = initView(savedInstanceState)
             if (layoutResID != 0) {  //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
                 setContentView(layoutResID)
-                //绑定到butterknife
-                mUnbinder = ButterKnife.bind(this as Activity)
+                mUnbinder = ButterKnife.bind(this as Activity) //绑定到butterknife
             }
         } catch (e: Exception) {
             if (e is InflateException)
@@ -63,6 +50,23 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
         initData(savedInstanceState)
     }
 
+    @Synchronized
+    override fun provideCache(): Cache<*, *> {
+        if (mCache == null) {
+            mCache = AppUtils.obtainAppComponentFromContext(this as Context).cacheFactory().build(CacheType.ACTIVITY_CACHE)
+        }
+        return mCache!!
+    }
+
+    override fun provideLifecycleSubject(): Subject<ActivityEvent> = mLifecycleSubject
+    //是否用到eventBus，会自动注册
+    override fun useEventBus(): Boolean = false
+
+    /**
+     * 是否需要绑定fragment，如果在Activity中绑定继承于 [BaseFragment] 的Fragment，会注册[android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks]
+     */
+    override fun useFragment(): Boolean = false
+
     override fun onDestroy() {
         super.onDestroy()
         if (mUnbinder != null && mUnbinder !== Unbinder.EMPTY)
@@ -70,13 +74,4 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IA
         this.mUnbinder = null
         mPresenter.onDestroy()
     }
-
-    override fun useEventBus(): Boolean = true
-    /**
-     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册[android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks]
-     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 [BaseFragment] 的Fragment将不起任何作用
-     *
-     * @return
-     */
-    override fun useFragment(): Boolean = true
 }

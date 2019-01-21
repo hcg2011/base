@@ -63,7 +63,7 @@ class AppManager private constructor() {
      *
      * @return
      */
-    val topActivity: Activity?
+    var topActivity: Activity? = null
         get() {
             if (mActivityList == null) {
                 Timber.tag(TAG).w("mActivityList == null when getTopActivity()")

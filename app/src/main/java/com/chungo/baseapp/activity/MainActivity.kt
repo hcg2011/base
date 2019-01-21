@@ -1,8 +1,8 @@
 package com.chungo.baseapp.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -10,6 +10,7 @@ import butterknife.BindView
 import com.chungo.base.base.BaseActivity
 import com.chungo.base.di.component.AppComponent
 import com.chungo.base.utils.AppUtils
+import com.chungo.base.utils.AppUtils.Companion.startActivity
 import com.chungo.baseapp.R
 import com.chungo.baseapp.adapter.DefaultAdapter
 import com.chungo.baseapp.adapter.DefaultAdapter.OnRecyclerViewItemClickListener
@@ -58,7 +59,7 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
         AutoSize.autoConvertDensity(this, 360f, true)
     }
 
-    override fun obtainActivity(): FragmentActivity {
+    override fun obtainActivity(): Activity {
         return this
     }
 
@@ -78,7 +79,7 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
 
 
     override fun onRefresh() {
-        mPresenter.requestUsers(true)
+        mPresenter?.requestUsers(true)
     }
 
     /**

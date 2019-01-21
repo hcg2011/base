@@ -32,25 +32,17 @@ abstract class BaseService : Service() {
         this.mCompositeDisposable = null
     }
 
-    /**
-     * 是否使用 EventBus
-     */
-    open fun useEventBus(): Boolean {
-        return true
-    }
+    open fun useEventBus(): Boolean = false
 
     protected fun addDispose(disposable: Disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = CompositeDisposable()
         }
-        mCompositeDisposable!!.add(disposable)//将所有subscription放入,集中处理
+        mCompositeDisposable!!.add(disposable)
     }
 
-    protected fun unDispose() {
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable!!.clear()//保证activity结束时取消所有正在执行的订阅
-        }
-    }
+    protected fun unDispose() = mCompositeDisposable?.clear()
+
 
     /**
      * 初始化

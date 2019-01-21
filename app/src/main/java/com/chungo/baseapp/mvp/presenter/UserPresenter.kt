@@ -1,9 +1,6 @@
 package com.chungo.baseapp.mvp.presenter
 
 import android.app.Application
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.support.v4.app.Fragment
 import com.chungo.base.di.scope.Scopes
 import com.chungo.base.mvp.BasePresenter
 import com.chungo.base.rxerror.ErrorHandleSubscriber
@@ -34,12 +31,9 @@ constructor(rootView: UserContract.View, model: UserContract.Model) : BasePresen
     private var isFirst = true
     private var preEndIndex: Int = 0
 
-    /**
-     * 使用 2017 Google IO 发布的 Architecture Components 中的 Lifecycles 的新特性 (此特性已被加入 Support library)
-     * 使 `Presenter` 可以与 [SupportActivity] 和 [Fragment] 的部分生命周期绑定
-     */
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    internal fun onCreate() {
+
+    //@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    override fun onCreate() {
         requestUsers(true)//打开 App 时自动加载列表
     }
 
@@ -53,7 +47,7 @@ constructor(rootView: UserContract.View, model: UserContract.Model) : BasePresen
 
             override fun onRequestPermissionFailure(permissions: List<String>) {
                 mRootView.showMessage("Request permissions failure")
-                mRootView?.hideLoading()//隐藏下拉刷新的进度条
+                mRootView.hideLoading()//隐藏下拉刷新的进度条
             }
 
             override fun onRequestPermissionFailureWithAskNeverAgain(permissions: List<String>) {

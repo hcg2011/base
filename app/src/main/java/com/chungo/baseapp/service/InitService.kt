@@ -15,7 +15,7 @@ class InitService : BaseInitService("InitService") {
 
     companion object {
         @JvmStatic
-        open fun start(context: Context) {
+        fun start(context: Context) {
             val intent = Intent(context, InitService::class.java)
             intent.action = ACTION_INIT
             context.startService(intent)

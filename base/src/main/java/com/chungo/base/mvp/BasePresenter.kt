@@ -6,6 +6,7 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.OnLifecycleEvent
+import android.support.v4.app.Fragment
 import android.view.View
 import com.chungo.base.eventbus.EventBusManager
 import com.trello.rxlifecycle2.RxLifecycle
@@ -23,6 +24,15 @@ open class BasePresenter<V : IView, M : IModel> @JvmOverloads constructor(rootVi
         onStart()
     }
 
+    /**
+     * 使用 2017 Google IO 发布的 Architecture Components 中的 Lifecycles 的新特性 (此特性已被加入 Support library)
+     * 使 `Presenter` 可以与 [SupportActivity] 和 [Fragment] 的部分生命周期绑定
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    open fun onCreate() {
+
+    }
+
     final override fun onStart() {
         //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
         if (mRootView != null && mRootView is LifecycleOwner)
@@ -32,7 +42,7 @@ open class BasePresenter<V : IView, M : IModel> @JvmOverloads constructor(rootVi
     }
 
     /**
-     * 在框架中 [Activity.onDestroy] 时会默认调用 [IPresenter.onDestroy]
+     *  [Activity.onDestroy] 会默认调用 [IPresenter.onDestroy]
      */
     override fun onDestroy() {
         if (useEventBus())
@@ -52,23 +62,19 @@ open class BasePresenter<V : IView, M : IModel> @JvmOverloads constructor(rootVi
      * 或者如果你声明了多个 @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY) 时在其他 @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
      * 中引用了 `mModel` 或 `mRootView` 也可能会出现此情况
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    internal fun onDestroy(owner: LifecycleOwner) {
-        owner.lifecycle.removeObserver(this)
-    }
 
-    /**
-     * 默认不注册 EventBus
-     */
-    open fun useEventBus(): Boolean = false
-
-    fun addDispose(disposable: Disposable) {
+    open fun addDispose(disposable: Disposable) {
         if (mCompositeDisposable == null)
             mCompositeDisposable = CompositeDisposable()
         mCompositeDisposable!!.add(disposable)//将所有 Disposable 放入集中处理
     }
 
-    fun unDispose() {
-        mCompositeDisposable?.clear()//保证 Activity 结束时取消所有正在执行的订阅
+    open fun useEventBus(): Boolean = false
+
+    open fun unDispose() = mCompositeDisposable?.clear()
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    open fun onDestroy(owner: LifecycleOwner) {
+        owner.lifecycle.removeObserver(this)
     }
 }
