@@ -4,14 +4,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
-import com.chungo.base.di.component.AppComponent
 import com.chungo.base.imageloader.ImageLoader
 import com.chungo.base.imageloader.glide.ImageConfigImpl
-import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.R
 import com.chungo.baseapp.adapter.BaseHolder
 import com.chungo.baseapp.adapter.DefaultAdapter
+import com.chungo.baseapp.di.component.AppComponent
 import com.chungo.baseapp.mvp.model.entity.User
+import com.chungo.baseapp.utils.AppUtils
 import io.reactivex.Observable
 
 

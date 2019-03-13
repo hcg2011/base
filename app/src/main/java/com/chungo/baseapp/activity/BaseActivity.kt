@@ -1,4 +1,4 @@
-package com.chungo.base.base
+package com.chungo.baseapp.activity
 
 import android.app.Activity
 import android.content.Context
@@ -7,12 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.InflateException
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.chungo.base.delegate.IActivity
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
 import com.chungo.base.lifecycle.rx.IActivityLifecycleable
 import com.chungo.base.mvp.IPresenter
-import com.chungo.base.utils.AppUtils
+import com.chungo.baseapp.lifecycle.IActivity
+import com.chungo.baseapp.utils.AppUtils
 import com.trello.rxlifecycle2.android.ActivityEvent
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject

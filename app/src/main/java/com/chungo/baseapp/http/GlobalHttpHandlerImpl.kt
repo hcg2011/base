@@ -4,9 +4,9 @@ import android.content.Context
 import android.text.TextUtils
 import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.http.log.RequestInterceptor
-import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.api.Api
 import com.chungo.baseapp.mvp.model.entity.User
+import com.chungo.baseapp.utils.AppUtils
 import com.google.gson.reflect.TypeToken
 import okhttp3.HttpUrl
 import okhttp3.Interceptor

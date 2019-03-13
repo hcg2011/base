@@ -1,10 +1,10 @@
-package com.chungo.base.delegate
+package com.chungo.baseapp.lifecycle
 
 import android.app.Activity
 import android.os.Bundle
-
+import com.chungo.base.delegate.ActivityDelegate
 import com.chungo.base.eventbus.EventBusManager
-import com.chungo.base.utils.AppUtils
+import com.chungo.baseapp.utils.AppUtils
 
 
 /**

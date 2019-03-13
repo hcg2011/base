@@ -1,4 +1,4 @@
-package com.chungo.base.base
+package com.chungo.baseapp.activity
 
 import android.content.Context
 import android.os.Bundle
@@ -6,12 +6,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chungo.base.delegate.IFragment
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
 import com.chungo.base.lifecycle.rx.IFragmentLifecycleable
 import com.chungo.base.mvp.IPresenter
-import com.chungo.base.utils.AppUtils
+import com.chungo.baseapp.lifecycle.IFragment
+import com.chungo.baseapp.utils.AppUtils
 import com.trello.rxlifecycle2.android.FragmentEvent
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject

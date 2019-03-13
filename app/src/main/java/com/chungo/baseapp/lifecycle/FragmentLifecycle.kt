@@ -1,18 +1,15 @@
-package com.chungo.base.lifecycle
+package com.chungo.baseapp.lifecycle
 
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.view.View
-
 import com.chungo.base.delegate.FragmentDelegate
 import com.chungo.base.delegate.FragmentDelegateImpl
-import com.chungo.base.delegate.IFragment
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.utils.Preconditions
-
 import javax.inject.Inject
 import javax.inject.Singleton
 

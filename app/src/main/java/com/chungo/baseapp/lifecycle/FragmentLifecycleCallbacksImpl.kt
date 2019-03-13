@@ -8,7 +8,7 @@ import android.view.View
 import com.chungo.base.integration.cache.Cache
 
 import com.chungo.base.integration.cache.IntelligentCache
-import com.chungo.base.utils.AppUtils
+import com.chungo.baseapp.utils.AppUtils
 import com.squareup.leakcanary.RefWatcher
 
 import timber.log.Timber

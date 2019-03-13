@@ -14,6 +14,19 @@ import dagger.Provides
 @Module
 class UserModule {
 
+//    @Scopes.Activity
+//    @Provides
+//    fun provideRxPermissions(activity: DetailActivity): UserContract.View {
+//        return activity
+//    }
+
+//    @Scopes.Activity
+//    @Provides
+//    fun provideRxPermissions(activity: Activity): UserContract.View {
+//        return activity as UserContract.View
+//    }
+
+
     @Scopes.Activity
     @Provides
     fun provideRxPermissions(view: UserContract.View): RxPermissions {

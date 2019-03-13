@@ -1,4 +1,4 @@
-package com.chungo.base.delegate
+package com.chungo.baseapp.lifecycle
 
 import android.app.Activity
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chungo.base.di.component.AppComponent
 import com.chungo.base.integration.cache.Cache
+import com.chungo.baseapp.di.component.AppComponent
 
 
 /**

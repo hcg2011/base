@@ -1,16 +1,20 @@
-package com.chungo.base.di.component
+package com.chungo.baseapp.di.component
 
 import android.app.Application
-import com.chungo.base.delegate.AppDelegate
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.di.module.*
 import com.chungo.base.http.IRepositoryManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.rxerror.RxErrorHandler
 import com.chungo.base.utils.AppUtils
+import com.chungo.baseapp.di.module.AppModuleBinds
+import com.chungo.baseapp.di.module.MainActivityModule
+import com.chungo.baseapp.di.module.UserActivityModule
+import com.chungo.baseapp.lifecycle.AppDelegate
 import com.google.gson.Gson
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 import okhttp3.OkHttpClient
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -22,16 +26,18 @@ import javax.inject.Singleton
  *
  */
 @Singleton
-@Component(modules = arrayOf(
-        AppModule::class,
-        AppModuleBinds::class,
-
-        NetModule::class,
-        RxCacheModule::class,
-        InterceptorModuleBinds::class,
-
-        GlobalConfigModule::class))
-
+@Component(modules = [
+    AppModule::class,
+    AppModuleBinds::class,
+    NetModule::class,
+    RxCacheModule::class,
+    InterceptorModuleBinds::class,
+    GlobalConfigModule::class,
+    AndroidInjectionModule::class,
+    //ActivityBindModule::class
+    UserActivityModule::class,
+    MainActivityModule::class
+])
 interface AppComponent {
 
     fun inject(delegate: AppDelegate)

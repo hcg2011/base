@@ -20,7 +20,6 @@ import android.app.ActivityManager
 import android.content.Context
 import android.support.v4.app.Fragment
 
-import com.chungo.base.di.component.AppComponent
 import com.chungo.base.http.RepositoryManager
 
 

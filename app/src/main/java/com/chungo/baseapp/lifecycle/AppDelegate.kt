@@ -1,4 +1,4 @@
-package com.chungo.base.delegate
+package com.chungo.baseapp.lifecycle
 
 import android.app.Activity
 import android.app.Application
@@ -10,14 +10,17 @@ import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.config.ManifestParser
-import com.chungo.base.di.component.AppComponent
-import com.chungo.base.di.component.DaggerAppComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles
 import com.chungo.base.utils.Preconditions
+import com.chungo.baseapp.di.component.AppComponent
+import com.chungo.baseapp.di.component.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import java.util.*
 import javax.inject.Inject
 
@@ -30,7 +33,7 @@ import javax.inject.Inject
  * @see BaseApplication
  *
  */
-class AppDelegate(context: Context) : IApp, IAppLifecycles {
+class AppDelegate(context: Context) : IApp, IAppLifecycles, HasActivityInjector {
     @Inject
     @field:[Qualifiers.Lifecycle]
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
@@ -45,6 +48,12 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
     private var mApplication: Application? = null
     private var mAppComponent: AppComponent? = null
 
+    @Inject
+    lateinit var dispatchingInjector: DispatchingAndroidInjector<Activity>
+
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return dispatchingInjector
+    }
 
     /**
      * 将 [AppComponent] 返回出去, 供其它地方使用, [AppComponent] 接口中声明的方法返回的实例, 在 [.getAppComponent] 拿到对象后都可以直接使用

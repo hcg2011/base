@@ -1,5 +1,6 @@
 package com.chungo.baseapp.api.cache
 
+import com.chungo.baseapp.mvp.model.entity.GameBean
 import com.chungo.baseapp.mvp.model.entity.User
 import io.reactivex.Observable
 import io.rx_cache2.DynamicKey
@@ -17,4 +18,7 @@ interface CommonCache {
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     fun getUsers(users: Observable<List<User>>, idLastUserQueried: DynamicKey, evictProvider: EvictProvider): Observable<Reply<List<User>>>
+
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    fun getGameCache(games: Observable<List<GameBean>?>, idLastUserQueried: DynamicKey, evictProvider: EvictProvider): Observable<Reply<List<GameBean>>>
 }

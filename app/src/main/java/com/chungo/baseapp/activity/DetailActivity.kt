@@ -3,14 +3,13 @@ package com.chungo.baseapp.activity
 import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import com.chungo.base.base.BaseActivity
-import com.chungo.base.di.component.AppComponent
 import com.chungo.baseapp.R
-import com.chungo.baseapp.di.component.DaggerUserComponent
+import com.chungo.baseapp.di.component.AppComponent
 import com.chungo.baseapp.mvp.contract.UserContract
 import com.chungo.baseapp.mvp.model.entity.User
 import com.chungo.baseapp.mvp.presenter.UserPresenter
 import com.tbruyelle.rxpermissions2.RxPermissions
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 
@@ -19,6 +18,10 @@ class DetailActivity : BaseActivity<UserPresenter>(), UserContract.View {
     @Inject
     lateinit var rxPermissions: RxPermissions
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
+    }
     override fun obtainRxPermissions(): RxPermissions {
         return rxPermissions
     }
@@ -36,12 +39,12 @@ class DetailActivity : BaseActivity<UserPresenter>(), UserContract.View {
     }
 
     override fun setupActivityComponent(appComponent: AppComponent) {
-        DaggerUserComponent
-                .builder()
-                .appComponent(appComponent)
-                .view(this)
-                .build()
-                .inject(this)
+//        DaggerUserComponent
+//                .builder()
+//                .appComponent(appComponent)
+//                .view(this)
+//                .build()
+//                .inject(this)
     }
 
     override fun initView(savedInstanceState: Bundle?): Int = R.layout.activity_detail

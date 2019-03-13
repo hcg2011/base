@@ -1,19 +1,19 @@
-package com.chungo.base.base
+package com.chungo.baseapp.activity
 
 import android.app.Application
 import android.content.Context
-import com.chungo.base.delegate.AppDelegate
-import com.chungo.base.delegate.IApp
-import com.chungo.base.di.component.AppComponent
 import com.chungo.base.lifecycle.IAppLifecycles
 import com.chungo.base.utils.AppUtils
 import com.chungo.base.utils.Preconditions
+import com.chungo.baseapp.di.component.AppComponent
+import com.chungo.baseapp.lifecycle.AppDelegate
+import com.chungo.baseapp.lifecycle.IApp
 
 
 /**
  * 基于MVPArms，改造为 kotlin版本 是一个整合了 MVP + Dagger2 + Retrofit + RxJava
  */
-open class BaseApplication : Application(), IApp {
+abstract class BaseApplication : Application(), IApp {
     protected var mAppDelegate: IAppLifecycles? = null
 
     /**

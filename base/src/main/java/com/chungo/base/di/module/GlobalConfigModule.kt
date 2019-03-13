@@ -1,11 +1,11 @@
 package com.chungo.base.di.module
 
 import android.app.Application
-import com.chungo.base.imageloader.BaseStrategy
 import com.chungo.base.http.interceptor.GlobalHttpHandler
 import com.chungo.base.http.log.DefaultFormatPrinter
 import com.chungo.base.http.log.FormatPrinter
 import com.chungo.base.http.log.RequestInterceptor
+import com.chungo.base.imageloader.BaseStrategy
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheFactory
 import com.chungo.base.rxerror.listener.ResponseErrorListener

@@ -11,7 +11,7 @@ import java.io.Serializable
  *
  *
  */
-class BaseResponse<T> : Serializable {
+open class BaseResponse<T> : Serializable {
     val data: T? = null
     val code: String? = null
     val msg: String? = null

@@ -1,20 +1,23 @@
 package com.chungo.baseapp.lifecycle
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import butterknife.ButterKnife
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles
-import com.chungo.base.utils.AppUtils
 import com.chungo.base.utils.log.TagTree
 import com.chungo.baseapp.BuildConfig
 import com.chungo.baseapp.config.Config
+import com.chungo.baseapp.utils.AppUtils
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import dagger.android.AndroidInjector
 import timber.log.Timber
 
 class AppLifecyclesImpl : IAppLifecycles {
+    override fun activityInjector(): AndroidInjector<Activity>? =null
 
     override fun attachBaseContext(base: Context) {
         //          MultiDex.install(base);  //这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化

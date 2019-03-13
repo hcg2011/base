@@ -1,14 +1,12 @@
-package com.chungo.base.delegate
+package com.chungo.baseapp.lifecycle
 
 
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-
-import com.chungo.base.base.BaseActivity
-import com.chungo.base.di.component.AppComponent
-import com.chungo.base.lifecycle.ActivityLifecycle
 import com.chungo.base.integration.cache.Cache
+import com.chungo.base.lifecycle.ActivityLifecycle
+import com.chungo.baseapp.di.component.AppComponent
 
 /**
  * 框架要求框架中的每个 [Activity] 都需要实现此类,以满足规范

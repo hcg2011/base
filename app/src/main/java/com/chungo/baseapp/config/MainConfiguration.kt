@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit
  *
  */
 class MainConfiguration : ConfigModule {
-
     override fun applyOptions(context: Context, builder: GlobalConfigModule) {
         if (!BuildConfig.DEBUG) { //Release 时,让框架不再打印 Http 请求和响应的信息
             builder.apply { mPrintHttpLogLevel = RequestInterceptor.Level.NONE }

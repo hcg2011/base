@@ -1,13 +1,13 @@
-package com.chungo.base.di.module
+package com.chungo.baseapp.di.module
 
 import android.app.Application
 import android.support.v4.app.FragmentManager
 import com.chungo.base.di.scope.Qualifiers
-import com.chungo.base.lifecycle.ActivityLifecycle
-import com.chungo.base.lifecycle.FragmentLifecycle
 import com.chungo.base.http.IRepositoryManager
 import com.chungo.base.http.RepositoryManager
 import com.chungo.base.lifecycle.rx.ActivityLifecycleForRxLifecycle
+import com.chungo.baseapp.lifecycle.ActivityLifecycle
+import com.chungo.baseapp.lifecycle.FragmentLifecycle
 import dagger.Binds
 import dagger.Module
 

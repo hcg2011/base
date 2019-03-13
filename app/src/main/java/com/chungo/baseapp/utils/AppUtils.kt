@@ -1,4 +1,4 @@
-package com.chungo.base.utils
+package com.chungo.baseapp.utils
 
 import android.app.Activity
 import android.content.Context
@@ -18,6 +18,9 @@ import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import com.chungo.base.integration.AppManager
+import com.chungo.base.utils.Preconditions
+import com.chungo.baseapp.di.component.AppComponent
+import com.chungo.baseapp.lifecycle.IApp
 import java.security.MessageDigest
 
 class AppUtils private constructor() {
@@ -421,6 +424,12 @@ class AppUtils private constructor() {
          */
         fun exitApp() {
             AppManager.instance.appExit()
+        }
+
+        fun obtainAppComponentFromContext(context: Context): AppComponent {
+            Preconditions.checkNotNull(context, "%s cannot be null", Context::class.java.name)
+            Preconditions.checkState(context.applicationContext is IApp, "%s must be implements %s", context.applicationContext.javaClass.name, IApp::class.java.name)
+            return (context.applicationContext as IApp).appComponent
         }
     }
 

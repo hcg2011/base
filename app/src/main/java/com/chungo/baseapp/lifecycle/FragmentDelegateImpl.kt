@@ -1,4 +1,4 @@
-package com.chungo.base.delegate
+package com.chungo.baseapp.lifecycle
 
 import android.content.Context
 import android.os.Bundle
@@ -7,8 +7,9 @@ import android.support.v4.app.FragmentManager
 import android.view.View
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.chungo.base.delegate.FragmentDelegate
 import com.chungo.base.eventbus.EventBusManager
-import com.chungo.base.utils.AppUtils
+import com.chungo.baseapp.utils.AppUtils
 import timber.log.Timber
 
 /**

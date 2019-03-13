@@ -1,4 +1,4 @@
-package com.chungo.base.lifecycle
+package com.chungo.baseapp.lifecycle
 
 import android.app.Activity
 import android.app.Application
@@ -7,9 +7,7 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.delegate.ActivityDelegate
-import com.chungo.base.delegate.ActivityDelegateImpl
 import com.chungo.base.delegate.FragmentDelegate
-import com.chungo.base.delegate.IActivity
 import com.chungo.base.integration.AppManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
