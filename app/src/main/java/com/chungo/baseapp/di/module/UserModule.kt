@@ -16,14 +16,14 @@ class UserModule {
 
 //    @Scopes.Activity
 //    @Provides
-//    fun provideRxPermissions(activity: DetailActivity): UserContract.View {
+//    fun provideMain(activity: MainActivity): UserContract.View {
 //        return activity
 //    }
-
+//
 //    @Scopes.Activity
 //    @Provides
-//    fun provideRxPermissions(activity: Activity): UserContract.View {
-//        return activity as UserContract.View
+//    fun provideDetail(activity: DetailActivity): UserContract.View {
+//        return activity
 //    }
 
 

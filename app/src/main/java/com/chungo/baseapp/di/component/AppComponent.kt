@@ -7,9 +7,8 @@ import com.chungo.base.http.IRepositoryManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.rxerror.RxErrorHandler
 import com.chungo.base.utils.AppUtils
+import com.chungo.baseapp.di.module.ActivityBindModule
 import com.chungo.baseapp.di.module.AppModuleBinds
-import com.chungo.baseapp.di.module.MainActivityModule
-import com.chungo.baseapp.di.module.UserActivityModule
 import com.chungo.baseapp.lifecycle.AppDelegate
 import com.google.gson.Gson
 import dagger.BindsInstance
@@ -34,9 +33,9 @@ import javax.inject.Singleton
     InterceptorModuleBinds::class,
     GlobalConfigModule::class,
     AndroidInjectionModule::class,
-    //ActivityBindModule::class
-    UserActivityModule::class,
-    MainActivityModule::class
+    ActivityBindModule::class
+//    UserActivityModule::class,
+//    MainActivityModule::class
 ])
 interface AppComponent {
 
