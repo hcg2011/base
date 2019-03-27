@@ -3,21 +3,25 @@ package com.chungo.base.delegate
 import android.app.Activity
 import android.app.Application
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.ComponentCallbacks2
 import android.content.ContentProvider
 import android.content.Context
 import android.content.res.Configuration
 import android.support.v4.app.Fragment
+import android.util.Log
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.config.ManifestParser
-import com.chungo.base.di.component.AppComponent
-import com.chungo.base.di.component.DaggerAppComponent
+import com.chungo.base.di.component.BaseAppComponent
+import com.chungo.base.di.component.IComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
+import com.chungo.base.lifecycle.IAndroidInjectorLifecycles
 import com.chungo.base.lifecycle.IAppLifecycles
-import com.chungo.base.utils.Preconditions
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
 import java.util.*
 import javax.inject.Inject
 
@@ -30,7 +34,19 @@ import javax.inject.Inject
  * @see BaseApplication
  *
  */
-class AppDelegate(context: Context) : IApp, IAppLifecycles {
+abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInjectorLifecycles {
+    @Inject
+    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+    @Inject
+    lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
+    @Inject
+    lateinit var supportFragmentInjector: DispatchingAndroidInjector<android.support.v4.app.Fragment>
+    @Inject
+    lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
+    @Inject
+    lateinit var serviceInjector: DispatchingAndroidInjector<Service>
+    @Inject
+    lateinit var contentProviderInjector: DispatchingAndroidInjector<ContentProvider>
     @Inject
     @field:[Qualifiers.Lifecycle]
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
@@ -38,52 +54,31 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
     @field:[Qualifiers.RxLifecycle]
     lateinit var mActivityLifecycleForRxLifecycle: Application.ActivityLifecycleCallbacks
     //参考glide。用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
-    private var mModules: ArrayList<ConfigModule> = ManifestParser(context).parse()
-    private var mAppLifecycles = ArrayList<IAppLifecycles>()
-    private var mActivityLifecycles = ArrayList<Application.ActivityLifecycleCallbacks>()
-    private var mComponentCallback: ComponentCallbacks2? = null
-    private var mApplication: Application? = null
-    private var mAppComponent: AppComponent? = null
-
-
-    /**
-     * 将 [AppComponent] 返回出去, 供其它地方使用, [AppComponent] 接口中声明的方法返回的实例, 在 [.getAppComponent] 拿到对象后都可以直接使用
-     *
-     * @return AppComponent
-     * @see ArmsUtils.obtainAppComponentFromContext
-     */
-    override val appComponent: AppComponent
-        get() {
-            Preconditions.checkNotNull(mAppComponent,
-                    "%s cannot be null,first call %s#onCreate(Application) in %s#onCreate()",
-                    AppComponent::class.java.getName(), javaClass.name, Application::class.java.name)
-            return mAppComponent!!
-        }
+    protected var mModules: ArrayList<ConfigModule> = ManifestParser(context).parse()
+    protected var mAppLifecycles = ArrayList<IAppLifecycles>()
+    protected var mActivityLifecycles = ArrayList<Application.ActivityLifecycleCallbacks>()
+    protected var mComponentCallback: ComponentCallbacks2? = null
+    protected var mApp: Application? = null
+    protected var mComponent: BaseAppComponent? = null
 
     init {
-//        var initMainConfig = false
+        Log.d("hcg_log", "BaseAppDelegate==$this context=$context")
         //遍历之前获得的集合, 执行每一个 ConfigModule 实现类的某些方法
         for (module in mModules) {
-//            if (module is MainConfiguration)
-//                initMainConfig = true
-            //将框架外部, 开发者实现的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
+            //将的 Application 的生命周期回调 (AppLifecycles) 存入 mAppLifecycles 集合 (此时还未注册回调)
             module.injectAppLifecycle(context, mAppLifecycles)
-            //将框架外部, 开发者实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLifecycles 集合 (此时还未注册回调)
+            //将Activity 的生命周期回调 ActivityLifecycleCallbacks存入 mActivityLifecycles 集合 (此时还未注册回调)
             module.injectActivityLifecycle(context, mActivityLifecycles)
         }
-//        if (!initMainConfig)
-//            initMainConfig(context)
     }
 
-    /**
-     * 如果Manifest里面没有 配置基本的ConfigModule。这里初始化一次
-     */
-//    private fun initMainConfig(context: Context) {
-//        val mainConfig = MainConfiguration()
-//        mainConfig.injectAppLifecycle(context, mAppLifecycles)
-//        mainConfig.injectActivityLifecycle(context, mActivityLifecycles)
-//        mModules.add(mainConfig)
-//    }
+    override var mAppComponent: IComponent? = null
+    override fun activityInjector(): AndroidInjector<Activity>? = activityInjector
+    override fun contentProviderInjector(): AndroidInjector<ContentProvider> = contentProviderInjector
+    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = fragmentInjector
+    override fun serviceInjector(): AndroidInjector<Service> = serviceInjector
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
+    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> = broadcastReceiverInjector
 
     override fun attachBaseContext(base: Context) {
         //遍历 mAppLifecycles, 执行所有已注册的 AppLifecycles 的 attachBaseContext() 方法 (框架外部, 开发者扩展的逻辑)
@@ -92,38 +87,40 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
         }
     }
 
+    /**
+     * 在注入之后，再执行super赋值操作
+     */
     override fun onCreate(application: Application) {
-        this.mApplication = application
-        mAppComponent = DaggerAppComponent
-                .builder()
-                .application(application)//提供application
-                .globalConfigModule(getGlobalConfigModule(application, mModules))//全局配置
-                .build()
-        mAppComponent!!.inject(this)
+        this.mApp = application
+//        mComponent = DaggerBaseAppComponent.builder()
+//                .application(application)
+//                .globalConfigModule(getGlobalConfigModule(application, mModules))
+//                .build()
+//        mComponent!!.inject(this)
 
         //将 ConfigModule 的实现类的集合存放到缓存 Cache, 可以随时获取
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
         //否则存储在 LRU 算法的存储空间中 (大于或等于缓存所能允许的最大 size, 则会根据 LRU 算法清除之前的条目)
         //前提是 extras 使用的是 IntelligentCache (框架默认使用)
-        val cache = mAppComponent!!.extras() as? Cache<String, Any>
+        val cache = mAppComponent?.extras() as? Cache<String, Any>
         cache?.put(IntelligentCache.KEY_KEEP + ConfigModule::class.java.getName(), mModules)
         this.mModules.clear()
         //注册框架内部已实现的 Activity 生命周期逻辑
-        mApplication!!.registerActivityLifecycleCallbacks(mActivityLifecycle)
+        mApp?.registerActivityLifecycleCallbacks(mActivityLifecycle)
 
         //注册框架内部已实现的 RxLifecycle 逻辑
-        mApplication!!.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
+        mApp?.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
         //注册框架外部, 开发者扩展的 Activity 生命周期逻辑
         //每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
         //也可以有 N 个 ConfigModule 的实现类 (完美支持组件化项目 各个 Module 的各种独特需求)
         for (lifecycle in mActivityLifecycles) {
-            mApplication!!.registerActivityLifecycleCallbacks(lifecycle)
+            mApp?.registerActivityLifecycleCallbacks(lifecycle)
         }
 
         mComponentCallback = AppComponentCallbacks(application, mAppComponent!!)
 
         //注册回掉: 内存紧张时释放部分内存
-        mApplication!!.registerComponentCallbacks(mComponentCallback)
+        mApp!!.registerComponentCallbacks(mComponentCallback)
 
         //执行框架外部, 开发者扩展的 App onCreate 逻辑
         for (lifecycle in mAppLifecycles) {
@@ -135,20 +132,20 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
 
     override fun onTerminate(application: Application) {
         mActivityLifecycle.let {
-            mApplication?.unregisterActivityLifecycleCallbacks(it)
+            mApp?.unregisterActivityLifecycleCallbacks(it)
         }
 
         mActivityLifecycleForRxLifecycle.let {
-            mApplication?.unregisterActivityLifecycleCallbacks(it)
+            mApp?.unregisterActivityLifecycleCallbacks(it)
         }
 
         mComponentCallback?.let {
-            mApplication?.unregisterComponentCallbacks(it)
+            mApp?.unregisterComponentCallbacks(it)
         }
 
         if (mActivityLifecycles.size > 0) {
             for (lifecycle in mActivityLifecycles) {
-                mApplication!!.unregisterActivityLifecycleCallbacks(lifecycle)
+                mApp!!.unregisterActivityLifecycleCallbacks(lifecycle)
             }
         }
         if (mAppLifecycles.size > 0) {
@@ -158,7 +155,7 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
         }
         this.mAppComponent = null
         this.mComponentCallback = null
-        this.mApplication = null
+        this.mApp = null
     }
 
 
@@ -168,7 +165,7 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
      *
      * @return GlobalConfigModule
      */
-    private fun getGlobalConfigModule(context: Context, modules: List<ConfigModule>): GlobalConfigModule {
+    protected fun getGlobalConfigModule(context: Context, modules: List<ConfigModule>): GlobalConfigModule {
 
         val congfig = GlobalConfigModule()
         //遍历 ConfigModule 集合, 给全局配置 GlobalConfigModule 添加参数
@@ -185,7 +182,7 @@ class AppDelegate(context: Context) : IApp, IAppLifecycles {
      * 响应 [ComponentCallbacks2.onTrimMemory] 回调, 开发者的 App 会存活的更持久, 有利于用户体验
      * 不响应 [ComponentCallbacks2.onTrimMemory] 回调, 系统 kill 掉进程的几率更大
      */
-    private class AppComponentCallbacks(private val mApplication: Application, private val mAppComponent: AppComponent) : ComponentCallbacks2 {
+    protected class AppComponentCallbacks(private val app: Application, private val component: IComponent) : ComponentCallbacks2 {
 
         /**
          * 在你的 App 生命周期的任何阶段, [ComponentCallbacks2.onTrimMemory] 发生的回调都预示着你设备的内存资源已经开始紧张

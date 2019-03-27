@@ -1,7 +1,7 @@
 package com.chungo.base.delegate
 
-import com.chungo.base.di.component.AppComponent
+import com.chungo.base.di.component.IComponent
 
 interface IApp {
-    val appComponent: AppComponent
+    var mAppComponent: IComponent?
 }

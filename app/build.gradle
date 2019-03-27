@@ -68,9 +68,6 @@ dependencies {
 //        exclude module: 'support-annotations'
 //        exclude module: 'support-compat'
 //    }
-    kapt(rootProject.ext.dependencies["butterknife-compiler"]) {
-        exclude module: 'support-annotations'
-    }
 //    //rx
 //    api rootProject.ext.dependencies["rxjava2"]
 //    api(rootProject.ext.dependencies["rxandroid2"]) {
@@ -151,8 +148,11 @@ dependencies {
 //    api rootProject.ext.dependencies["logger"]
 //    //tools
 //    compileOnly rootProject.ext.dependencies["javax.annotation"]
-    implementation rootProject.ext.dependencies["dagger2"]
-    kapt rootProject.ext.dependencies["dagger2-compiler"]
+    implementation rootProject.ext.dagger2Libs
+    kapt rootProject.ext.dagger2_processor_Libs
+
+//    implementation rootProject.ext.dependencies["dagger2"]
+//    kapt rootProject.ext.dependencies["dagger2-compiler"]
     compileOnly rootProject.ext.dependencies["eventbus"]
     debugImplementation rootProject.ext.dependencies["leakcanary-debug"]
     releaseImplementation rootProject.ext.dependencies["leakcanary-release"]

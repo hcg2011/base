@@ -4,14 +4,12 @@ package com.chungo.base.delegate
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
-
 import com.chungo.base.base.BaseActivity
-import com.chungo.base.di.component.AppComponent
-import com.chungo.base.lifecycle.ActivityLifecycle
 import com.chungo.base.integration.cache.Cache
+import com.chungo.base.lifecycle.ActivityLifecycle
 
 /**
- * 框架要求框架中的每个 [Activity] 都需要实现此类,以满足规范
+ * 每个 [Activity] 都需要实现此类,以满足规范
  *
  * @see BaseActivity
  */
@@ -25,13 +23,6 @@ interface IActivity {
      * @return like [LruCache]
      */
     fun provideCache(): Cache<*, *>
-
-    /**
-     * 提供 AppComponent (提供所有的单例对象) 给实现类, 进行 Component 依赖
-     *
-     * @param appComponent
-     */
-    fun setupActivityComponent(appComponent: AppComponent)
 
     /**
      * 是否使用 EventBus
@@ -60,7 +51,7 @@ interface IActivity {
     fun initData(savedInstanceState: Bundle?)
 
     /**
-     * 这个 Activity 是否会使用 Fragment,框架会根据这个属性判断是否注册 [FragmentManager.FragmentLifecycleCallbacks]
+     * 这个 Activity 是否会使用 Fragment,会根据这个属性判断是否注册 [FragmentManager.FragmentLifecycleCallbacks]
      * 如果返回`false`,那意味着这个 Activity 不需要绑定 Fragment,那你再在这个 Activity 中绑定继承于 [BaseFragment] 的 Fragment 将不起任何作用
      * @see ActivityLifecycle.registerFragmentCallbacks
      * @return

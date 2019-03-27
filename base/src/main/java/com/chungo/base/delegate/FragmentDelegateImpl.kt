@@ -5,11 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.view.View
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.chungo.base.eventbus.EventBusManager
-import com.chungo.base.utils.AppUtils
-import timber.log.Timber
 
 /**
  * [FragmentDelegate] 默认实现类
@@ -18,7 +14,6 @@ import timber.log.Timber
  */
 open class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, private var mFragment: Fragment?) : FragmentDelegate {
     protected var iFragment: IFragment? = null
-    protected var mUnbinder: Unbinder? = null
 
     /**
      * Return true if the fragment is currently added to its activity.
@@ -39,13 +34,10 @@ open class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, 
         if (iFragment!!.useEventBus())
         //如果要使用eventbus请将此方法返回true
             EventBusManager.instance.register(mFragment!!)//注册到事件主线
-        iFragment!!.setupFragmentComponent(AppUtils.obtainAppComponentFromContext(mFragment!!.context!!))
     }
 
     override fun onCreateView(view: View?, savedInstanceState: Bundle?) {
-        //绑定到butterknife
-        if (view != null)
-            mUnbinder = ButterKnife.bind(mFragment!!, view)
+
     }
 
     override fun onActivityCreate(savedInstanceState: Bundle?) {
@@ -73,23 +65,13 @@ open class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, 
     }
 
     override fun onDestroyView() {
-        if (mUnbinder != null && mUnbinder !== Unbinder.EMPTY) {
-            try {
-                mUnbinder!!.unbind()
-            } catch (e: IllegalStateException) {
-                e.printStackTrace()
-                //fix Bindings already cleared
-                Timber.w("onDestroyView: " + e.message)
-            }
 
-        }
     }
 
     override fun onDestroy() {
         if (iFragment != null && iFragment!!.useEventBus())
         //如果要使用eventbus请将此方法返回true
             EventBusManager.instance.unregister(mFragment!!)//注册到事件主线
-        this.mUnbinder = null
         this.mFragmentManager = null
         this.mFragment = null
         this.iFragment = null

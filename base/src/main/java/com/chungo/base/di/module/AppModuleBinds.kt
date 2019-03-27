@@ -25,8 +25,9 @@ abstract class AppModuleBinds {
     @Qualifiers.Lifecycle
     abstract fun bindActivityLifecycle(activityLifecycle: ActivityLifecycle): Application.ActivityLifecycleCallbacks
 
-    @Qualifiers.RxLifecycle
+
     @Binds
+    @Qualifiers.RxLifecycle
     abstract fun bindActivityForRxLifecycle(activityRxLifecycle: ActivityLifecycleForRxLifecycle): Application.ActivityLifecycleCallbacks
 
     @Binds

@@ -14,7 +14,6 @@ ext {
             retrofitSdkVersion      : "2.4.0",
             dagger2SdkVersion       : "2.19",
             glideSdkVersion         : "4.8.0",
-            butterknifeSdkVersion   : "8.8.1",
             rxlifecycle2SdkVersion  : "2.2.2",
             espressoSdkVersion      : "3.0.1",
             leakcanary              : "1.5.4",
@@ -30,16 +29,16 @@ ext {
             "cardview-v7"    : "com.android.support:cardview-v7:$version.androidSupportSdkVersion",
             "annotations"    : "com.android.support:support-annotations:$version.androidSupportSdkVersion",
             "recyclerview-v7": "com.android.support:recyclerview-v7:$version.androidSupportSdkVersion",
-            "palette-v7": "com.android.support:palette-v7:$version.androidSupportSdkVersion",
+            "palette-v7"     : "com.android.support:palette-v7:$version.androidSupportSdkVersion",
     ]
 
     retrofit = [ //network
-            "retrofit"                : "com.squareup.retrofit2:retrofit:$version.retrofitSdkVersion",
-            "retrofit-converter-gson" : "com.squareup.retrofit2:converter-gson:$version.retrofitSdkVersion",
-            "retrofit-converter-moshi": "com.squareup.retrofit2:converter-moshi:$version.retrofitSdkVersion",
-            "retrofit-adapter-rxjava2": "com.squareup.retrofit2:adapter-rxjava2:$version.retrofitSdkVersion",
-            "okhttp3"                 : "com.squareup.okhttp3:okhttp:3.11.0",
-            "okhttp-urlconnection"    : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
+                 "retrofit"                : "com.squareup.retrofit2:retrofit:$version.retrofitSdkVersion",
+                 "retrofit-converter-gson" : "com.squareup.retrofit2:converter-gson:$version.retrofitSdkVersion",
+                 "retrofit-converter-moshi": "com.squareup.retrofit2:converter-moshi:$version.retrofitSdkVersion",
+                 "retrofit-adapter-rxjava2": "com.squareup.retrofit2:adapter-rxjava2:$version.retrofitSdkVersion",
+                 "okhttp3"                 : "com.squareup.okhttp3:okhttp:3.11.0",
+                 "okhttp-urlconnection"    : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
     ]
 
     rxJava = [
@@ -59,11 +58,14 @@ ext {
     ]
 
     dagger2 = [
-            "dagger2"                  : "com.google.dagger:dagger:$version.dagger2SdkVersion",
-            "dagger2-android"          : "com.google.dagger:dagger-android:$version.dagger2SdkVersion",
-            "dagger2-android-support"  : "com.google.dagger:dagger-android-support:$version.dagger2SdkVersion",
-            "dagger2-compiler"         : "com.google.dagger:dagger-compiler:$version.dagger2SdkVersion",
+            "dagger2"                : "com.google.dagger:dagger:$version.dagger2SdkVersion",
+            "dagger2-android"        : "com.google.dagger:dagger-android:$version.dagger2SdkVersion",
+            "dagger2-android-support": "com.google.dagger:dagger-android-support:$version.dagger2SdkVersion",
+    ]
+
+    dagger2_processor = [
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:$version.dagger2SdkVersion",
+            "dagger2-compiler"         : "com.google.dagger:dagger-compiler:$version.dagger2SdkVersion",
     ]
 
     dependencies = [
@@ -90,8 +92,6 @@ ext {
 
             //view
             "autolayout"               : "com.zhy:autolayout:1.4.5",
-            "butterknife"              : "com.jakewharton:butterknife:$version.butterknifeSdkVersion",
-            "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:$version.butterknifeSdkVersion",
             "pickerview"               : "com.contrarywind:Android-PickerView:3.2.5",
             "photoview"                : "com.github.chrisbanes.photoview:library:1.2.3",
             "numberprogressbar"        : "com.daimajia.numberprogressbar:library:1.2@aar",
@@ -157,4 +157,5 @@ ext {
     retrofitLibs = retrofit.values()
     refreshLibs = smartrefresh.values()
     dagger2Libs = dagger2.values()
+    dagger2_processor_Libs = dagger2_processor.values()
 }

@@ -9,14 +9,11 @@ import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool
 import com.bumptech.glide.load.engine.cache.DiskLruCacheWrapper
 import com.bumptech.glide.load.engine.cache.LruResourceCache
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator
-import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
-import com.chungo.base.http.ssl.OkHttpUrlLoader
 import com.chungo.base.imageloader.ImageLoader
 import com.chungo.base.utils.AppUtils
 import com.chungo.base.utils.DataHelper
 import java.io.File
-import java.io.InputStream
 
 /**
  * [AppGlideModule] 的默认实现类
@@ -54,8 +51,8 @@ class GlideConfiguration : AppGlideModule() {
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         //Glide 默认使用 HttpURLConnection 做网络请求,在这切换成 Okhttp 请求
-        val appComponent = AppUtils.obtainAppComponentFromContext(context)
-        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(appComponent.okHttpClient()))
+//        val appComponent = AppUtils.obtainAppComponentFromContext(context)
+//        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(appComponent.okHttpClient()))
     }
 
     override fun isManifestParsingEnabled(): Boolean {

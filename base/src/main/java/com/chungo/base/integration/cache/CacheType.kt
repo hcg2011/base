@@ -20,7 +20,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.support.v4.app.Fragment
 
-import com.chungo.base.di.component.AppComponent
+import com.chungo.base.di.component.BaseAppComponent
 import com.chungo.base.http.RepositoryManager
 
 
@@ -92,7 +92,7 @@ interface CacheType {
         }
 
         /**
-         * [AppComponent] 中的 extras
+         * [BaseAppComponent] 中的 extras
          */
         val EXTRAS: CacheType = object : CacheType {
             private val MAX_SIZE = 500

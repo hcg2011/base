@@ -18,7 +18,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import com.chungo.base.delegate.IApp
-import com.chungo.base.di.component.AppComponent
+import com.chungo.base.di.component.IComponent
 import com.chungo.base.integration.AppManager
 import java.security.MessageDigest
 
@@ -425,10 +425,9 @@ class AppUtils private constructor() {
             AppManager.instance.appExit()
         }
 
-        fun obtainAppComponentFromContext(context: Context): AppComponent {
+        fun obtainAppComponentFromContext(context: Context): IComponent {
             Preconditions.checkNotNull(context, "%s cannot be null", Context::class.java.name)
-            Preconditions.checkState(context.applicationContext is IApp, "%s must be implements %s", context.applicationContext.javaClass.name, IApp::class.java.name)
-            return (context.applicationContext as IApp).appComponent
+            return (context.applicationContext as IApp).mAppComponent!!
         }
     }
 

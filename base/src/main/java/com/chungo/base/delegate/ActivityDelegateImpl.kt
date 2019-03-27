@@ -2,9 +2,7 @@ package com.chungo.base.delegate
 
 import android.app.Activity
 import android.os.Bundle
-
 import com.chungo.base.eventbus.EventBusManager
-import com.chungo.base.utils.AppUtils
 
 
 /**
@@ -25,9 +23,6 @@ open class ActivityDelegateImpl(private var mActivity: Activity?) : ActivityDele
             //注册到事件主线
             EventBusManager.instance.register(mActivity!!)
         }
-
-        //这里提供 AppComponent 对象给 BaseActivity 的子类, 用于 Dagger2 的依赖注入
-        iActivity!!.setupActivityComponent(AppUtils.obtainAppComponentFromContext(mActivity!!))
     }
 
     override fun onStart() {

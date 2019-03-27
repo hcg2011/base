@@ -4,9 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import com.chungo.base.base.BaseActivity
-import com.chungo.base.di.component.AppComponent
 import com.chungo.baseapp.R
-import com.chungo.baseapp.di.component.DaggerUserComponent
 import com.chungo.baseapp.mvp.contract.UserContract
 import com.chungo.baseapp.mvp.model.entity.User
 import com.chungo.baseapp.mvp.presenter.UserPresenter
@@ -19,9 +17,7 @@ class DetailActivity : BaseActivity<UserPresenter>(), UserContract.View {
     @Inject
     lateinit var rxPermissions: RxPermissions
 
-    override fun obtainRxPermissions(): RxPermissions {
-        return rxPermissions
-    }
+    override fun obtainRxPermissions(): RxPermissions = rxPermissions
 
     override fun startLoadMore() {
 
@@ -33,15 +29,6 @@ class DetailActivity : BaseActivity<UserPresenter>(), UserContract.View {
 
     override fun showMessage(message: String) {
 
-    }
-
-    override fun setupActivityComponent(appComponent: AppComponent) {
-        DaggerUserComponent
-                .builder()
-                .appComponent(appComponent)
-                .view(this)
-                .build()
-                .inject(this)
     }
 
     override fun initView(savedInstanceState: Bundle?): Int = R.layout.activity_detail

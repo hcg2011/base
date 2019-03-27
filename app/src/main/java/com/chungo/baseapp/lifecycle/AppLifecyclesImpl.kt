@@ -2,7 +2,6 @@ package com.chungo.baseapp.lifecycle
 
 import android.app.Application
 import android.content.Context
-import butterknife.ButterKnife
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles
@@ -34,7 +33,6 @@ class AppLifecyclesImpl : IAppLifecycles {
 //                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
 //                }
 //            })
-            ButterKnife.setDebug(true)
         }
         //LeakCanary 内存泄露检查
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中

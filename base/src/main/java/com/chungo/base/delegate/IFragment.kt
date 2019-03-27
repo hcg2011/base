@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.chungo.base.di.component.AppComponent
 import com.chungo.base.integration.cache.Cache
 
 
@@ -25,13 +24,6 @@ interface IFragment {
      * @return like [LruCache]
      */
     fun provideCache(): Cache<String, Any>
-
-    /**
-     * 提供 AppComponent (提供所有的单例对象) 给实现类, 进行 Component 依赖
-     *
-     * @param appComponent
-     */
-    fun setupFragmentComponent(appComponent: AppComponent)
 
     /**
      * 是否使用 EventBus

@@ -8,6 +8,10 @@ import javax.inject.Scope
  * @Created 2018/11/22 15:16
  */
 annotation class Scopes {
+    @Scope
+    @MustBeDocumented
+    @Retention
+    annotation class App
 
     //Activity 的生命周期，对于activity单例
     @Scope

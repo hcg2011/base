@@ -1,51 +1,49 @@
 package com.chungo.base.base
 
+import android.app.Activity
 import android.app.Application
+import android.app.Fragment
+import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.ContentProvider
 import android.content.Context
-import com.chungo.base.delegate.AppDelegate
 import com.chungo.base.delegate.IApp
-import com.chungo.base.di.component.AppComponent
-import com.chungo.base.lifecycle.IAppLifecycles
-import com.chungo.base.utils.AppUtils
-import com.chungo.base.utils.Preconditions
+import com.chungo.base.lifecycle.IAndroidInjectorLifecycles
+import dagger.android.*
+import dagger.android.support.HasSupportFragmentInjector
 
 
 /**
  * 基于MVPArms，改造为 kotlin版本 是一个整合了 MVP + Dagger2 + Retrofit + RxJava
  */
-open class BaseApplication : Application(), IApp {
-    protected var mAppDelegate: IAppLifecycles? = null
+abstract class BaseApplication : Application(), IApp,
+        HasActivityInjector,
+        HasBroadcastReceiverInjector,
+        HasFragmentInjector,
+        HasServiceInjector,
+        HasContentProviderInjector,
+        HasSupportFragmentInjector {
+    protected var mAppDelegate: IAndroidInjectorLifecycles? = null
 
-    /**
-     * 将 [AppComponent] 返回出去, 供其它地方使用, [AppComponent] 接口中声明的方法所返回的实例, 在 [.getAppComponent] 拿到对象后都可以直接使用
-     *
-     * @see AppUtils.obtainAppComponentFromContext
-     * @return AppComponent
-     */
-    override val appComponent: AppComponent
-        get() {
-            Preconditions.checkNotNull<IAppLifecycles>(mAppDelegate, "%s cannot be null", AppDelegate::class.java.name)
-            Preconditions.checkState(mAppDelegate is IApp, "%s must be implements %s", mAppDelegate!!.javaClass.name, IApp::class.java.name)
-            return (mAppDelegate as IApp).appComponent
-        }
+    override fun activityInjector(): AndroidInjector<Activity>? = mAppDelegate!!.activityInjector()
+    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver>? = mAppDelegate!!.broadcastReceiverInjector()
+    override fun fragmentInjector(): AndroidInjector<Fragment>? = mAppDelegate!!.fragmentInjector()
+    override fun serviceInjector(): AndroidInjector<Service>? = mAppDelegate!!.serviceInjector()
+    override fun contentProviderInjector(): AndroidInjector<ContentProvider>? = mAppDelegate!!.contentProviderInjector()
+    override fun supportFragmentInjector(): AndroidInjector<android.support.v4.app.Fragment>? = mAppDelegate!!.supportFragmentInjector()
 
-    /**
-     * 这里会在 [BaseApplication.onCreate] 之前被调用,可以做一些较早的初始化
-     * 常用于 MultiDex 以及插件化框架的初始化
-     *
-     * @param context
-     */
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(context)
-        if (mAppDelegate == null)
-            this.mAppDelegate = AppDelegate(context)
-        this.mAppDelegate!!.attachBaseContext(context)
+        attachAppDelegate(context)
+        mAppDelegate?.attachBaseContext(context)
     }
+
+    /**代理Application 的生命周期**/
+    abstract fun attachAppDelegate(context: Context)
 
     override fun onCreate() {
         super.onCreate()
-        if (mAppDelegate != null)
-            mAppDelegate!!.onCreate(this)
+        mAppDelegate?.onCreate(this)
     }
 
     /**
@@ -53,8 +51,6 @@ open class BaseApplication : Application(), IApp {
      */
     override fun onTerminate() {
         super.onTerminate()
-        if (mAppDelegate != null)
-            mAppDelegate!!.onTerminate(this)
+        mAppDelegate?.onTerminate(this)
     }
-
 }

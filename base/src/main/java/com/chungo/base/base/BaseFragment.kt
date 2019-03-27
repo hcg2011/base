@@ -13,6 +13,7 @@ import com.chungo.base.lifecycle.rx.IFragmentLifecycleable
 import com.chungo.base.mvp.IPresenter
 import com.chungo.base.utils.AppUtils
 import com.trello.rxlifecycle2.android.FragmentEvent
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
@@ -35,7 +36,18 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, IFragmentLi
         return mCache!!
     }
 
+    protected fun inject() {
+        AndroidSupportInjection.inject(this)
+//    if (injectRouter())
+//        ARouter.getInstance().inject(this)
+    }
+
+    protected fun injectRouter(): Boolean {
+        return false
+    }
+
     override fun onAttach(context: Context?) {
+        inject()
         super.onAttach(context)
         mContext = context
     }

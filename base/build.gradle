@@ -5,17 +5,17 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+    }
+
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
-    }
-
-
-    defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 28
     }
 
     buildTypes {
@@ -40,14 +40,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2') {
         exclude module: 'support-annotations'
     }
-
-    api(rootProject.ext.dependencies["butterknife"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-compat'
-    }
-//    kapt(rootProject.ext.dependencies["butterknife-compiler"]) {
-//        exclude module: 'support-annotations'
-//    }
 
     //rx
     api rootProject.ext.dependencies["rxjava2"]
@@ -131,8 +123,10 @@ dependencies {
     //api rootProject.ext.dependencies["logger"]
     //tools
     compileOnly rootProject.ext.dependencies["javax.annotation"]
-    implementation rootProject.ext.dependencies["dagger2"]
-    kapt rootProject.ext.dependencies["dagger2-compiler"]
+//    implementation rootProject.ext.dependencies["dagger2"]
+//    kapt rootProject.ext.dependencies["dagger2-compiler"]
+    implementation rootProject.ext.dagger2Libs
+    kapt rootProject.ext.dagger2_processor_Libs
 
     compileOnly rootProject.ext.dependencies["eventbus"]
     debugImplementation rootProject.ext.dependencies["leakcanary-debug"]

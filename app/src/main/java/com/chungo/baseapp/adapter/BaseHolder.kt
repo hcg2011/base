@@ -3,15 +3,12 @@ package com.chungo.baseapp.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
-import com.chungo.base.utils.ThirdViewUtil
-
 abstract class BaseHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     protected var mOnViewClickListener: OnViewClickListener? = null
     protected val TAG = this.javaClass.simpleName
 
     init {
         itemView.setOnClickListener(this)//点击事件
-        ThirdViewUtil.bindTarget(this, itemView)//绑定
     }
 
 

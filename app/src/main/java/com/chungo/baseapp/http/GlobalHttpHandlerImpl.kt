@@ -29,7 +29,6 @@ class GlobalHttpHandlerImpl(private val context: Context) : GlobalHttpHandler {
         if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body()!!.contentType())) {
             try {
                 val list = AppUtils.obtainAppComponentFromContext(context).gson()!!.fromJson<List<User>>(httpResult, object : TypeToken<List<User>>() {
-
                 }.type)
                 val user = list[0]
                 Timber.w("Result ------> " + user.login + "    ||   Avatar_url------> " + user.avatarUrl)
