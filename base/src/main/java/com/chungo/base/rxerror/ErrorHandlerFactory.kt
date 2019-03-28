@@ -4,7 +4,7 @@ import android.content.Context
 
 import com.chungo.base.rxerror.listener.ResponseErrorListener
 
-class ErrorHandlerFactory(val mContext: Context,val mResponseErrorListener: ResponseErrorListener) {
+class ErrorHandlerFactory(val context: Context,val mResponseErrorListener: ResponseErrorListener) {
     val TAG = this.javaClass.simpleName
 
     /**
@@ -12,6 +12,6 @@ class ErrorHandlerFactory(val mContext: Context,val mResponseErrorListener: Resp
      * @param throwable
      */
     fun handleError(throwable: Throwable) {
-        mResponseErrorListener.handleResponseError(mContext, throwable)
+        mResponseErrorListener.handleResponseError(context, throwable)
     }
 }

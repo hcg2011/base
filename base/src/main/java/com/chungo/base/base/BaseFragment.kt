@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chungo.base.delegate.IFragment
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
@@ -38,8 +39,8 @@ abstract class BaseFragment<P : IPresenter> : Fragment(), IFragment, IFragmentLi
 
     protected fun inject() {
         AndroidSupportInjection.inject(this)
-//    if (injectRouter())
-//        ARouter.getInstance().inject(this)
+        if (injectRouter())
+            ARouter.getInstance().inject(this)
     }
 
     protected fun injectRouter(): Boolean {

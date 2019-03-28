@@ -8,6 +8,7 @@ import javax.inject.Scope
  * @Created 2018/11/22 15:16
  */
 annotation class Scopes {
+
     @Scope
     @MustBeDocumented
     @Retention
@@ -24,4 +25,9 @@ annotation class Scopes {
     @MustBeDocumented
     @Retention
     annotation class Fragment
+
+    @Scope
+    @MustBeDocumented
+    @Retention
+    annotation class Service
 }

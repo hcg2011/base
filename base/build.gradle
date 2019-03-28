@@ -11,6 +11,11 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     compileOptions {
@@ -28,10 +33,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.supports["recyclerview-v7"]
-    implementation rootProject.ext.supports["appcompat-v7"]
+    api rootProject.ext.supports["recyclerview-v7"]
+    api rootProject.ext.supports["appcompat-v7"]
     compileOnly rootProject.ext.dependencies["design"]
-//    implementation 'com.android.support:design:28.0.0'
 //    api rootProject.ext.supportLibs
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test:runner:1.0.2') {
@@ -51,7 +55,7 @@ dependencies {
         exclude module: 'dagger'
         exclude module: 'api'
     }
-    implementation(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
+    api(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
         exclude module: 'gson'
     }
     api(rootProject.ext.dependencies["rxlifecycle2"]) {
@@ -73,42 +77,34 @@ dependencies {
         exclude module: 'okio'
     }
     api rootProject.ext.dependencies["gson"]
-    implementation(rootProject.ext.dependencies["retrofit-converter-gson"]) {
+    api(rootProject.ext.dependencies["retrofit-converter-gson"]) {
         exclude module: 'gson'
         exclude module: 'okhttp'
         exclude module: 'okio'
         exclude module: 'retrofit'
     }
     api rootProject.ext.dependencies["moshi"]
-    implementation(rootProject.ext.dependencies["retrofit-converter-moshi"]) {
+    api(rootProject.ext.dependencies["retrofit-converter-moshi"]) {
         exclude module: 'moshi'
         exclude module: 'okhttp'
         exclude module: 'okio'
         exclude module: 'retrofit'
     }
-    implementation(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+    api(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
         exclude module: 'rxjava'
         exclude module: 'okhttp'
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
     api rootProject.ext.dependencies["okhttp3"]
-    implementation rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["glide"]
     kapt(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }
-    //view
-//    implementation('com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-15') {
-//        exclude module: 'support-annotations'
-//        exclude module: 'appcompat-v7'
-//        exclude module: 'support-v4'
-//    }
-//    implementation('com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-15') {
-//        exclude module: 'support-annotations'
-//        exclude module: 'appcompat-v7'
-//        exclude module: 'support-v4'
-//    }
-    api('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31') {
+    api rootProject.ext.dependencies["arouter"]
+    kapt rootProject.ext.dependencies["arouter-compiler"]
+
+    api(rootProject.ext.adapterLibs) {
         exclude module: 'support'
         exclude module: 'appcompat-v7'
     }
@@ -117,15 +113,14 @@ dependencies {
     // implementation 'me.jessyan:arms-autolayout:2.5.0'
     //现在已经将 Demo 中的屏幕适配框架从 AndroidAutoLayout 替换为 AndroidAutoSize, AndroidAutoLayout 和 AndroidAutoSize 可以在项目中共存
     //所以旧项目只要依赖 arms-autolayout 即可兼容之前的旧页面, 新页面可以使用 AndroidAutoSize 进行适配, 等有时间了再将旧页面全部替换为 AndroidAutoSize
-    implementation rootProject.ext.dependencies["autosize"]
+    api rootProject.ext.dependencies["autosize"]
     //log
     api rootProject.ext.dependencies["timber"]
     //api rootProject.ext.dependencies["logger"]
     //tools
     compileOnly rootProject.ext.dependencies["javax.annotation"]
-//    implementation rootProject.ext.dependencies["dagger2"]
-//    kapt rootProject.ext.dependencies["dagger2-compiler"]
-    implementation rootProject.ext.dagger2Libs
+
+    api rootProject.ext.dagger2Libs
     kapt rootProject.ext.dagger2_processor_Libs
 
     compileOnly rootProject.ext.dependencies["eventbus"]

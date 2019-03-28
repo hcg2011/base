@@ -20,6 +20,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -64,6 +69,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation project(':base')
 //    api(rootProject.ext.dependencies["butterknife"]) {
 //        exclude module: 'support-annotations'
 //        exclude module: 'support-compat'
@@ -135,24 +142,10 @@ dependencies {
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
     }
-//    api('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.31') {
-//        exclude module: 'support-annotations'
-//        exclude module: 'appcompat-v7'
-//        exclude module: 'support-v4'
-//    }
 
-    // implementation 'me.jessyan:arms-autolayout:2.5.0'
-   implementation rootProject.ext.dependencies["autosize"]
-    //log
-    implementation rootProject.ext.dependencies["timber"]
-//    api rootProject.ext.dependencies["logger"]
-//    //tools
-//    compileOnly rootProject.ext.dependencies["javax.annotation"]
-    implementation rootProject.ext.dagger2Libs
     kapt rootProject.ext.dagger2_processor_Libs
+    kapt(rootProject.ext.dependencies["arouter-compiler"])
 
-//    implementation rootProject.ext.dependencies["dagger2"]
-//    kapt rootProject.ext.dependencies["dagger2-compiler"]
     compileOnly rootProject.ext.dependencies["eventbus"]
     debugImplementation rootProject.ext.dependencies["leakcanary-debug"]
     releaseImplementation rootProject.ext.dependencies["leakcanary-release"]
@@ -160,5 +153,4 @@ dependencies {
     //test
     implementation rootProject.ext.dependencies["paginate"]
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation project(':base')
 }

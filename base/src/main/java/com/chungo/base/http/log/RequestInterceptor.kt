@@ -16,8 +16,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RequestInterceptor @Inject
-constructor() : Interceptor {
+class RequestInterceptor @Inject constructor() : Interceptor {
     @Inject
     lateinit var mHandler: GlobalHttpHandler
     @Inject
@@ -26,22 +25,10 @@ constructor() : Interceptor {
     lateinit var printLevel: Level
 
     enum class Level {
-        /**
-         * 不打印log
-         */
-        NONE,
-        /**
-         * 只打印请求信息
-         */
-        REQUEST,
-        /**
-         * 只打印响应信息
-         */
-        RESPONSE,
-        /**
-         * 所有数据全部打印
-         */
-        ALL
+        NONE,//不打印log
+        REQUEST,//只打印请求信息
+        RESPONSE,//只打印响应信息
+        ALL//所有数据全部打印
     }
 
     @Throws(IOException::class)
@@ -50,17 +37,14 @@ constructor() : Interceptor {
 
         val logRequest = printLevel == Level.ALL || printLevel != Level.NONE && printLevel == Level.REQUEST
 
-        if (logRequest) {
-            //打印请求信息
+        if (logRequest) { //打印请求信息
             if (request.body() != null && isParseable(request.body()!!.contentType())) {
-                mPrinter!!.printJsonRequest(request, parseParams(request))
-            } else {
-                mPrinter!!.printFileRequest(request)
-            }
+                mPrinter.printJsonRequest(request, parseParams(request))
+            } else
+                mPrinter.printFileRequest(request)
         }
 
         val logResponse = printLevel == Level.ALL || printLevel != Level.NONE && printLevel == Level.RESPONSE
-
         val t1 = if (logResponse) System.nanoTime() else 0
         val originalResponse: Response
         try {

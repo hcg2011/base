@@ -3,9 +3,8 @@ package com.chungo.base.base
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-
 import com.chungo.base.eventbus.EventBusManager
-
+import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -18,6 +17,7 @@ abstract class BaseService : Service() {
     }
 
     override fun onCreate() {
+        AndroidInjection.inject(this)
         super.onCreate()
         if (useEventBus())
             EventBusManager.instance.register(this)

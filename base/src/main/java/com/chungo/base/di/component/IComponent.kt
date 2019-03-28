@@ -6,6 +6,7 @@ import com.chungo.base.http.IRepositoryManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.rxerror.RxErrorHandler
 import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -47,6 +48,13 @@ interface IComponent {
      * @return [Gson]
      */
     fun gson(): Gson?
+
+    /**
+     * Json 高级序列化库
+     *
+     * @return [Moshi]
+     */
+    fun moshi(): Moshi?
 
     /**
      * 缓存文件根目录 (RxCache 和 Glide 的缓存都已经作为子文件夹放在这个根目录下), 应该将所有缓存都统一放到这个根目录下

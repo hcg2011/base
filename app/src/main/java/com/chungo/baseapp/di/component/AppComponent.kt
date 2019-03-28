@@ -6,6 +6,7 @@ import com.chungo.base.di.module.*
 import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.activity.AppDelegate
 import com.chungo.baseapp.di.module.ActivityBindModule
+import com.chungo.baseapp.di.module.ServiceBindModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -28,6 +29,7 @@ import javax.inject.Singleton
     AndroidInjectionModule::class,
     AndroidSupportInjectionModule::class,
 
+    ServiceBindModule::class,
     ActivityBindModule::class])
 interface AppComponent : IComponent {
     fun inject(delegate: AppDelegate)

@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment
 import android.util.Log
 import com.chungo.base.config.ConfigModule
 import com.chungo.base.config.ManifestParser
-import com.chungo.base.di.component.BaseAppComponent
 import com.chungo.base.di.component.IComponent
 import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
@@ -58,8 +57,6 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInj
     protected var mAppLifecycles = ArrayList<IAppLifecycles>()
     protected var mActivityLifecycles = ArrayList<Application.ActivityLifecycleCallbacks>()
     protected var mComponentCallback: ComponentCallbacks2? = null
-    protected var mApp: Application? = null
-    protected var mComponent: BaseAppComponent? = null
 
     init {
         Log.d("hcg_log", "BaseAppDelegate==$this context=$context")
@@ -90,8 +87,7 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInj
     /**
      * 在注入之后，再执行super赋值操作
      */
-    override fun onCreate(application: Application) {
-        this.mApp = application
+    override fun onCreate(app: Application) {
 //        mComponent = DaggerBaseAppComponent.builder()
 //                .application(application)
 //                .globalConfigModule(getGlobalConfigModule(application, mModules))
@@ -106,25 +102,25 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInj
         cache?.put(IntelligentCache.KEY_KEEP + ConfigModule::class.java.getName(), mModules)
         this.mModules.clear()
         //注册框架内部已实现的 Activity 生命周期逻辑
-        mApp?.registerActivityLifecycleCallbacks(mActivityLifecycle)
+        app.registerActivityLifecycleCallbacks(mActivityLifecycle)
 
         //注册框架内部已实现的 RxLifecycle 逻辑
-        mApp?.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
+        app.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
         //注册框架外部, 开发者扩展的 Activity 生命周期逻辑
         //每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
         //也可以有 N 个 ConfigModule 的实现类 (完美支持组件化项目 各个 Module 的各种独特需求)
         for (lifecycle in mActivityLifecycles) {
-            mApp?.registerActivityLifecycleCallbacks(lifecycle)
+            app.registerActivityLifecycleCallbacks(lifecycle)
         }
 
-        mComponentCallback = AppComponentCallbacks(application, mAppComponent!!)
+        mComponentCallback = AppComponentCallbacks(app, mAppComponent!!)
 
         //注册回掉: 内存紧张时释放部分内存
-        mApp!!.registerComponentCallbacks(mComponentCallback)
+        app.registerComponentCallbacks(mComponentCallback)
 
         //执行框架外部, 开发者扩展的 App onCreate 逻辑
         for (lifecycle in mAppLifecycles) {
-            lifecycle.onCreate(application)
+            lifecycle.onCreate(app)
         }
 
     }
@@ -132,20 +128,20 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInj
 
     override fun onTerminate(application: Application) {
         mActivityLifecycle.let {
-            mApp?.unregisterActivityLifecycleCallbacks(it)
+            application.unregisterActivityLifecycleCallbacks(it)
         }
 
         mActivityLifecycleForRxLifecycle.let {
-            mApp?.unregisterActivityLifecycleCallbacks(it)
+            application.unregisterActivityLifecycleCallbacks(it)
         }
 
         mComponentCallback?.let {
-            mApp?.unregisterComponentCallbacks(it)
+            application.unregisterComponentCallbacks(it)
         }
 
         if (mActivityLifecycles.size > 0) {
             for (lifecycle in mActivityLifecycles) {
-                mApp!!.unregisterActivityLifecycleCallbacks(lifecycle)
+                application.unregisterActivityLifecycleCallbacks(lifecycle)
             }
         }
         if (mAppLifecycles.size > 0) {
@@ -155,7 +151,6 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInj
         }
         this.mAppComponent = null
         this.mComponentCallback = null
-        this.mApp = null
     }
 
 

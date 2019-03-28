@@ -17,7 +17,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideAppManager(application: Application): AppManager? {
+    fun provideAppManager(application: Application): AppManager{
         return AppManager.instance.init(application)
     }
 

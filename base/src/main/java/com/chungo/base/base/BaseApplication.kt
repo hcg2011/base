@@ -7,8 +7,9 @@ import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.ContentProvider
 import android.content.Context
+import com.chungo.base.delegate.BaseAppDelegate
 import com.chungo.base.delegate.IApp
-import com.chungo.base.lifecycle.IAndroidInjectorLifecycles
+import com.chungo.base.di.component.IComponent
 import dagger.android.*
 import dagger.android.support.HasSupportFragmentInjector
 
@@ -23,7 +24,7 @@ abstract class BaseApplication : Application(), IApp,
         HasServiceInjector,
         HasContentProviderInjector,
         HasSupportFragmentInjector {
-    protected var mAppDelegate: IAndroidInjectorLifecycles? = null
+    protected var mAppDelegate: BaseAppDelegate? = null
 
     override fun activityInjector(): AndroidInjector<Activity>? = mAppDelegate!!.activityInjector()
     override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver>? = mAppDelegate!!.broadcastReceiverInjector()
@@ -31,6 +32,9 @@ abstract class BaseApplication : Application(), IApp,
     override fun serviceInjector(): AndroidInjector<Service>? = mAppDelegate!!.serviceInjector()
     override fun contentProviderInjector(): AndroidInjector<ContentProvider>? = mAppDelegate!!.contentProviderInjector()
     override fun supportFragmentInjector(): AndroidInjector<android.support.v4.app.Fragment>? = mAppDelegate!!.supportFragmentInjector()
+
+    override var mAppComponent: IComponent? = null
+        get() = mAppDelegate?.mAppComponent
 
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(context)

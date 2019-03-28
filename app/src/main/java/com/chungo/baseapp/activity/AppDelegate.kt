@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.chungo.base.delegate.BaseAppDelegate
-import com.chungo.baseapp.di.component.AppComponent
 import com.chungo.baseapp.di.component.DaggerAppComponent
 
 /**
@@ -25,7 +24,7 @@ open class AppDelegate(context: Context) : BaseAppDelegate(context) {
                 .application(application)//提供application
                 .globalConfigModule(getGlobalConfigModule(application, mModules))//全局配置
                 .build()
-        (mAppComponent as AppComponent).inject(this)
+        (mAppComponent as DaggerAppComponent).inject(this)
         super.onCreate(application)
     }
 }

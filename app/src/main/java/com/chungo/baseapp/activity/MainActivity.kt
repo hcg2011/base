@@ -1,10 +1,12 @@
 package com.chungo.baseapp.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
+import android.util.AttributeSet
 import android.view.View
 import com.chungo.base.base.BaseActivity
 import com.chungo.base.utils.AppUtils
@@ -18,6 +20,7 @@ import com.chungo.baseapp.mvp.presenter.UserPresenter
 import com.paginate.Paginate
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_user.*
+import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.internal.CustomAdapt
 import timber.log.Timber
 import javax.inject.Inject
@@ -47,6 +50,14 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
         return R.layout.activity_user
     }
 
+    override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
+        return super.onCreateView(name, context, attrs)
+        //由于某些原因, 屏幕旋转后 Fragment 的重建, 会导致框架对 Fragment 的自定义适配参数失去效果
+        //所以如果您的 Fragment 允许屏幕旋转, 则请在 onCreateView 手动调用一次 AutoSize.autoConvertDensity()
+        //如果您的 Fragment 不允许屏幕旋转, 则可以将下面调用 AutoSize.autoConvertDensity() 的代码删除掉
+        AutoSize.autoConvertDensity(this, 360f, true)
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
         mRecyclerView = recyclerView
         mSwipeRefreshLayout = swipeRefreshLayout
@@ -72,7 +83,7 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
     override fun onItemClick(view: View, viewType: Int, data: User, position: Int) {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(User.KEY_URL, data.avatarUrl)
-        startActivity(intent)
+        launchActivity(intent)
     }
 
     override fun showLoading() {
