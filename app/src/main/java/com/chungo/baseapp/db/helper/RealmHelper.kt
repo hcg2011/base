@@ -2,19 +2,17 @@ package com.chungo.baseapp.db.helper
 
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import javax.inject.Inject
 
 
-class RealmHelper @Inject
+class RealmHelper
 constructor() : DBHelper<Any?> {
 
-
     companion object {
-
-        val DB_NAME = "myRealm.realm"
+        const val DB_NAME = "myRealm.realm"
+        const val DB_VERSION = 1L
     }
 
-    private val mRealm: Realm
+    private var mRealm: Realm? = null
 
     override//使用findAllSort ,先findAll再result.sort无效
     //RealmResults<RealmLikeBean> results = mRealm.where(RealmLikeBean.class).findAllSorted("time");
@@ -35,10 +33,12 @@ constructor() : DBHelper<Any?> {
         get() = null
 
     init {
-        mRealm = Realm.getInstance(RealmConfiguration.Builder()
+        val config = RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .name(DB_NAME)
-                .build())
+                .schemaVersion(DB_VERSION)
+                .build()
+        Realm.setDefaultConfiguration(config)
     }
 
     /**
@@ -126,7 +126,7 @@ constructor() : DBHelper<Any?> {
         //        } else {
         //            bean.setTime(--time);
         //        }
-        mRealm.commitTransaction()
+        mRealm?.commitTransaction()
     }
 
     /**
@@ -141,7 +141,7 @@ constructor() : DBHelper<Any?> {
         //            data.deleteFromRealm();
         //        }
         //        mRealm.copyToRealm(bean);
-        mRealm.commitTransaction()
+        mRealm?.commitTransaction()
     }
 
 }
