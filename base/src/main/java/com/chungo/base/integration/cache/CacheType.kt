@@ -25,7 +25,6 @@ import com.chungo.base.http.RepositoryManager
 
 
 /**
- * ================================================
  * 构建 [Cache] 时,使用 [CacheType] 中声明的类型,来区分不同的模块
  * 从而为不同的模块构建不同的缓存策略
  *

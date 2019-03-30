@@ -9,7 +9,7 @@ import com.chungo.base.config.ConfigModule
 import com.chungo.base.delegate.ActivityDelegate
 import com.chungo.base.delegate.ActivityDelegateImpl
 import com.chungo.base.delegate.FragmentDelegate
-import com.chungo.base.delegate.IActivity
+import com.chungo.base.base.IActivity
 import com.chungo.base.integration.AppManager
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache

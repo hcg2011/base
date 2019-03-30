@@ -1,34 +1,12 @@
-/*
- * Copyright 2017 JessYan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.chungo.base.integration.cache
 
 import com.chungo.base.di.module.GlobalConfigModule
 
 
 /**
- * ================================================
  * 用于缓存框架中所必需的组件,开发者可通过 [GlobalConfigModule.Builder.cacheFactory] 为框架提供缓存策略
  * 开发者也可以用于自己日常中的使用
  *
- * @see GlobalConfigModule.provideCacheFactory
- * @see LruCache
- * Created by JessYan on 25/09/2017 16:36
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
  */
 interface Cache<K, V> {
 
@@ -73,7 +51,7 @@ interface Cache<K, V> {
      * @param value `value`
      * @return 如果这个 `key` 在容器中已经储存有 `value`, 则返回之前的 `value` 否则返回 `null`
      */
-     fun put(key: K, value: V): V?
+    fun put(key: K, value: V): V?
 
     /**
      * 移除缓存中这个 `key` 所对应的条目,并返回所移除条目的 value

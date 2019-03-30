@@ -3,7 +3,7 @@ package com.chungo.baseapp.lifecycle
 import android.app.Application
 import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
-import com.chungo.base.delegate.IApp
+import com.chungo.base.base.IApp
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles

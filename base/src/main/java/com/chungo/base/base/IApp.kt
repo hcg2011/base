@@ -1,4 +1,4 @@
-package com.chungo.base.delegate
+package com.chungo.base.base
 
 import com.chungo.base.di.component.IComponent
 

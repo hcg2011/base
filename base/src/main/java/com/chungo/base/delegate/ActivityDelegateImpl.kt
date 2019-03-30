@@ -2,6 +2,7 @@ package com.chungo.base.delegate
 
 import android.app.Activity
 import android.os.Bundle
+import com.chungo.base.base.IActivity
 import com.chungo.base.eventbus.EventBusManager
 
 

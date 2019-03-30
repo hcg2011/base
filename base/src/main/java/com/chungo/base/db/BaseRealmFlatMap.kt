@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.common.db
+package com.chungo.base.db
 
 import io.realm.Realm
 import io.realm.RealmModel
@@ -7,14 +7,13 @@ import io.realm.RealmResults
 import retrofit2.Response
 
 /**
- * Created by guoshuyu
- * Date: 2018-11-06
- */
-
-/**
  * 保存response中的实体信息
  */
-class FlatMapRealmSaveResult<T, E : RealmModel>(response: Response<T>, private val clazz: Class<E>, private val listener: FlatTransactionInterface<E>, needSave: Boolean) {
+open class FlatMapRealmSaveResult<T, E : RealmModel>
+constructor(response: Response<T>,
+            private val clazz: Class<E>,
+            private val listener: FlatTransactionInterface<E>,
+            needSave: Boolean) {
     init {
         if (response.isSuccessful && needSave) {
             val realm = Realm.getDefaultInstance()
@@ -29,11 +28,6 @@ class FlatMapRealmSaveResult<T, E : RealmModel>(response: Response<T>, private v
             }
         }
     }
-}
-
-interface FlatTransactionInterface<E : RealmModel> {
-    fun query(q: RealmQuery<E>): RealmResults<E>
-    fun onTransaction(targetObject: E?)
 }
 
 /**
@@ -66,6 +60,10 @@ fun <T, E : RealmModel, R> FlatMapRealmReadObject(realm: Realm, listener: FlatRe
     return listener.onConversion(data)
 }
 
+interface FlatTransactionInterface<E : RealmModel> {
+    fun query(q: RealmQuery<E>): RealmResults<E>
+    fun onTransaction(targetObject: E?)
+}
 
 interface FlatRealmReadConversionInterface<T, E> {
     fun query(realm: Realm): RealmResults<E>

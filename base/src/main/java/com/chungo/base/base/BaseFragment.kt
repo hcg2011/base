@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
-import com.chungo.base.delegate.IFragment
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
 import com.chungo.base.lifecycle.rx.IFragmentLifecycleable

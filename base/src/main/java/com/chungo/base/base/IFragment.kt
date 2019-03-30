@@ -1,4 +1,4 @@
-package com.chungo.base.delegate
+package com.chungo.base.base
 
 import android.app.Activity
 import android.os.Bundle

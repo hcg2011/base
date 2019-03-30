@@ -8,7 +8,6 @@ import android.content.BroadcastReceiver
 import android.content.ContentProvider
 import android.content.Context
 import com.chungo.base.delegate.BaseAppDelegate
-import com.chungo.base.delegate.IApp
 import com.chungo.base.di.component.IComponent
 import dagger.android.*
 import dagger.android.support.HasSupportFragmentInjector

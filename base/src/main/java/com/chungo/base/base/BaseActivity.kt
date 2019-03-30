@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.InflateException
 import com.alibaba.android.arouter.launcher.ARouter
-import com.chungo.base.delegate.IActivity
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.CacheType
 import com.chungo.base.lifecycle.rx.IActivityLifecycleable

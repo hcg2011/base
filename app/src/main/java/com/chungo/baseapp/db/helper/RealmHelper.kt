@@ -15,8 +15,8 @@ constructor() : DBHelper<Any?> {
     private var mRealm: Realm? = null
 
     override//使用findAllSort ,先findAll再result.sort无效
-    //RealmResults<RealmLikeBean> results = mRealm.where(RealmLikeBean.class).findAllSorted("time");
-    //return mRealm.copyFromRealm(results);
+//    RealmResults<RealmLikeBean> results = mRealm.where(RealmLikeBean.class).findAllSorted("time");
+//    return mRealm.copyFromRealm(results);
     val likeList: List<Any?>?
         get() = null
 

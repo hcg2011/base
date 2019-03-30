@@ -17,7 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
-import com.chungo.base.delegate.IApp
+import com.chungo.base.base.IApp
 import com.chungo.base.di.component.IComponent
 import com.chungo.base.integration.AppManager
 import java.security.MessageDigest

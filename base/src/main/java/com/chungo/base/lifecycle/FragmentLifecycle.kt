@@ -8,7 +8,7 @@ import android.view.View
 
 import com.chungo.base.delegate.FragmentDelegate
 import com.chungo.base.delegate.FragmentDelegateImpl
-import com.chungo.base.delegate.IFragment
+import com.chungo.base.base.IFragment
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.utils.Preconditions
