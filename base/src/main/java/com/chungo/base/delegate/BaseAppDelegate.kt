@@ -88,7 +88,7 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInj
     /**
      * 在注入之后，再执行super赋值操作
      */
-    override fun onCreate(app: Application) {
+    override fun onCreate(application: Application) {
 //        mComponent = DaggerBaseAppComponent.builder()
 //                .application(application)
 //                .globalConfigModule(getGlobalConfigModule(application, mModules))
@@ -103,25 +103,25 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInj
         cache?.put(IntelligentCache.KEY_KEEP + ConfigModule::class.java.getName(), mModules)
         this.mModules.clear()
         //注册框架内部已实现的 Activity 生命周期逻辑
-        app.registerActivityLifecycleCallbacks(mActivityLifecycle)
+        application.registerActivityLifecycleCallbacks(mActivityLifecycle)
 
         //注册框架内部已实现的 RxLifecycle 逻辑
-        app.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
+        application.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle)
         //注册框架外部, 开发者扩展的 Activity 生命周期逻辑
         //每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调
         //也可以有 N 个 ConfigModule 的实现类 (完美支持组件化项目 各个 Module 的各种独特需求)
         for (lifecycle in mActivityLifecycles) {
-            app.registerActivityLifecycleCallbacks(lifecycle)
+            application.registerActivityLifecycleCallbacks(lifecycle)
         }
 
-        mComponentCallback = AppComponentCallbacks(app, mAppComponent!!)
+        mComponentCallback = AppComponentCallbacks(application, mAppComponent!!)
 
         //注册回掉: 内存紧张时释放部分内存
-        app.registerComponentCallbacks(mComponentCallback)
+        application.registerComponentCallbacks(mComponentCallback)
 
         //执行框架外部, 开发者扩展的 App onCreate 逻辑
         for (lifecycle in mAppLifecycles) {
-            lifecycle.onCreate(app)
+            lifecycle.onCreate(application)
         }
 
     }

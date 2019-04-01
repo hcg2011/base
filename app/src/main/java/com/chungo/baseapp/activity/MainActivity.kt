@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.chungo.base.base.BaseActivity
 import com.chungo.base.utils.AppUtils
 import com.chungo.baseapp.R
@@ -24,7 +25,7 @@ import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.internal.CustomAdapt
 import timber.log.Timber
 import javax.inject.Inject
-
+@Route(path = "DetailActivity", name = "DetailActivity")
 class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefreshLayout.OnRefreshListener, CustomAdapt, OnRecyclerViewItemClickListener<User> {
 
 
