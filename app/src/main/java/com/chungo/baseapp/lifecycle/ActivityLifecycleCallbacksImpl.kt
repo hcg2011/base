@@ -20,11 +20,11 @@ import timber.log.Timber
 class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        Timber.i(activity.toString() + " - onActivityCreated")
+        Timber.i("$activity - onActivityCreated")
     }
 
     override fun onActivityStarted(activity: Activity) {
-        Timber.i(activity.toString() + " - onActivityStarted")
+        Timber.i("$activity - onActivityStarted")
         if (!activity.intent.getBooleanExtra("isInitToolbar", false)) {
             //由于加强框架的兼容性,故将 setContentView 放到 onActivityCreated 之后,onActivityStarted 之前执行
             //而 findViewById 必须在 Activity setContentView() 后才有效,所以将以下代码从之前的 onActivityCreated 中移动到 onActivityStarted 中执行
@@ -51,23 +51,23 @@ class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityResumed(activity: Activity) {
-        Timber.i(activity.toString() + " - onActivityResumed")
+        Timber.i("$activity - onActivityResumed")
     }
 
     override fun onActivityPaused(activity: Activity) {
-        Timber.i(activity.toString() + " - onActivityPaused")
+        Timber.i("$activity - onActivityPaused")
     }
 
     override fun onActivityStopped(activity: Activity) {
-        Timber.i(activity.toString() + " - onActivityStopped")
+        Timber.i("$activity - onActivityStopped")
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        Timber.i(activity.toString() + " - onActivitySaveInstanceState")
+        Timber.i("$activity - onActivitySaveInstanceState")
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        Timber.i(activity.toString() + " - onActivityDestroyed")
+        Timber.i("$activity - onActivityDestroyed")
         //横竖屏切换或配置改变时, Activity 会被重新创建实例, 但 Bundle 中的基础数据会被保存下来,移除该数据是为了保证重新创建的实例可以正常工作
         activity.intent.removeExtra("isInitToolbar")
     }

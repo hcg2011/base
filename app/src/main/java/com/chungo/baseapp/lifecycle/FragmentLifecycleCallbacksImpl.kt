@@ -21,11 +21,11 @@ import timber.log.Timber
 class FragmentLifecycleCallbacksImpl : FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
-        Timber.i(f.toString() + " - onFragmentAttached")
+        Timber.i("$f - onFragmentAttached")
     }
 
     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-        Timber.i(f.toString() + " - onFragmentCreated")
+        Timber.i("$f - onFragmentCreated")
         // 在配置变化的时候将这个 Fragment 保存下来,在 Activity 由于配置变化重建时重复利用已经创建的 Fragment。
         // https://developer.android.com/reference/android/app/Fragment.html?hl=zh-cn#setRetainInstance(boolean)
         // 如果在 XML 中使用 <Fragment/> 标签,的方式创建 Fragment 请务必在标签中加上 android:id 或者 android:tag 属性,否则 setRetainInstance(true) 无效
@@ -34,49 +34,49 @@ class FragmentLifecycleCallbacksImpl : FragmentManager.FragmentLifecycleCallback
     }
 
     override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-        Timber.i(f.toString() + " - onFragmentViewCreated")
+        Timber.i("$f - onFragmentViewCreated")
     }
 
     override fun onFragmentActivityCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-        Timber.i(f.toString() + " - onFragmentActivityCreated")
+        Timber.i("$f - onFragmentActivityCreated")
     }
 
     override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
-        Timber.i(f.toString() + " - onFragmentStarted")
+        Timber.i("$f - onFragmentStarted")
     }
 
     override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
-        Timber.i(f.toString() + " - onFragmentResumed")
+        Timber.i("$f - onFragmentResumed")
     }
 
     override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
-        Timber.i(f.toString() + " - onFragmentPaused")
+        Timber.i("$f - onFragmentPaused")
     }
 
     override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
-        Timber.i(f.toString() + " - onFragmentStopped")
+        Timber.i("$f - onFragmentStopped")
     }
 
     override fun onFragmentSaveInstanceState(fm: FragmentManager, f: Fragment, outState: Bundle) {
-        Timber.i(f.toString() + " - onFragmentSaveInstanceState")
+        Timber.i("$f - onFragmentSaveInstanceState")
     }
 
     override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
-        Timber.i(f.toString() + " - onFragmentViewDestroyed")
+        Timber.i("$f - onFragmentViewDestroyed")
     }
 
     @Suppress("UNCHECKED_CAST")
     override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
-        Timber.i(f.toString() + " - onFragmentDestroyed")
+        Timber.i("$f - onFragmentDestroyed")
         var cache = AppUtils
                 .obtainAppComponentFromContext(f.activity as Context)
                 .extras() as Cache<String, Any>
 
-        (cache.get(IntelligentCache.getKeyOfKeep(RefWatcher::class.java.name)) as RefWatcher)
+        (cache[IntelligentCache.getKeyOfKeep(RefWatcher::class.java.name)] as RefWatcher)
                 .watch(f)
     }
 
     override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
-        Timber.i(f.toString() + " - onFragmentDetached")
+        Timber.i("$f - onFragmentDetached")
     }
 }
