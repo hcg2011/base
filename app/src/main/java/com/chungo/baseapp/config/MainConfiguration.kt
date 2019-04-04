@@ -83,13 +83,16 @@ class MainConfiguration : ConfigModule {
                                     .enableComplexMapKeySerialization()//支持将序列化key为object的map,默认只能序列化key为string的map
                         }
                     }
-
+                    /**
+                     * https://github.com/square/moshi
+                     * moshi可以通过两种方式解析json，
+                     * 1是添加KotlinJsonAdapterFactory()，通过kotlin反射解析，它本身就是一个通用的反射解析类。
+                     * 2是通过在bean上增加注解 @JsonClass(generateAdapter = true) ，通过自动生成adapter来解析
+                     */
                     mMoshiConfiguration = object : NetModule.MoshiConfig {
                         override fun configMoshi(context: Context, builder: Moshi.Builder) {
-                            //https://github.com/square/moshi
                             builder.add(KotlinJsonAdapterFactory())
                         }
-
                     }
 
                     mRetrofitConfiguration = object : NetModule.RetrofitConfig {

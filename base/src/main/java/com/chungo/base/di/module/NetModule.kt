@@ -65,7 +65,6 @@ class NetModule {
     fun provideRetrofit(application: Application, config: RetrofitConfig?, builder: Retrofit.Builder, client: OkHttpClient, httpUrl: HttpUrl, gson: Gson, moshi: Moshi): Retrofit {
         builder.baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
-
         config?.configRetrofit(application, builder)
         builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用 Rxjava
                 //.addConverterFactory(GsonConverterFactory.create(gson))//使用 Gson
