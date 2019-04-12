@@ -12,6 +12,7 @@ import com.chungo.baseapp.BuildConfig
 import com.chungo.baseapp.config.Config
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import io.realm.Realm
 import timber.log.Timber
 
 class AppLifecyclesImpl : IAppLifecycles {
@@ -45,6 +46,7 @@ class AppLifecyclesImpl : IAppLifecycles {
         else
             RefWatcher.DISABLED
         ARouter.init(application)
+        Realm.init(application)
         val cache = (application as IApp).mAppComponent?.extras() as? Cache<String, Any>
         cache?.put(IntelligentCache.getKeyOfKeep(RefWatcher::class.java.name), refWatcher)
     }

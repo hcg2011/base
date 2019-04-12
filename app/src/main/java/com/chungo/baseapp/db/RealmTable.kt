@@ -1,4 +1,4 @@
-package com.shuyu.github.kotlin.common.db
+package com.chungo.baseapp.db
 
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass

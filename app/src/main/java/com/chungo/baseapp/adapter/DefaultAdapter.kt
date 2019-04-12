@@ -10,15 +10,10 @@ import android.view.ViewGroup
  *
  *
  */
-abstract class DefaultAdapter<T>(infos: List<T>) : RecyclerView.Adapter<BaseHolder<T>>() {
-    var infos: List<T>
-        protected set
+abstract class DefaultAdapter<T> : RecyclerView.Adapter<BaseHolder<T>>() {
+    var infos: List<T>?=null
     protected var mOnItemClickListener: OnRecyclerViewItemClickListener<T>? = null
     private lateinit var mHolder: BaseHolder<T>
-
-    init {
-        this.infos = infos
-    }
 
     /**
      * 创建 [BaseHolder]
@@ -33,8 +28,8 @@ abstract class DefaultAdapter<T>(infos: List<T>) : RecyclerView.Adapter<BaseHold
         mHolder.setOnItemClickListener(object : BaseHolder.OnViewClickListener {
             override fun onViewClick(view: View, position: Int) {
                 //设置Item点击事件
-                if (mOnItemClickListener != null && infos.size > 0) {
-                    mOnItemClickListener!!.onItemClick(view, viewType, infos[position], position)
+                if (mOnItemClickListener != null && infos!!.size > 0) {
+                    mOnItemClickListener!!.onItemClick(view, viewType, infos!![position], position)
                 }
             }
 
@@ -49,7 +44,7 @@ abstract class DefaultAdapter<T>(infos: List<T>) : RecyclerView.Adapter<BaseHold
      * @param position
      */
     override fun onBindViewHolder(holder: BaseHolder<T>, position: Int) {
-        holder.setData(infos[position], position)
+        holder.setData(infos!![position], position)
     }
 
 
@@ -59,7 +54,7 @@ abstract class DefaultAdapter<T>(infos: List<T>) : RecyclerView.Adapter<BaseHold
      * @return
      */
     override fun getItemCount(): Int {
-        return infos.size
+        return infos!!.size
     }
 
     /**
@@ -68,7 +63,7 @@ abstract class DefaultAdapter<T>(infos: List<T>) : RecyclerView.Adapter<BaseHold
      * @param position
      * @return
      */
-    fun getItem(position: Int): T? = if (infos == null) null else infos.let { it[position] }
+    fun getItem(position: Int): T? = if (infos == null) null else infos?.let { it[position] }
 
     /**
      * 让子类实现用以提供 [BaseHolder]

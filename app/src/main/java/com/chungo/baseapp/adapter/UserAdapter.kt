@@ -9,7 +9,10 @@ import com.chungo.baseapp.mvp.model.entity.User
  * 展示 [DefaultAdapter] 的用法
  *
  */
-class UserAdapter(infos: List<User>) : DefaultAdapter<User>(infos) {
+class UserAdapter : DefaultAdapter<User>() {
+    init {
+        infos = ArrayList<User>()
+    }
 
     override fun getHolder(v: View, viewType: Int): BaseHolder<User> {
         return UserItemHolder(v)

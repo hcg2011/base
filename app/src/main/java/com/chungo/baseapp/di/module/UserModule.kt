@@ -28,14 +28,14 @@ class UserModule {
 
     @Scopes.Activity
     @Provides
-    fun provideUserList(): MutableList<User> {
+    fun provideUserList(): List<User> {
         return mutableListOf()
     }
 
     @Scopes.Activity
     @Provides
-    fun provideUserAdapter(list: List<User>): UserAdapter {
-        return UserAdapter(list)
+    fun provideUserAdapter(): UserAdapter {
+        return UserAdapter()
     }
 
 }

@@ -17,7 +17,7 @@ class UserServiceModule {
 
     @Scopes.Service
     @Provides
-    fun provideUserAdapter(list: List<User>): UserAdapter {
-        return UserAdapter(list)
+    fun provideUserAdapter(): UserAdapter {
+        return UserAdapter()
     }
 }

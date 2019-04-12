@@ -1,6 +1,7 @@
 package com.chungo.baseapp.mvp.presenter
 
 import android.app.Application
+import android.util.Log
 import com.chungo.base.di.scope.Scopes
 import com.chungo.base.mvp.BasePresenter
 import com.chungo.base.rxerror.ErrorHandleSubscriber
@@ -13,6 +14,7 @@ import com.chungo.baseapp.mvp.contract.UserContract
 import com.chungo.baseapp.mvp.model.entity.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
 import javax.inject.Inject
 
 @Scopes.Activity
@@ -30,6 +32,7 @@ constructor(rootView: UserContract.View, model: UserContract.Model) : BasePresen
     private var lastUserId = 1
     private var isFirst = true
     private var preEndIndex: Int = 0
+    private var refreshTimes: Int = 0
 
 
     //@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -91,7 +94,17 @@ constructor(rootView: UserContract.View, model: UserContract.Model) : BasePresen
                         lastUserId = users[users.size - 1].id//记录最后一个id,用于下一次请求
                         if (pullToRefresh) mUsers.clear()//如果是下拉刷新则清空列表
                         preEndIndex = mUsers.size//更新之前列表总长度,用于确定加载更多的起始位置
+                        users[0].refreshTimes = refreshTimes++
+                        Realm.getDefaultInstance().also {
+                            val all = it.where(User::class.java).findAll()
+                            Log.d(TAG, "all===${all.size}")
+                            it.beginTransaction()
+                            it.insertOrUpdate(users)
+                            it.commitTransaction()
+                            it.close()
+                        }
                         mUsers.addAll(users)
+                        (mAdapter.infos as MutableList).addAll(users)
                         if (pullToRefresh)
                             mAdapter.notifyDataSetChanged()
                         else
