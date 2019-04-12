@@ -25,6 +25,7 @@ import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.internal.CustomAdapt
 import timber.log.Timber
 import javax.inject.Inject
+
 @Route(path = "DetailActivity", name = "DetailActivity")
 class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefreshLayout.OnRefreshListener, CustomAdapt, OnRecyclerViewItemClickListener<User> {
 
@@ -38,6 +39,8 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
     lateinit var mLayoutManager: RecyclerView.LayoutManager
     @Inject
     internal lateinit var mAdapter: UserAdapter
+    @Inject
+    internal lateinit var mList: MutableList<User>
 
     private var mPaginate: Paginate? = null
     private var isLoadingMore: Boolean = false
@@ -52,11 +55,11 @@ class MainActivity : BaseActivity<UserPresenter>(), UserContract.View, SwipeRefr
     }
 
     override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
-        return super.onCreateView(name, context, attrs)
         //由于某些原因, 屏幕旋转后 Fragment 的重建, 会导致框架对 Fragment 的自定义适配参数失去效果
         //所以如果您的 Fragment 允许屏幕旋转, 则请在 onCreateView 手动调用一次 AutoSize.autoConvertDensity()
         //如果您的 Fragment 不允许屏幕旋转, 则可以将下面调用 AutoSize.autoConvertDensity() 的代码删除掉
         AutoSize.autoConvertDensity(this, 360f, true)
+        return super.onCreateView(name, context, attrs)
     }
 
     override fun initData(savedInstanceState: Bundle?) {

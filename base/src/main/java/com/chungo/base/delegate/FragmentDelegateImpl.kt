@@ -13,18 +13,18 @@ import com.chungo.base.eventbus.EventBusManager
  *
  *
  */
-open class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, private var mFragment: Fragment?) : FragmentDelegate {
+open class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, private var fragment: Fragment?) : FragmentDelegate {
     protected var iFragment: IFragment? = null
 
     /**
      * Return true if the fragment is currently added to its activity.
      */
     override val isAdded: Boolean
-        get() = mFragment != null && mFragment!!.isAdded
+        get() = fragment != null && fragment!!.isAdded
 
 
     init {
-        iFragment = mFragment as IFragment
+        iFragment = fragment as IFragment
     }
 
     override fun onAttach(context: Context) {
@@ -34,7 +34,7 @@ open class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (iFragment!!.useEventBus())
         //如果要使用eventbus请将此方法返回true
-            EventBusManager.instance.register(mFragment!!)//注册到事件主线
+            EventBusManager.instance.register(fragment!!)//注册到事件主线
     }
 
     override fun onCreateView(view: View?, savedInstanceState: Bundle?) {
@@ -72,9 +72,9 @@ open class FragmentDelegateImpl(private var mFragmentManager: FragmentManager?, 
     override fun onDestroy() {
         if (iFragment != null && iFragment!!.useEventBus())
         //如果要使用eventbus请将此方法返回true
-            EventBusManager.instance.unregister(mFragment!!)//注册到事件主线
+            EventBusManager.instance.unregister(fragment!!)//注册到事件主线
         this.mFragmentManager = null
-        this.mFragment = null
+        this.fragment = null
         this.iFragment = null
     }
 

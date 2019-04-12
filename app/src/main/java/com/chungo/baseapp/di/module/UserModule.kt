@@ -28,7 +28,7 @@ class UserModule {
 
     @Scopes.Activity
     @Provides
-    fun provideUserList(): List<User> {
+    fun provideUserList(): MutableList<User> {
         return mutableListOf()
     }
 

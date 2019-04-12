@@ -18,7 +18,6 @@ import com.chungo.base.di.module.GlobalConfigModule
 import com.chungo.base.di.scope.Qualifiers
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
-import com.chungo.base.lifecycle.IAndroidInjectorLifecycles
 import com.chungo.base.lifecycle.IAppLifecycles
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -34,19 +33,13 @@ import javax.inject.Inject
  * @see BaseApplication
  *
  */
-abstract class BaseAppDelegate constructor(context: Context) : IApp, IAndroidInjectorLifecycles {
-    @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
-    @Inject
-    lateinit var supportFragmentInjector: DispatchingAndroidInjector<android.support.v4.app.Fragment>
-    @Inject
-    lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
-    @Inject
-    lateinit var serviceInjector: DispatchingAndroidInjector<Service>
-    @Inject
-    lateinit var contentProviderInjector: DispatchingAndroidInjector<ContentProvider>
+abstract class BaseAppDelegate constructor(context: Context) : IApp, IAppDelegate {
+    @Inject lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+    @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
+    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<android.support.v4.app.Fragment>
+    @Inject lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
+    @Inject lateinit var serviceInjector: DispatchingAndroidInjector<Service>
+    @Inject lateinit var contentProviderInjector: DispatchingAndroidInjector<ContentProvider>
     @Inject
     @field:[Qualifiers.Lifecycle]
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
