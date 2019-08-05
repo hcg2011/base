@@ -7,7 +7,7 @@ import com.chungo.base.base.IApp
 import com.chungo.base.integration.cache.Cache
 import com.chungo.base.integration.cache.IntelligentCache
 import com.chungo.base.lifecycle.IAppLifecycles
-import com.chungo.base.utils.log.TagTree
+import com.chungo.base.utils.log.TreeType
 import com.chungo.baseapp.BuildConfig
 import com.chungo.baseapp.config.Config
 import com.squareup.leakcanary.LeakCanary
@@ -25,7 +25,7 @@ class AppLifecyclesImpl : IAppLifecycles {
         if (LeakCanary.isInAnalyzerProcess(application)) {
             return
         }
-        Timber.plant(TagTree().addTag(Config.DEVELOPER))
+        Timber.plant(TreeType.TagTree().addTag(Config.DEVELOPER))
         if (BuildConfig.DEBUG) {//Timber初始化
             ARouter.openLog()
             ARouter.openDebug()

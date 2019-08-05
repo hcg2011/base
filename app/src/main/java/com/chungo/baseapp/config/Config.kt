@@ -10,7 +10,7 @@ package com.chungo.baseapp.config
 class Config {
     companion object {
         /******************** base  *********************/
-        const val DEVELOPER = "hcg_"
+        const val DEVELOPER = "hcg"
         const val DIR_PATH = "/PRIZE_WG_DOWNLOAD"
 
         /******************** 广点通  *********************/
