@@ -3,7 +3,6 @@ package com.chungo.base.base
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.InflateException
 import com.alibaba.android.arouter.launcher.ARouter
@@ -16,8 +15,7 @@ import com.trello.rxlifecycle2.android.ActivityEvent
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasFragmentInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
@@ -30,7 +28,7 @@ import javax.inject.Inject
  * 继承于这个特定的 [Activity], 然后再按照 [BaseActivity] 的格式, 将代码复制过去, 记住一定要实现[IActivity]
  *
  */
-abstract class BaseActivity<P : IPresenter>() : AppCompatActivity(), IActivity, IActivityLifecycleable, HasFragmentInjector, HasSupportFragmentInjector {
+abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), IActivity, IActivityLifecycleable, HasAndroidInjector {
     protected val TAG = this.javaClass.simpleName
     protected val mLifecycleSubject = BehaviorSubject.create<ActivityEvent>()
     protected var mCache: Cache<*, *>? = null
@@ -38,9 +36,7 @@ abstract class BaseActivity<P : IPresenter>() : AppCompatActivity(), IActivity, 
     @Inject
     lateinit var mPresenter: P
     @Inject
-    lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
-    @Inject
-    lateinit var frameworkFragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
+    lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inject()
@@ -71,8 +67,7 @@ abstract class BaseActivity<P : IPresenter>() : AppCompatActivity(), IActivity, 
         return mCache!!
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment>? = supportFragmentInjector
-    override fun fragmentInjector(): AndroidInjector<android.app.Fragment>? = frameworkFragmentInjector
+    override fun androidInjector(): AndroidInjector<Any>? = mAndroidInjector
     override fun provideLifecycleSubject(): Subject<ActivityEvent> = mLifecycleSubject
     override fun useEventBus(): Boolean = false
     override fun useFragment(): Boolean = false
@@ -88,7 +83,7 @@ abstract class BaseActivity<P : IPresenter>() : AppCompatActivity(), IActivity, 
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter.onDestroy()
+        mPresenter?.onDestroy()
         unDispose()
     }
 }

@@ -3,7 +3,6 @@ package com.chungo.base.delegate
 import android.app.Activity
 import android.app.Application
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.ComponentCallbacks2
 import android.content.ContentProvider
 import android.content.Context
@@ -34,17 +33,13 @@ import javax.inject.Inject
  *
  */
 abstract class BaseAppDelegate constructor(context: Context) : IApp, IAppDelegate {
-    @Inject lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-    @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<android.app.Fragment>
-    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<android.support.v4.app.Fragment>
-    @Inject lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
-    @Inject lateinit var serviceInjector: DispatchingAndroidInjector<Service>
-    @Inject lateinit var contentProviderInjector: DispatchingAndroidInjector<ContentProvider>
     @Inject
-    @field:[Qualifiers.Lifecycle]
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    @Inject
+    @field:Qualifiers.Lifecycle
     lateinit var mActivityLifecycle: Application.ActivityLifecycleCallbacks
     @Inject
-    @field:[Qualifiers.RxLifecycle]
+    @field:Qualifiers.RxLifecycle
     lateinit var mActivityLifecycleForRxLifecycle: Application.ActivityLifecycleCallbacks
     //参考glide。用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
     protected var mModules: ArrayList<ConfigModule> = ManifestParser(context).parse()
@@ -64,12 +59,7 @@ abstract class BaseAppDelegate constructor(context: Context) : IApp, IAppDelegat
     }
 
     override var mAppComponent: IComponent? = null
-    override fun activityInjector(): AndroidInjector<Activity>? = activityInjector
-    override fun contentProviderInjector(): AndroidInjector<ContentProvider> = contentProviderInjector
-    override fun fragmentInjector(): AndroidInjector<android.app.Fragment> = fragmentInjector
-    override fun serviceInjector(): AndroidInjector<Service> = serviceInjector
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
-    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> = broadcastReceiverInjector
+    override fun androidInjector(): AndroidInjector<Any>? = androidInjector.takeIf {  }
 
     override fun attachBaseContext(base: Context) {
         //遍历 mAppLifecycles, 执行所有已注册的 AppLifecycles 的 attachBaseContext() 方法 (框架外部, 开发者扩展的逻辑)
